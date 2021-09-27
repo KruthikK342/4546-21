@@ -4,16 +4,18 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.util.Range;
 
 @TeleOp(name="Teleop", group="4546")
 public class Teleop extends OpMode {
 
-    private DcMotor forwardMotor;
+    public DcMotor leftDrive = null;
+    public DcMotor rightDrive = null;
     //private DcMotor backwardMotor;
 
     @Override
     public void init() {
-        forwardMotor = hardwareMap.dcMotor.get("testing");
+        leftDrive = hardwareMap.dcMotor.get("testing");
         //backwardMotor = hardwareMap.dcMotor.get("backwardMotor");
         //forwardMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         //backwardMotor.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -25,7 +27,13 @@ public class Teleop extends OpMode {
     public void loop() {
         //forwardMotor.setPower(gamepad1.left_stick_y - gamepad1.left_stick_x);
         //backwardMotor.setPower(gamepad1.right_stick_y + gamepad1.right_stick_x);
-        forwardMotor.setPower(0.4);
+        double leftPower;
+        double rightPower;
+
+        double drive = -gamepad1.left_stick_y;
+        double turn  = -gamepad1.right_stick_x;
+        leftPower    = Range.clip(drive + turn, -1.0, 1.0) ;
+        rightPower   = Range.clip(drive - turn, -1.0, 1.0) ;
         //change
     }
 }
