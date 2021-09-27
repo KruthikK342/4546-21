@@ -11,7 +11,6 @@ public class Teleop extends OpMode {
 
     public DcMotor leftDrive = null;
     public DcMotor rightDrive = null;
-    //private DcMotor backwardMotor;
 
     @Override
     public void init() {
@@ -34,6 +33,10 @@ public class Teleop extends OpMode {
         double turn  = -gamepad1.right_stick_x;
         leftPower    = Range.clip(drive + turn, -1.0, 1.0) ;
         rightPower   = Range.clip(drive - turn, -1.0, 1.0) ;
+        leftDrive.setPower(leftPower);
+        rightDrive.setPower(rightPower);
         //change
+        //
+        gamepad1.right_trigger
     }
 }
