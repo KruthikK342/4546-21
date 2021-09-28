@@ -45,6 +45,7 @@ public class Teleop extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor leftDrive = null;
     private DcMotor rightDrive = null;
+    private DcMotor intake = null;
 
     @Override
     public void runOpMode() {
@@ -91,6 +92,14 @@ public class Teleop extends LinearOpMode {
             // Send calculated power to wheels
             leftDrive.setPower(leftPower);
             rightDrive.setPower(rightPower);
+
+            if(gamepad1.right_trigger > .5) {
+                intake.setPower(-1);
+            }
+
+            if(gamepad1.left_trigger > .5) {
+                intake.setPower(1);
+            }
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
