@@ -63,7 +63,7 @@ public class Teleop extends LinearOpMode {
         leftDrive.setDirection(DcMotor.Direction.REVERSE);
         rightDrive.setDirection(DcMotor.Direction.FORWARD);
 
-        // Wait for the game to start (driver presses PLAY)
+        // Waits for the game to start (driver presses PLAY)
         waitForStart();
         runtime.reset();
 
