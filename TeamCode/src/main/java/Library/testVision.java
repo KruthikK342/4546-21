@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 @Autonomous(name = "testVision", group = "Autonomous")
 public class testVision extends LinearOpMode {
 
+    //example
     hardwareMap robot = new hardwareMap();
     public ElapsedTime runtime = new ElapsedTime();
     //WebCamVision vision = null;
