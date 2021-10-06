@@ -40,7 +40,7 @@ public class WebCamVision {
 
 
 
-    private static final String VUFORIA_KEY = "AeFSc8v/////AAABmX+Pinx9j0k6hQOygQElLa1v9CMRX9dH3SsSruSA5mg7UiNXNkpeWWSVy9dezEwHXnc1l4ppFWFGjhlE8IUM6WR7LPMsX5PpNItWn3imKy2iLgQbw1/vU3zmNaItZJPUwDH/TCJW+ifvorBYRL6Ohu63V6z4tL8UABgktWq05oXJ4I7RwFbO47nYuA5CZNe6eHXmWaC/kECXH8B1n8gjsvrwD8NLj0SJcn21Auw/SxcxnpoVs079o9p7Sw/CuKJwqDa1fWfiWzTnsWfVTyxdP/VU2ahsGhg/6LEtAmvx3SewpDsqlmgEIYQnh6RnDPZ74G5CgamQ1XZKR73HVJio7gKaAXcNhxxZ10iqcFoQihj1";
+    private static final String VUFORIA_KEY = "AVFFxKT/////AAABmQTYeIgT6k6wv0phn1XaTKN+Z9RdP23vp3+6IEyv9haxqO0u2vStZKAjPLct97BEhaeSkeYivFGo2IDu8fWfJlBY+2JZ0FIf8M2N7yW5XExNYWbGNwwem7Wgzsl5ld4wr6xOeXqcwtVn1mgt5ELcypOfvRnnun3FWIBr7mx+AJRN1ZAnqVvfOphPVxNm9vpylN4d5nJu58aTxiXMCJadPhhyviOGVlI6tT//lTO5GJEBva9xN+SXpxsTnPEaegQNE+qzFxVzmtXabk+oAuMxDh1XR+6EbyZzZjQm3gI9DXkt7os7ZkM95GXEZN9MHRwPWdwbk1Bt/iGI3VcXp2VfUDhWYXaWJjvu/aZC2WqrhAef";
 
     private BlockingQueue<VuforiaLocalizer.CloseableFrame> frame;
 
