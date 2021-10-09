@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.ultimategoal2020;
+package Opmode;
 
 import android.graphics.Bitmap;
 
@@ -22,7 +22,7 @@ import static android.graphics.Color.green;
 import static android.graphics.Color.red;
 
 
-public class WebCamVision {
+public class ExampleWebCamVision_UG {
 
     private LinearOpMode opMode;
     private VuforiaLocalizer vuforia;
@@ -46,7 +46,7 @@ public class WebCamVision {
 
     public static String bitmapSkyStonePosition;
 
-    public WebCamVision(LinearOpMode opMode) {
+    public ExampleWebCamVision_UG(LinearOpMode opMode) {
 
         this.opMode = opMode;
 
@@ -91,7 +91,7 @@ public class WebCamVision {
         return bm;
     }
 
-    public Bitmap getBitmap() throws InterruptedException{
+    public Bitmap getBitmap() throws InterruptedException {
 
         VuforiaLocalizer.CloseableFrame picture;
         picture = vuforia.getFrameQueue().take();
@@ -134,7 +134,7 @@ public class WebCamVision {
         return imageBitmap;
     }
 
-    public String sample() throws InterruptedException{
+    public String sample() throws InterruptedException {
         Bitmap bitmap = getBitmap();
         String bitmapCubePosition;
 
@@ -225,17 +225,17 @@ public class WebCamVision {
         return "red floor: " + floorAvgRed + "blue floor: " + floorAvgBlue;
     }
 
-    public int findStackHeight() throws InterruptedException{
+    public int findStackHeight() throws InterruptedException {
         Bitmap bitmap = getBitmap();
         int ringStackHeight;
 
 
-        int ring1 = bitmap.getPixel((int)(256 * widthFactor), (int)(507 * heightFactor));//bitmap.getWidth() * 2/5, 20
+        int ring1 = bitmap.getPixel((int)(359 * widthFactor), (int)(674 * heightFactor));//bitmap.getWidth() * 2/5, 20
         int redVal1 = red(ring1);
         int greenVal1 = green(ring1);
         int blueVal1 = blue(ring1);
 
-        int ring2 = bitmap.getPixel((int)(257 * widthFactor), (int)(432 * heightFactor));//bitmap.getWidth()/2, 20
+        int ring2 = bitmap.getPixel((int)(367 * widthFactor), (int)(596 * heightFactor));//bitmap.getWidth()/2, 20
         int redVal2 = red(ring2);
         int greenVal2 = green(ring2);
         int blueVal2 = blue(ring2);
@@ -314,7 +314,7 @@ public class WebCamVision {
 
         return ringStackHeight;
     }
-    public String findBlueSkystones() throws InterruptedException{
+    public String findBlueSkystones() throws InterruptedException {
         Bitmap bitmap = getBitmap();
         String bitmapCubePosition;
 

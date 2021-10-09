@@ -1,11 +1,11 @@
-package org.firstinspires.ftc.teamcode.ultimategoal2020;
+package Opmode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Autonomous(name = "testVision", group = "Autonomous")
-public class testVision extends LinearOpMode {
+public class testVision_UG extends LinearOpMode {
 
     hardwareMap robot = new hardwareMap();
     public ElapsedTime runtime = new ElapsedTime();
