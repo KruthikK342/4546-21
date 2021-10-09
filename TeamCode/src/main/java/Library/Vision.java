@@ -1,4 +1,4 @@
-package Opmode;
+package Library;
 
 import android.graphics.Bitmap;
 
@@ -22,7 +22,7 @@ import static android.graphics.Color.green;
 import static android.graphics.Color.red;
 
 
-public class ExampleWebCamVision_UG {
+public class Vision {
 
     private LinearOpMode opMode;
     private VuforiaLocalizer vuforia;
@@ -39,14 +39,11 @@ public class ExampleWebCamVision_UG {
     private final int yheight = 300;
 
 
-
     private static final String VUFORIA_KEY = "AVFFxKT/////AAABmQTYeIgT6k6wv0phn1XaTKN+Z9RdP23vp3+6IEyv9haxqO0u2vStZKAjPLct97BEhaeSkeYivFGo2IDu8fWfJlBY+2JZ0FIf8M2N7yW5XExNYWbGNwwem7Wgzsl5ld4wr6xOeXqcwtVn1mgt5ELcypOfvRnnun3FWIBr7mx+AJRN1ZAnqVvfOphPVxNm9vpylN4d5nJu58aTxiXMCJadPhhyviOGVlI6tT//lTO5GJEBva9xN+SXpxsTnPEaegQNE+qzFxVzmtXabk+oAuMxDh1XR+6EbyZzZjQm3gI9DXkt7os7ZkM95GXEZN9MHRwPWdwbk1Bt/iGI3VcXp2VfUDhWYXaWJjvu/aZC2WqrhAef";
 
     private BlockingQueue<VuforiaLocalizer.CloseableFrame> frame;
 
-    public static String bitmapSkyStonePosition;
-
-    public ExampleWebCamVision_UG(LinearOpMode opMode) {
+    public Vision(LinearOpMode opMode) {
 
         this.opMode = opMode;
 
@@ -62,17 +59,23 @@ public class ExampleWebCamVision_UG {
         vuforia.enableConvertFrameToBitmap();
 
     }
-/*
-    public BitMapVision(LinearOpMode opMode) {
-        this.opMode = opMode;
-        int cameraMonitorViewId = this.opMode.hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", this.opMode.hardwareMap.appContext.getPackageName());
-        VuforiaLocalizer.Parameters params = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
-        params.vuforiaLicenseKey = VUFORIA_KEY;
-        params.cameraDirection = CAMERA_CHOICE;
-        vuforia = ClassFactory.getInstance().createVuforia(params);
-        Vuforia.setFrameFormat(PIXEL_FORMAT.RGB565, true); //enables RGB565 format for the image
-        vuforia.setFrameQueueCapacity(4); //tells VuforiaLocalizer to only store one frame at a time
-    }*/
+
+    public void checkRGB() throws InterruptedException {
+        int redThreshold = 127, greenThreshold = 20, blueThreshold = 20;
+        Bitmap bitmap = getBitmap();
+        for (int col = 0; col < bitmap.getWidth(); col++) {
+            for (int row = 0; row < bitmap.getHeight(); row++) {
+                int pixel = bitmap.getPixel(col, row);
+                int redValue = red(pixel);
+                int blueValue = blue(pixel);
+                int greenValue = green(pixel);
+                if (redValue > redThreshold && blueValue < blueThreshold && greenValue < greenThreshold) {
+                    opMode.telemetry.addLine(String.format("Detected red at %d, %d", col, row));
+                    opMode.telemetry.update();
+                }
+            }
+        }
+    }
 
     public Bitmap getImage() throws InterruptedException {
         VuforiaLocalizer.CloseableFrame frame = vuforia.getFrameQueue().take();
@@ -81,7 +84,7 @@ public class ExampleWebCamVision_UG {
         for (int i = 0; i < numImages; i++) {
             Image img = frame.getImage(i);
             int fmt = img.getFormat();
-           if (fmt == PIXEL_FORMAT.RGB565) {
+            if (fmt == PIXEL_FORMAT.RGB565) {
                 rgb = frame.getImage(i);
                 break;
             }
@@ -200,165 +203,28 @@ public class ExampleWebCamVision_UG {
         return "red: " + redVal1 + " blue: " + blueVal1 + " green: " + greenVal1;
     }
 
-    public String floorAvg() throws InterruptedException
-    {
+    public String floorAvg() throws InterruptedException {
         Bitmap bitmap = getBitmap();
-        int floor1 = bitmap.getPixel((int)(953 * widthFactor), (int)(473 * heightFactor));//bitmap.getWidth()/2, 20
+        int floor1 = bitmap.getPixel((int) (953 * widthFactor), (int) (473 * heightFactor));//bitmap.getWidth()/2, 20
         int redFloor1 = red(floor1);
         int greenFloor1 = green(floor1);
         int blueFloor1 = blue(floor1);
 
-        int floor2 = bitmap.getPixel((int)(840 * widthFactor), (int)(460 * heightFactor));//bitmap.getWidth()/2, 20
+        int floor2 = bitmap.getPixel((int) (840 * widthFactor), (int) (460 * heightFactor));//bitmap.getWidth()/2, 20
         int redFloor2 = red(floor2);
         int greenFloor2 = green(floor2);
         int blueFloor2 = blue(floor2);
 
-        int floor3 = bitmap.getPixel((int)(810 * widthFactor), (int)(510 * heightFactor));//bitmap.getWidth()/2, 20
+        int floor3 = bitmap.getPixel((int) (810 * widthFactor), (int) (510 * heightFactor));//bitmap.getWidth()/2, 20
         int redFloor3 = red(floor3);
         int greenFloor3 = green(floor3);
         int blueFloor3 = blue(floor3);
 
 
-        double floorAvgRed = (double)(redFloor1 + redFloor2 + redFloor3) / 3;
-        double floorAvgBlue = (double)(blueFloor1 + blueFloor2 + blueFloor3) / 3;
+        double floorAvgRed = (double) (redFloor1 + redFloor2 + redFloor3) / 3;
+        double floorAvgBlue = (double) (blueFloor1 + blueFloor2 + blueFloor3) / 3;
 
         return "red floor: " + floorAvgRed + "blue floor: " + floorAvgBlue;
-    }
-
-    public int findStackHeight() throws InterruptedException {
-        Bitmap bitmap = getBitmap();
-        int ringStackHeight;
-
-
-        int ring1 = bitmap.getPixel((int)(359 * widthFactor), (int)(674 * heightFactor));//bitmap.getWidth() * 2/5, 20
-        int redVal1 = red(ring1);
-        int greenVal1 = green(ring1);
-        int blueVal1 = blue(ring1);
-
-        int ring2 = bitmap.getPixel((int)(367 * widthFactor), (int)(596 * heightFactor));//bitmap.getWidth()/2, 20
-        int redVal2 = red(ring2);
-        int greenVal2 = green(ring2);
-        int blueVal2 = blue(ring2);
-
-        if (blueVal2 > 110 && redVal2 < 200)
-        {
-            if (Math.abs(blueVal1 - blueVal2) > 50)
-            {
-                ringStackHeight = 1;
-            }
-            else
-            {
-                ringStackHeight = 0;
-            }
-        }
-        else
-        {
-            ringStackHeight = 4;
-        }
-
-
-        return ringStackHeight;
-    }
-
-    public int findStackHeight2() throws InterruptedException
-    {
-        Bitmap bitmap = getBitmap();
-        int ringStackHeight;
-
-
-        int ring1 = bitmap.getPixel((int)(1210 * widthFactor), (int)(520 * heightFactor));//bitmap.getWidth() * 2/5, 20
-        int redVal1 = red(ring1);
-        int greenVal1 = green(ring1);
-        int blueVal1 = blue(ring1);
-
-        int ring2 = bitmap.getPixel((int)(1209 * widthFactor), (int)(451 * heightFactor));//bitmap.getWidth()/2, 20
-        int redVal2 = red(ring2);
-        int greenVal2 = green(ring2);
-        int blueVal2 = blue(ring2);
-
-        int floor1 = bitmap.getPixel((int)(953 * widthFactor), (int)(473 * heightFactor));//bitmap.getWidth()/2, 20
-        int redFloor1 = red(floor1);
-        int greenFloor1 = green(floor1);
-        int blueFloor1 = blue(floor1);
-
-        int floor2 = bitmap.getPixel((int)(840 * widthFactor), (int)(460 * heightFactor));//bitmap.getWidth()/2, 20
-        int redFloor2 = red(floor2);
-        int greenFloor2 = green(floor2);
-        int blueFloor2 = blue(floor2);
-
-        int floor3 = bitmap.getPixel((int)(810 * widthFactor), (int)(510 * heightFactor));//bitmap.getWidth()/2, 20
-        int redFloor3 = red(floor3);
-        int greenFloor3 = green(floor3);
-        int blueFloor3 = blue(floor3);
-
-
-        double floorAvgRed = (double)(redFloor1 + redFloor2 + redFloor3) / 3;
-        double floorAvgBlue = (double)(blueFloor1 + blueFloor2 + blueFloor3) / 3;
-
-        if (redVal1 > floorAvgRed && blueVal1 < floorAvgBlue)
-        {
-            if (redVal2 > floorAvgRed && blueVal1 < floorAvgBlue)
-            {
-                ringStackHeight = 4;
-            }
-            else
-            {
-                ringStackHeight = 1;
-            }
-        }
-        else
-        {
-            ringStackHeight = 0;
-        }
-
-
-        return ringStackHeight;
-    }
-    public String findBlueSkystones() throws InterruptedException {
-        Bitmap bitmap = getBitmap();
-        String bitmapCubePosition;
-
-        int stone1 = bitmap.getPixel((int)(1210 * widthFactor), (int)(520 * heightFactor));//bitmap.getWidth() * 2/5, 20
-        int redVal1 = red(stone1);
-
-        int stone2 = bitmap.getPixel((int)(1209 * widthFactor), (int)(1677 * heightFactor));//bitmap.getWidth()/2, 20
-        int redVal2 = red(stone2);
-
-        int stone3 = bitmap.getPixel((int)(2500 * widthFactor), (int)(1677 * heightFactor));//bitmap.getWidth() * 3/5, 20
-        int redVal3 = red(stone3);
-
-        ArrayList<Integer> vals = new ArrayList<Integer>();
-        vals.add(redVal1);
-        vals.add(redVal2);
-        vals.add(redVal3);
-
-        int min = Collections.min(vals);
-        int pos = vals.indexOf(min);
-
-        if (pos == 0){
-            bitmapCubePosition = "left";
-        }
-
-        else if (pos == 1){
-            bitmapCubePosition = "center";
-        }
-
-        else if (pos == 2){
-            bitmapCubePosition = "right";
-        }
-        else {
-            bitmapCubePosition = "yikes";
-        }
-        /*
-        telemetry.addData("redval1", redVal1);
-        telemetry.addData("redval2", redVal2);
-        telemetry.addData("redval3", redVal3);
-        telemetry.addData("left", vals.get(0));
-        telemetry.addData("center", vals.get(1));
-        telemetry.addData("right", vals.get(2));
-        telemetry.update();
-        sleep(5000);*/
-        return bitmapCubePosition;
     }
 
     public Bitmap vufConvertToBitmap(Frame frame) { return vuforia.convertFrameToBitmap(frame); }
