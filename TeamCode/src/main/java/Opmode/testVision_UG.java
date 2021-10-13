@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import Library.Vision;
+import Library.DuckBarcodeBitmap;
 
 @Autonomous(name = "testVision", group = "Autonomous")
 public class testVision_UG extends LinearOpMode {
