@@ -18,10 +18,10 @@ public class testVision_UG extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
 
         //stuff that happens after init is pressed
-        Vision vision = new Vision(this);
+        DuckBarcodeBitmap db = new DuckBarcodeBitmap(this);
         waitForStart();
         while (opModeIsActive())  {
-            vision.checkRGB();
+            db.getBarcode();
             sleep(5000);
         }
     }
