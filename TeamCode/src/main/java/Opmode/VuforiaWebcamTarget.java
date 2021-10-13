@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.Range;
+import com.vuforia.PIXEL_FORMAT;
+import com.vuforia.Vuforia;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -31,14 +33,16 @@ public class VuforiaWebcamTarget extends LinearOpMode
 
     final double MM_PER_INCH = 25.40 ;   //  Metric conversion
 
-
+    private final int RED_THRESHOLD = 255;
+    private final int GREEN_THRESHOLD = 255;
+    private final int BLUE_THRESHOLD = 0    ;
 
     //kruthik's vuforia key
     private static final String VUFORIA_KEY = "AVFFxKT/////AAABmQTYeIgT6k6wv0phn1XaTKN+Z9RdP23vp3+6IEyv9haxqO0u2vStZKAjPLct97BEhaeSkeYivFGo2IDu8fWfJlBY+2JZ0FIf8M2N7yW5XExNYWbGNwwem7Wgzsl5ld4wr6xOeXqcwtVn1mgt5ELcypOfvRnnun3FWIBr7mx+AJRN1ZAnqVvfOphPVxNm9vpylN4d5nJu58aTxiXMCJadPhhyviOGVlI6tT//lTO5GJEBva9xN+SXpxsTnPEaegQNE+qzFxVzmtXabk+oAuMxDh1XR+6EbyZzZjQm3gI9DXkt7os7ZkM95GXEZN9MHRwPWdwbk1Bt/iGI3VcXp2VfUDhWYXaWJjvu/aZC2WqrhAef ";
 
     VuforiaLocalizer vuforia    = null;
     OpenGLMatrix targetPose     = null;
-    String targetName           = "";
+    String targetName           = "duck";
 
     private DcMotor leftDrive   = null;
     private DcMotor rightDrive  = null;
@@ -60,9 +64,9 @@ public class VuforiaWebcamTarget extends LinearOpMode
         parameters.cameraName = hardwareMap.get(WebcamName.class, "Webcam 1");
         this.vuforia = ClassFactory.getInstance().createVuforia(parameters);
 
-        // Load the trackable objects from the Assets file, and give them meaningful names
+        // Load the trackable objects from the the asset Assets file, and give them meaningful names
         VuforiaTrackables targetsFreightFrenzy = this.vuforia.loadTrackablesFromAsset("FreightFrenzy");
-        targetsFreightFrenzy.get(0).setName("Blue Storage");
+        targetsFreightFrenzy.get(0).setName("Duck");
         targetsFreightFrenzy.get(1).setName("Blue Alliance Wall");
         targetsFreightFrenzy.get(2).setName("Red Storage");
         targetsFreightFrenzy.get(3).setName("Red Alliance Wall");
@@ -162,6 +166,13 @@ public class VuforiaWebcamTarget extends LinearOpMode
             rightDrive.setPower(rightPower);
 
             sleep(10);
+
+            Vuforia.setFrameFormat(PIXEL_FORMAT.RGB565, true); //enables RGB565 format for the image
+            vuforia.setFrameQueueCapacity(4); //tells VuforiaLocalizer to only store one frame at a time
+            vuforia.enableConvertFrameToBitmap();
+
+
+
         }
     }
 }
