@@ -29,7 +29,7 @@ public class DuckBarcodeBitmap {
 
     private final int YELLOW_RED_THRESHOLD = 225;
     private final int YELLOW_GREEN_THRESHOLD = 225;
-    private final int YELLOW_BLUE_THRESHOLD = 90;
+    private final int YELLOW_BLUE_MAX = 130;
 
     private final int RED_RED_THRESHOLD = 200;
     private final int RED_GREEN_THRESHOLD = 35;
@@ -110,8 +110,9 @@ public class DuckBarcodeBitmap {
         int width = bitmap.getWidth();
 
         boolean duckFound =false;
-        int xPosition = 0;
+        int duckXPosition = 0;
 
+        outerloop:
         for(int y=0; y < height && !duckFound; y++) {
             int duckPixelCount = 0;
             for(int x=0; x<width; x++) {
@@ -119,30 +120,35 @@ public class DuckBarcodeBitmap {
                 int redValue = red(pixel);
                 int blueValue  = blue(pixel);
                 int greenValue = green(pixel);
-                boolean isYellow = redValue >= YELLOW_RED_THRESHOLD && blueValue >=YELLOW_BLUE_THRESHOLD && greenValue >=YELLOW_GREEN_THRESHOLD;
+                boolean isYellow = redValue >= YELLOW_RED_THRESHOLD && greenValue >=YELLOW_GREEN_THRESHOLD && blueValue <= YELLOW_BLUE_MAX;
                 if(isYellow) {
+                    opMode.telemetry.addData("R: ", red(pixel));
+                    opMode.telemetry.addData("G: ", green(pixel));
+                    opMode.telemetry.addData("B: ", blue(pixel));
                     duckPixelCount++;
-                    xPosition = x;
+                    duckXPosition = x;
+                    duckFound = true;
+                    break outerloop;
                 }
             }
-            if(duckPixelCount > 4) {
+            /*if(duckPixelCount > 4) {
                 duckFound = true;
-            }
+            }*/
         }
         int barcode = 0;
         int section = width/3;
         if(duckFound) {
 
-            if(xPosition >= 0 &&  xPosition <= section) {
+            if(duckXPosition >= 0 &&  duckXPosition <= section) {
                 barcode = 1;
-            }else if(xPosition > section && xPosition <= (section*2)) {
+            }else if(duckXPosition > section && duckXPosition <= (section*2)) {
                 barcode = 2;
             }else {
                 barcode = 3;
             }
 
         }
-        opMode.telemetry.addData("xPosition: ", xPosition);
+        opMode.telemetry.addData("DuckxPosition: ", duckXPosition);
         opMode.telemetry.addData("section: ", section);
         opMode.telemetry.addData("width: ", width);
         opMode.telemetry.addData("Barcode: ", barcode);

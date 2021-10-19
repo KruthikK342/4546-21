@@ -13,17 +13,26 @@ public class testVision_UG extends LinearOpMode {
     //ElapsedTime time = new ElapsedTime();
     //WebCamVision vision = new WebCamVision(this);
 
+    /*freight rgb's:
+      duck: 231, 255, 255
+      box:
+      sphere:
+    */
+
     // Testing
     @Override
     public void runOpMode() throws InterruptedException {
 
         //stuff that happens after init is pressed
         DuckBarcodeBitmap db = new DuckBarcodeBitmap(this);
-        waitForStart();
+        //int i =0;
         while (opModeIsActive())  {
             db.getBarcode();
-            sleep(5000);
+            //sleep(5000);
+            //i++;
         }
+
+
     }
 }
 
