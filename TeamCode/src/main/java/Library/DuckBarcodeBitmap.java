@@ -112,7 +112,6 @@ public class DuckBarcodeBitmap {
         boolean duckFound =false;
         int duckXPosition = 0;
 
-        outerloop:
         for(int y=0; y < height && !duckFound; y++) {
             int duckPixelCount = 0;
             for(int x=0; x<width; x++) {
@@ -128,12 +127,9 @@ public class DuckBarcodeBitmap {
                     duckPixelCount++;
                     duckXPosition = x;
                     duckFound = true;
-                    break outerloop;
+                    break;
                 }
             }
-            /*if(duckPixelCount > 4) {
-                duckFound = true;
-            }*/
         }
         int barcode = 0;
         int section = width/3;
