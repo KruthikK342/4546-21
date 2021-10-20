@@ -31,6 +31,10 @@ public class DuckBarcodeBitmap {
     private final int YELLOW_GREEN_THRESHOLD = 225;
     private final int YELLOW_BLUE_MAX = 130;
 
+    private final int BLACK_RED_THRESHOLD = 25;
+    private final int BLACK_GREEN_THRESHOLD = 25;
+    private final int BLACK_BLUE_THRESHOLD = 25;
+
     private final int RED_RED_THRESHOLD = 200;
     private final int RED_GREEN_THRESHOLD = 35;
     private final int RED_BLUE_THRESHOLD = 35;
@@ -76,10 +80,6 @@ public class DuckBarcodeBitmap {
             if (format == PIXEL_FORMAT.RGB565) {
                 rgb = picture.getImage(i);
                 break;
-            } else {
-                //opMode.telemetry.addLine("Didn't find correct RGB format");
-                //opMode.telemetry.update();
-
             }
         }
 
@@ -109,16 +109,18 @@ public class DuckBarcodeBitmap {
         int height = bitmap.getHeight();
         int width = bitmap.getWidth();
 
-        boolean duckFound =false;
+        boolean teamElementFound = false;
+        boolean duckFound = false;
         int duckXPosition = 0;
 
         for(int y=0; y < height && !duckFound; y++) {
-            int duckPixelCount = 0;
+            int duckPixelCount = 0, teamElementPixelCount = 0;
             for(int x=0; x<width; x++) {
                 int pixel = bitmap.getPixel(x,y);
                 int redValue = red(pixel);
                 int blueValue  = blue(pixel);
                 int greenValue = green(pixel);
+                boolean isBlack =  redValue <= BLACK_RED_THRESHOLD && greenValue <= BLACK_GREEN_THRESHOLD && blueValue <= BLACK_BLUE_THRESHOLD;
                 boolean isYellow = redValue >= YELLOW_RED_THRESHOLD && greenValue >=YELLOW_GREEN_THRESHOLD && blueValue <= YELLOW_BLUE_MAX;
                 if(isYellow) {
                     opMode.telemetry.addData("R: ", red(pixel));

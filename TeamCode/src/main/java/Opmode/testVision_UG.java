@@ -25,11 +25,9 @@ public class testVision_UG extends LinearOpMode {
 
         //stuff that happens after init is pressed
         DuckBarcodeBitmap db = new DuckBarcodeBitmap(this);
-        //int i =0;
         while (opModeIsActive())  {
             db.getBarcode();
             //sleep(5000);
-            //i++;
         }
 
 
