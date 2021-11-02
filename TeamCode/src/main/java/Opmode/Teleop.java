@@ -17,10 +17,14 @@ public class Teleop extends LinearOpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
-    private DcMotor leftDrive = null; // left drive motor
-    private DcMotor rightDrive = null; // right drive motor
+    private Double leftDrive = null; // left  drive call for other motors
+    private DcMotor fL = null; // front left drive motor
+    private DcMotor bL = null; // back left drive motor
+    private Double rightDrive = null; // right drive call for other motors
+    private DcMotor fR = null; // front left drive motor
+    private DcMotor bR = null; // back left drive motor
     private DcMotor intake = null; // intake motor
-    private DcMotor outake = null; // outputting unneccesary
+    private DcMotor outake = null; // outputting unnecessary
     private Servo sort = null; // sorting items collected
     private DcMotor spin = null; // carousel control motor
     private DcMotor arm = null; // pulley motor
@@ -32,10 +36,15 @@ public class Teleop extends LinearOpMode {
         telemetry.update();
 
         // Initialize the hardware variables. Note that the strings used here as parameters
-        leftDrive  = hardwareMap.get(DcMotor.class, "left_drive");
-        rightDrive = hardwareMap.get(DcMotor.class, "right_drive");
-        leftDrive.setDirection(DcMotor.Direction.REVERSE);
-        rightDrive.setDirection(DcMotor.Direction.FORWARD);
+        fL  = hardwareMap.get(DcMotor.class, "fL");
+        bL  = hardwareMap.get(DcMotor.class, "bL");
+        fR  = hardwareMap.get(DcMotor.class, "fR");
+        bR  = hardwareMap.get(DcMotor.class, "bR");
+        intake  = hardwareMap.get(DcMotor.class, "Intake");
+        fL.setDirection(DcMotor.Direction.REVERSE);
+        bL.setDirection(DcMotor.Direction.REVERSE);
+        fR.setDirection(DcMotor.Direction.FORWARD);
+        bR.setDirection(DcMotor.Direction.FORWARD);
 
         // Waits for the game to start (driver presses PLAY)
         waitForStart();
@@ -53,8 +62,10 @@ public class Teleop extends LinearOpMode {
             leftPower    = Range.clip(drive + turn, -1.0, 1.0) ;
             rightPower   = Range.clip(drive - turn, -1.0, 1.0) ;
 
-            leftDrive.setPower(leftPower);
-            rightDrive.setPower(rightPower);
+            fL.setPower(leftPower);
+            bL.setPower(leftPower);
+            fR.setPower(rightPower);
+            bR.setPower(rightPower);
 
             //Driver 1
             if(gamepad1.right_trigger > .5) intake.setPower(-1); // Intake out
