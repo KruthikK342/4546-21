@@ -141,7 +141,7 @@ public class Vision {
         Bitmap bitmap = getBitmap();
         String bitmapCubePosition;
 
-        ArrayList<Integer> xValues = new ArrayList<>();
+        Array3<Integer> xValues = new ArrayList<>();
 
         int avgX = 0;
 
@@ -192,7 +192,7 @@ public class Vision {
     {
         Bitmap bitmap = getBitmap();
     }
-    public String rbgVals(int xCoord, int yCoord) throws InterruptedException
+    public static String rbgVals(int xCoord, int yCoord) throws InterruptedException
     {
         Bitmap bitmap = getBitmap();
         int stone1 = bitmap.getPixel((int)(xCoord * widthFactor), (int)(yCoord * heightFactor));//bitmap.getWidth() * 2/5, 20

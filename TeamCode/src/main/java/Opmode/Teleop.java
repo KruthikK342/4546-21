@@ -16,9 +16,11 @@ public class Teleop extends LinearOpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
-    private DcMotor fL, bL, fR, bR;
+    private DcMotor fL, bL, fR, bR; // front left, back left, front right, back right
+    private Double leftDrive = null; // left  drive call for other motors
+    private Double rightDrive = null; // right drive call for other motors
     private DcMotor intake = null; // intake motor
-    private DcMotor outake = null; // outputting unneccesary
+    private DcMotor outake = null; // outputting unnecessary
     private Servo sort = null; // sorting items collected
     private DcMotor spin = null; // carousel control motor
     private DcMotor arm = null; // pulley motor
@@ -30,14 +32,13 @@ public class Teleop extends LinearOpMode {
         telemetry.update();
 
         // Initialize the hardware variables. Note that the strings used here as parameters
-        fR  = hardwareMap.get(DcMotor.class, "fR");
-        bR = hardwareMap.get(DcMotor.class, "bR");
         fL  = hardwareMap.get(DcMotor.class, "fL");
-        bL = hardwareMap.get(DcMotor.class, "bL");
-        intake = hardwareMap.get(DcMotor.class, "intake");
-        bL.setDirection(DcMotor.Direction.REVERSE);
+        bL  = hardwareMap.get(DcMotor.class, "bL");
+        fR  = hardwareMap.get(DcMotor.class, "fR");
+        bR  = hardwareMap.get(DcMotor.class, "bR");
+        intake  = hardwareMap.get(DcMotor.class, "Intake");
         fL.setDirection(DcMotor.Direction.REVERSE);
-        intake.setDirection(DcMotor.Direction.REVERSE);
+        bL.setDirection(DcMotor.Direction.REVERSE);
         fR.setDirection(DcMotor.Direction.FORWARD);
         bR.setDirection(DcMotor.Direction.FORWARD);
 
@@ -57,10 +58,10 @@ public class Teleop extends LinearOpMode {
             leftPower    = Range.clip(drive + turn, -1.0, 1.0) ;
             rightPower   = Range.clip(drive - turn, -1.0, 1.0) ;
 
-            bL.setPower(leftPower);
             fL.setPower(leftPower);
+            bL.setPower(leftPower);
+            fR.setPower(rightPower);
             bR.setPower(rightPower);
-            fR.setPower(leftPower);
 
             //Driver 1
             if(gamepad1.right_trigger > .5) intake.setPower(-1); // Intake out

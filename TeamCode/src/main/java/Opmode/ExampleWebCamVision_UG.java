@@ -46,7 +46,7 @@ public class ExampleWebCamVision_UG {
 
     public static String bitmapSkyStonePosition;
 
-    public ExampleWebCamVision_UG(LinearOpMode opMode) {
+    public ExampleWebCamVision_UG(LinearOpMode opMode) { //5  idk why this five was here
 
         this.opMode = opMode;
 
