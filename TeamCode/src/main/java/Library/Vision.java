@@ -138,10 +138,10 @@ public class Vision {
     }
 
     public String sample() throws InterruptedException {
-        Bitmap bitmap = getBitmap();
+        Bitmap bitmap = this.getBitmap();
         String bitmapCubePosition;
 
-        Array3<Integer> xValues = new ArrayList<>();
+        ArrayList<Integer> xValues = new ArrayList<Integer>();
 
         int avgX = 0;
 
@@ -190,11 +190,11 @@ public class Vision {
 
     public void initBitmap() throws InterruptedException
     {
-        Bitmap bitmap = getBitmap();
+        Bitmap bitmap = this.getBitmap();
     }
-    public static String rbgVals(int xCoord, int yCoord) throws InterruptedException
+    public String rbgVals(int xCoord, int yCoord) throws InterruptedException
     {
-        Bitmap bitmap = getBitmap();
+        Bitmap bitmap = this.getBitmap();
         int stone1 = bitmap.getPixel((int)(xCoord * widthFactor), (int)(yCoord * heightFactor));//bitmap.getWidth() * 2/5, 20
         int redVal1 = red(stone1);
         int greenVal1 = green(stone1);
@@ -204,7 +204,7 @@ public class Vision {
     }
 
     public String floorAvg() throws InterruptedException {
-        Bitmap bitmap = getBitmap();
+        Bitmap bitmap = this.getBitmap();
         int floor1 = bitmap.getPixel((int) (953 * widthFactor), (int) (473 * heightFactor));//bitmap.getWidth()/2, 20
         int redFloor1 = red(floor1);
         int greenFloor1 = green(floor1);

@@ -37,6 +37,11 @@ public class Teleop extends LinearOpMode {
         fR  = hardwareMap.get(DcMotor.class, "fR");
         bR  = hardwareMap.get(DcMotor.class, "bR");
         intake  = hardwareMap.get(DcMotor.class, "Intake");
+        outake = hardwareMap.get(DcMotor.class, "Outake");
+        spin = hardwareMap.get(DcMotor.class, "carousel");
+        arm = hardwareMap.get(DcMotor.class, "arm");
+        wrist = hardwareMap.get(Servo.class, "wrist");
+        sort = hardwareMap.get(Servo.class, "sort");
         fL.setDirection(DcMotor.Direction.REVERSE);
         bL.setDirection(DcMotor.Direction.REVERSE);
         fR.setDirection(DcMotor.Direction.FORWARD);
