@@ -70,15 +70,22 @@ public class Teleop extends LinearOpMode {
 
             //Driver 1
             if(gamepad1.right_trigger > .5) intake.setPower(-1); // Intake out
+            else intake.setPower(0);
+
             if(gamepad1.left_trigger > .5) intake.setPower(1); //Intake in
+            else intake.setPower(0);
+
             if(gamepad1.left_bumper) outake.setPower(.7); //Outake
             if (gamepad1.x) sort.setPosition(.5); //sorting one direction
             if (gamepad1.y) sort.setPosition(0); //sorting other direction
 
             // Driver 2
             if (gamepad2.right_bumper) spin.setPower(.2); // Carousel
+            else arm.setPower(0);
+
             if (gamepad2.right_trigger > .5) arm.setPower(.2); // Pulley up
-            if (gamepad2.right_trigger < .5) arm.setPower(0); // Pulley stop
+            else arm.setPower(0); // Pulley stop
+
             if (gamepad2.y) wrist.setPosition(0); // Wrist out
             if (gamepad2.x) wrist.setPosition(1); // Wrist in
 
