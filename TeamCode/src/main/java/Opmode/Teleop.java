@@ -81,7 +81,7 @@ public class Teleop extends LinearOpMode {
 
             // Driver 2
             if (gamepad2.right_bumper) spin.setPower(.2); // Carousel
-            else arm.setPower(0);
+            else spin.setPower(0);
 
             if (gamepad2.right_trigger > .5) arm.setPower(.2); // Pulley up
             else arm.setPower(0); // Pulley stop

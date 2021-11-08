@@ -24,25 +24,28 @@ public class Auto extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         // Vuforia stuff here
         int barcode = vision.getBarcode();
-        if (barcode == 1) {
-            
-        } else if (barcode == 2) {
-
-        } else {
-
-        }
-        drivetrain.moveForward(3);
+        telemetry.addLine("Barcode: " + barcode);
+        telemetry.update();
+        sleep(2000);
+        drivetrain.turnPD(90, 0.5, 0.5, 2000);
+        sleep(1000);
+        drivetrain.stopMotors();
+        // drivetrain.moveForward(3);
+        /*
         carousel.spin();
-        // collect duck?
         intake.collect();
-        // drivetrain.turnPD();
         drivetrain.moveForward(3);
-        // do stuff at shipping hub
-        intake.out();
+        if (barcode == 1) {
+            intake.out();
+        } else if (barcode == 2) {
+            intake.out();
+        } else {
+            intake.out();
+        }
         //drivetrain.turnPD();
         drivetrain.moveForward(3);
         intake.collect();
         intake.out();
-        drivetrain.stopMotors();
+        drivetrain.stopMotors();*/
     }
 }
