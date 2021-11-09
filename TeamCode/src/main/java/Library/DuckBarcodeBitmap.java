@@ -113,7 +113,7 @@ public class DuckBarcodeBitmap {
         boolean duckFound = false;
         int duckXPosition = 0;
 
-        for(int y=0; y < height && !duckFound; y++) {
+        for(int y= bitmap.getHeight() / 2; y < height-5; y++) {
             int duckPixelCount = 0, teamElementPixelCount = 0;
             for(int x=0; x<width; x++) {
                 int pixel = bitmap.getPixel(x,y);
@@ -128,7 +128,6 @@ public class DuckBarcodeBitmap {
                     opMode.telemetry.addData("B: ", blue(pixel));
                     duckPixelCount++;
                     duckXPosition = x;
-                    duckFound = true;
                     break;
                 }
             }
@@ -137,7 +136,7 @@ public class DuckBarcodeBitmap {
         int section = width/3;
         if(duckFound) {
 
-            if(duckXPosition >= 0 &&  duckXPosition <= section) {
+            if(duckXPosition >= 0 && duckXPosition <= section) {
                 barcode = 1;
             }else if(duckXPosition > section && duckXPosition <= (section*2)) {
                 barcode = 2;
@@ -151,6 +150,7 @@ public class DuckBarcodeBitmap {
         opMode.telemetry.addData("width: ", width);
         opMode.telemetry.addData("Barcode: ", barcode);
         opMode.telemetry.update();
+        opMode.sleep(2000);
         return barcode;
     }
 }

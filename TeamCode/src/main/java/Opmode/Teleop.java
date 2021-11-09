@@ -26,6 +26,23 @@ public class Teleop extends LinearOpMode {
     private DcMotor arm = null; // pulley motor
     private Servo wrist = null; // wrist like outake
 
+    public double WeightAvg(double x, double y, double z) {
+        double speed_D = 0;
+
+        if ((Math.abs(x) + Math.abs(y) + Math.abs(z))  != 0.0) {
+            speed_D = ((x * Math.abs(x)) + (y * Math.abs(y)) + (z * Math.abs(z)))
+                    / (Math.abs(x) + Math.abs(y) + Math.abs(z));
+        }
+        return (speed_D);
+    }
+
+    public void driveTrainPower(double forward, double strafe, double rotate){
+        fL.setPower(WeightAvg(forward,strafe,-rotate));
+        fR.setPower(WeightAvg(forward,-strafe,rotate));
+        bL.setPower(WeightAvg(forward,-strafe,-rotate));
+        bR.setPower(WeightAvg(forward,strafe,rotate));
+    }
+
     @Override
     public void runOpMode() {
         telemetry.addData("Status", "Initialized");
@@ -58,15 +75,12 @@ public class Teleop extends LinearOpMode {
             double leftPower;
             double rightPower;
 
-            double drive = -gamepad1.left_stick_y; // forward and backwards
-            double turn  =  gamepad1.right_stick_x; // left and right
-            leftPower    = Range.clip(drive + turn, -1.0, 1.0) ;
-            rightPower   = Range.clip(drive - turn, -1.0, 1.0) ;
 
-            fL.setPower(leftPower);
-            bL.setPower(leftPower);
-            fR.setPower(rightPower);
-            bR.setPower(rightPower);
+            if (Math.abs(gamepad1.left_stick_y) > .05 || Math.abs(gamepad1.left_stick_x) > .05 || Math.abs(gamepad1.right_stick_x) > .05) {
+                driveTrainPower(gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x * .78);
+            } else {
+                driveTrainPower(0, 0, 0);
+            }
 
             //Driver 1
             if(gamepad1.right_trigger > .5) intake.setPower(-1); // Intake out
@@ -76,22 +90,23 @@ public class Teleop extends LinearOpMode {
             else intake.setPower(0);
 
             if(gamepad1.left_bumper) outake.setPower(.7); //Outake
+            else outake.setPower(0);
+
             if (gamepad1.x) sort.setPosition(.5); //sorting one direction
             if (gamepad1.y) sort.setPosition(0); //sorting other direction
 
-            // Driver 2
-            if (gamepad2.right_bumper) spin.setPower(.2); // Carousel
+
+            if (gamepad1.right_bumper) spin.setPower(.2); // Carousel
             else spin.setPower(0);
 
-            if (gamepad2.right_trigger > .5) arm.setPower(.2); // Pulley up
+            if (gamepad1.right_trigger > .5) arm.setPower(.2); // Pulley up
             else arm.setPower(0); // Pulley stop
 
-            if (gamepad2.y) wrist.setPosition(0); // Wrist out
-            if (gamepad2.x) wrist.setPosition(1); // Wrist in
+            if (gamepad1.y) wrist.setPosition(0); // Wrist out
+            if (gamepad1.x) wrist.setPosition(1); // Wrist in
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
-            telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
             telemetry.update();
         }
     }
