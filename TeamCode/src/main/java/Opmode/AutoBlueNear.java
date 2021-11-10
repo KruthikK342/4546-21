@@ -20,12 +20,22 @@ public class AutoBlueNear extends LinearOpMode {
     private Carousel carousel;
     private Intake intake;
 
+    public void carousel() {
+            drivetrain.moveInches(1, 0.5);
+            sleep(1000);
+            drivetrain.turnPI(87.5, 0.25, 0.25, 2000);
+            sleep(1000);
+            drivetrain.moveInches(6, 1.0);
+            sleep(500);
+            carousel.spin();
+        }
+
     public void park() {
         drivetrain.moveInches(7, 0.5);
         sleep(1000);
         drivetrain.turnPI(-87.5, 0.25, 0.25, 2000);
         sleep(500);
-        drivetrain.moveInches(100, 1.0);
+        drivetrain.moveInches(90, 1.0);
         sleep(500);
     }
 
@@ -35,7 +45,12 @@ public class AutoBlueNear extends LinearOpMode {
         vision = new DuckBarcodeBitmap(this);
         drivetrain = new Drivetrain(this);
         waitForStart();
-        while (opModeIsActive()) {
+            park();
+            /*
+            carousel();
+
+
+            break;
             /*
             carousel.spin();
             intake.collect();
@@ -52,6 +67,5 @@ public class AutoBlueNear extends LinearOpMode {
             intake.collect();
             intake.out();
             drivetrain.stopMotors();*/
-        }
     }
 }
