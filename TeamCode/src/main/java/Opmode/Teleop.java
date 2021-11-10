@@ -77,7 +77,7 @@ public class Teleop extends LinearOpMode {
 
 
             if (Math.abs(gamepad1.left_stick_y) > .05 || Math.abs(gamepad1.left_stick_x) > .05 || Math.abs(gamepad1.right_stick_x) > .05) {
-                driveTrainPower(gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x * .78);
+                driveTrainPower(-gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x * .78);
             } else {
                 driveTrainPower(0, 0, 0);
             }

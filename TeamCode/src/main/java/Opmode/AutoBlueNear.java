@@ -12,8 +12,8 @@ import Library.Intake;
 import Library.Carousel;
 import Library.DuckBarcodeBitmap;
 
-@Autonomous(name="Auto", group="4546")
-public class Auto extends LinearOpMode {
+@Autonomous(name="AutoBlueNear", group="4546")
+public class AutoBlueNear extends LinearOpMode {
     // front left, front right, back left, back right motors
     private Drivetrain drivetrain;
     private DuckBarcodeBitmap vision;
@@ -21,27 +21,21 @@ public class Auto extends LinearOpMode {
     private Intake intake;
 
     public void park() {
-        if (!isStopRequested() && opModeIsActive()) {
-            drivetrain.turnPD(90, 0.5, 0.5, 2000);
-            sleep(500);
-            drivetrain.moveForward(0.5);
-        }
+        drivetrain.moveInches(7, 0.5);
+        sleep(1000);
+        drivetrain.turnPI(-87.5, 0.25, 0.25, 2000);
+        sleep(500);
+        drivetrain.moveInches(100, 1.0);
+        sleep(500);
     }
 
     @Override
     public void runOpMode() throws InterruptedException {
         // Vuforia stuff here
         vision = new DuckBarcodeBitmap(this);
+        drivetrain = new Drivetrain(this);
         waitForStart();
         while (opModeIsActive()) {
-            int barcode = vision.getBarcode();
-            telemetry.addLine("Barcode: " + barcode);
-            telemetry.update();
-            park();
-            // drivetrain.turnPD(90, 0.5, 0.5, 2000);
-            // sleep(1000);
-            // drivetrain.stopMotors();
-            // drivetrain.moveForward(3);
             /*
             carousel.spin();
             intake.collect();
