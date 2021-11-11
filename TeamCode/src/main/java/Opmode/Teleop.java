@@ -72,38 +72,71 @@ public class Teleop extends LinearOpMode {
         while (opModeIsActive()) {
 
             // Driving [arcade mode]
-            double leftPower;
-            double rightPower;
 
-
+            //Driver 1
+            /*
+            Driver 1 controls the drivetrain, carousel, intake, sorter, and the base level
+            outtake. This ensures the maximum efficiency and speed possible as less coordination is
+            needed between drivers for when it matters such as competing for tipping the shared
+            shipping hub. Additionally, driver 1 should be able to spin the carousel wheel in either
+            direction regardless of team color.
+//////////////////////////////////////////////////////////////////////////////////////////////////
+            POSSIBLE FUTURE CHANGES:
+            Create different teleOp classes for red vs blue so that only 1 button is needed for
+            carousel.
+            Create a "half-speed" mode for more precise movements, more specifically for carousel.
+            If necessary account for alterations in wheel movements/positioning.
+             */
             if (Math.abs(gamepad1.left_stick_y) > .05 || Math.abs(gamepad1.left_stick_x) > .05 || Math.abs(gamepad1.right_stick_x) > .05) {
                 driveTrainPower(-gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x * .78);
             } else {
                 driveTrainPower(0, 0, 0);
             }
 
-            //Driver 1
+
+            // If the right trigger is pressed down past a threshhold, the intake will run at full
+            // power. If left trigger, will run the opposite direction to clear the robot.
+            // If neither condition is met, automatically set power to 0 and rest.
             if(gamepad1.right_trigger > .5) intake.setPower(-1); // Intake out
+            else if (gamepad1.left_trigger > .5) intake.setPower(1);
             else intake.setPower(0);
 
-            if(gamepad1.left_trigger > .5) intake.setPower(1); //Intake in
-            else intake.setPower(0);
 
-            if(gamepad1.left_bumper) outake.setPower(.7); //Outake
-            else outake.setPower(0);
-
-            if (gamepad1.x) sort.setPosition(.5); //sorting one direction
-            if (gamepad1.y) sort.setPosition(0); //sorting other direction
-
-
-            if (gamepad1.right_bumper) spin.setPower(.2); // Carousel
+            // If the left bumper is pressed down past a threshhold, the carousel will run at half
+            // power. If right bumper, will run the opposite direction to spin the carousel.
+            // If neither condition is met, automatically set power to 0 and rest.
+            if(gamepad1.left_bumper) spin.setPower(.5); //Outake
+            else if (gamepad1.right_bumper) spin.setPower(-.5);
             else spin.setPower(0);
 
-            if (gamepad1.right_trigger > .5) arm.setPower(.2); // Pulley up
-            else arm.setPower(0); // Pulley stop
+            // Either adjust the servo to sort into the box or into the base outtake
+            if (gamepad1.x) sort.setPosition(.5); //Sorting into box
+            if (gamepad1.y) sort.setPosition(0); //sorting into base outtake
 
-            if (gamepad1.y) wrist.setPosition(0); // Wrist out
-            if (gamepad1.x) wrist.setPosition(1); // Wrist in
+            //Driver 2
+            /*
+            Driver 2 currently controls the arm and wrist outtake as these mechanisms should be
+            operated while moving in order to reduce cycle times as much as possible. Although few
+            in terms of controls, Driver 2 is still vital in watching and commanding other robots
+            as well as keeping an eye out as Driver 1 will likely be focused on the main overall
+            game plan while still outtaking.
+//////////////////////////////////////////////////////////////////////////////////////////////////
+            POSSIBLE FUTURE CHANGES:
+            Create macros to rise and automatically turn the box at the mid and high levels. (PID?)
+            Create encoder limits to ensure the pulley line does not snap.
+            Test and set TRUE position for servo wrist. Possibly servo programmer.
+             */
+
+            // If the right trigger of Driver 2 is pressed past a threshold, the arm will extend out,
+            // if the left trigger is pressed, the arm will retract back down. Otherwise rest.
+            // Will likely combine with wrist movement and into different levels.
+            if (gamepad2.right_trigger > .5) arm.setPower(.2);
+            else if (gamepad2.left_trigger > .5) arm.setPower(-.2);
+            else arm.setPower(0);
+
+            // Currently rotates the box either upright or to be slightly tilted downwards
+            if (gamepad2.y) wrist.setPosition(0); // Wrist out
+            if (gamepad2.x) wrist.setPosition(.75); // Wrist in
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
