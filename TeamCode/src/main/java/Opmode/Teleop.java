@@ -100,11 +100,6 @@ public class Teleop extends LinearOpMode {
             else if (gamepad1.left_trigger > .5) intake.setPower(1);
             else intake.setPower(0);
 
-            //Driver 1
-            if(gamepad1.right_trigger > .5) intake.setPower(-1); // Intake out
-            else if(gamepad1.left_trigger > .5) intake.setPower(1); //Intake in
-            else intake.setPower(0);
-
 
             // If the left bumper is pressed down past a threshhold, the carousel will run at half
             // power. If right bumper, will run the opposite direction to spin the carousel.
