@@ -93,21 +93,17 @@ public class Teleop extends LinearOpMode {
                 driveTrainPower(0, 0, 0);
             }
 
-<<<<<<< HEAD
-
             // If the right trigger is pressed down past a threshhold, the intake will run at full
             // power. If left trigger, will run the opposite direction to clear the robot.
             // If neither condition is met, automatically set power to 0 and rest.
             if(gamepad1.right_trigger > .5) intake.setPower(-1); // Intake out
             else if (gamepad1.left_trigger > .5) intake.setPower(1);
             else intake.setPower(0);
-=======
+
             //Driver 1
             if(gamepad1.right_trigger > .5) intake.setPower(-1); // Intake out
             else if(gamepad1.left_trigger > .5) intake.setPower(1); //Intake in
             else intake.setPower(0);
-
->>>>>>> a4dcdc7de58569506f8365614e032d153ff9600e
 
 
             // If the left bumper is pressed down past a threshhold, the carousel will run at half
