@@ -84,10 +84,9 @@ public class Teleop extends LinearOpMode {
 
             //Driver 1
             if(gamepad1.right_trigger > .5) intake.setPower(-1); // Intake out
+            else if(gamepad1.left_trigger > .5) intake.setPower(1); //Intake in
             else intake.setPower(0);
 
-            if(gamepad1.left_trigger > .5) intake.setPower(1); //Intake in
-            else intake.setPower(0);
 
             if(gamepad1.left_bumper) outake.setPower(.7); //Outake
             else outake.setPower(0);
