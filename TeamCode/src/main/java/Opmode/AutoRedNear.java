@@ -45,6 +45,12 @@ public class AutoRedNear extends LinearOpMode {
 
     }
 
+    public void highGoal() {
+        drivetrain.moveInches(5, -.5);
+        sleep(500);
+
+    }
+
     @Override
     public void runOpMode() throws InterruptedException {
         // Vuforia stuff here
