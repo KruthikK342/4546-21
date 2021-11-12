@@ -105,12 +105,18 @@ public class Teleop extends LinearOpMode {
             else if(gamepad1.left_trigger > .5) intake.setPower(1); //Intake in
             else intake.setPower(0);
 
+            if(gamepad1.a) outake.setPower(1); // Outake forward
+            else if(gamepad1.b) outake.setPower(-1); //Outake reverse
+            else outake.setPower(0);
+
+
+
 
             // If the left bumper is pressed down past a threshhold, the carousel will run at half
             // power. If right bumper, will run the opposite direction to spin the carousel.
             // If neither condition is met, automatically set power to 0 and rest.
-            if(gamepad1.left_bumper) spin.setPower(.5); //Outake
-            else if (gamepad1.right_bumper) spin.setPower(-.5);
+            if(gamepad1.left_bumper) spin.setPower(.3); //Outake
+            else if (gamepad1.right_bumper) spin.setPower(-.3);
             else spin.setPower(0);
 
             // Either adjust the servo to sort into the box or into the base outtake
@@ -134,8 +140,8 @@ public class Teleop extends LinearOpMode {
             // If the right trigger of Driver 2 is pressed past a threshold, the arm will extend out,
             // if the left trigger is pressed, the arm will retract back down. Otherwise rest.
             // Will likely combine with wrist movement and into different levels.
-            if (gamepad2.right_trigger > .5) arm.setPower(.2);
-            else if (gamepad2.left_trigger > .5) arm.setPower(-.2);
+            if (gamepad2.right_trigger > .5) arm.setPower(.1);
+            else if (gamepad2.left_trigger > .5) arm.setPower(-.1);
             else arm.setPower(0);
 
             // Currently rotates the box either upright or to be slightly tilted downwards

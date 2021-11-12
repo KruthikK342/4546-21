@@ -20,22 +20,13 @@ public class AutoRedFar extends LinearOpMode {
     private Carousel carousel;
     private Intake intake;
 
-  /*  public void carousel() {
-        drivetrain.moveInches(1, 0.5);
-        sleep(1000);
-        drivetrain.turnPI(-87.5, 0.25, 0.25, 2000);
-        sleep(500);
-        drivetrain.moveInches(6, 1.0);
-        sleep(500);
-        carousel.spin();
-    }
-*/
+
     public void park() {
         drivetrain.moveInches(7, 0.5);
         sleep(1000);
         drivetrain.turnPI(87.5, 0.25, 0.25, 2000);
         sleep(500);
-        drivetrain.moveInches(150, 1.0);
+        drivetrain.moveInches(180, 1.0);
         sleep(500);
     }
 
@@ -45,7 +36,7 @@ public class AutoRedFar extends LinearOpMode {
         vision = new DuckBarcodeBitmap(this);
         drivetrain = new Drivetrain(this);
         waitForStart();
-            park();
+        park();
 
             /*
             carousel.spin();

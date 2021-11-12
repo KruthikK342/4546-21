@@ -21,22 +21,27 @@ public class AutoBlueNear extends LinearOpMode {
     private Intake intake;
 
     public void carousel() {
-            drivetrain.moveInches(1, 0.5);
-            sleep(1000);
-            drivetrain.turnPI(87.5, 0.25, 0.25, 2000);
-            sleep(1000);
-            drivetrain.moveInches(6, 1.0);
-            sleep(500);
-            carousel.spin();
-        }
+        drivetrain.moveInches(3, 0.5);
+        sleep(500);
+        drivetrain.turnPI(90, 0.25, 0.25, 2000);
+        sleep(500);
+        drivetrain.moveInches(50, 0.4);
+        sleep(500);
+        carousel.spin();
+        sleep(3000);
+        carousel.stop();
+    }
 
     public void park() {
-        drivetrain.moveInches(7, 0.5);
-        sleep(1000);
-        drivetrain.turnPI(-87.5, 0.25, 0.25, 2000);
+        drivetrain.moveInches(5, -0.5);
         sleep(500);
-        drivetrain.moveInches(90, 1.0);
+        drivetrain.turnPI(-200, 0.25, 0.25, 2000);
         sleep(500);
+        /*
+        drivetrain.moveInches(90, .8);
+        sleep(500);
+
+         */
     }
 
     @Override
@@ -44,13 +49,12 @@ public class AutoBlueNear extends LinearOpMode {
         // Vuforia stuff here
         vision = new DuckBarcodeBitmap(this);
         drivetrain = new Drivetrain(this);
+        carousel = new Carousel(this);
         waitForStart();
-            park();
-            /*
-            carousel();
+        carousel();
+        /*
+        park();
 
-
-            break;
             /*
             carousel.spin();
             intake.collect();

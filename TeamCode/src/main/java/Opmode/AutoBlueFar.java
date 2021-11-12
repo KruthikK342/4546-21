@@ -25,26 +25,17 @@ public class AutoBlueFar extends LinearOpMode {
         sleep(1000);
         drivetrain.turnPI(-87.5, 0.25, 0.25, 2000);
         sleep(500);
-        drivetrain.moveInches(150, 1.0);
+        drivetrain.moveInches(180, 1.0);
         sleep(500);
     }
-    /*  public void carousel() {
-            drivetrain.moveInches(1, 0.5);
-            sleep(1000);
-            drivetrain.turnPI(-87.5, 0.25, 0.25, 2000);
-            sleep(500);
-            drivetrain.moveInches(6, 1.0);
-            sleep(500);
-            carousel.spin();
-        }
-    */
+
     @Override
     public void runOpMode() throws InterruptedException {
         // Vuforia stuff here
         vision = new DuckBarcodeBitmap(this);
         drivetrain = new Drivetrain(this);
         waitForStart();
-            park();
+        park();
 
         /*
         while (opModeIsActive()) {

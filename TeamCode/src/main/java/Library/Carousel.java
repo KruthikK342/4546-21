@@ -8,13 +8,13 @@ public class Carousel {
     private LinearOpMode opMode;
     private DcMotor spinner;
 
-    public Carousel() {
+    public Carousel(LinearOpMode opMode) {
         this.opMode = opMode;
-        spinner = this.opMode.hardwareMap.dcMotor.get("spinner");
+        spinner = this.opMode.hardwareMap.dcMotor.get("carousel");
     }
 
     public void spin() {
-        spinner.setPower(1);
+        spinner.setPower(-0.2);
     }
 
     public void stop() {

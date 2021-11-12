@@ -20,23 +20,29 @@ public class AutoRedNear extends LinearOpMode {
     private Carousel carousel;
     private Intake intake;
 
-    /*  public void carousel() {
-        drivetrain.moveInches(1, 0.5);
-        sleep(1000);
-        drivetrain.turnPI(-87.5, 0.25, 0.25, 2000);
+    public void carousel() {
+        drivetrain.moveInches(5, 0.5);
         sleep(500);
-        drivetrain.moveInches(6, 1.0);
+        drivetrain.turnPI(-93, 0.25, 0.25, 2000);
+        sleep(500);
+        drivetrain.moveInches(50, 0.4);
         sleep(500);
         carousel.spin();
+        sleep(3000);
+        carousel.stop();
     }
-*/
+
+
     public void park() {
-        drivetrain.moveInches(7, 0.5);
-        sleep(1000);
-        drivetrain.turnPI(87.5, 0.25, 0.25, 2000);
+        drivetrain.moveInches(5, -0.5);
         sleep(500);
-        drivetrain.moveInches(90, 1.0);
+        drivetrain.turnPI(200, 0.25, 0.25, 2000);
         sleep(500);
+        /*
+        drivetrain.moveInches(90, .8);
+        sleep(500);
+        */
+
     }
 
     @Override
@@ -44,10 +50,14 @@ public class AutoRedNear extends LinearOpMode {
         // Vuforia stuff here
         vision = new DuckBarcodeBitmap(this);
         drivetrain = new Drivetrain(this);
+        carousel = new Carousel(this);
         waitForStart();
-            park();
+        carousel();
+        park();
+
 
             /*
+            park();
             carousel.spin();
             intake.collect();
             drivetrain.moveForward(3);
