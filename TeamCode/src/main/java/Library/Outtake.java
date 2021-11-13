@@ -22,9 +22,9 @@ public class Outtake {
             pulley.setPower(.4);
         }
         wrist.setPosition(.4);
-        opMode.sleep(1000);
+        opMode.sleep(2000);
         wrist.setPosition(0);
-        opMode.sleep(1000);
+        opMode.sleep(2000);
         while (pulley.getCurrentPosition() > 100) {
             pulley.setPower(-.4);
         }

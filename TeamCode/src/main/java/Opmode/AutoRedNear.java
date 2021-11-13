@@ -23,11 +23,11 @@ public class AutoRedNear extends LinearOpMode {
     private Outtake outake;
 
     public void carousel() {
-        drivetrain.moveInches(5, 0.5);
+        drivetrain.moveInches(8, 0.5);
         sleep(500);
-        drivetrain.turnPI(-93, 0.25, 0.25, 2000);
+        drivetrain.turnPI(-98, 0.25, 0.25, 2000);
         sleep(500);
-        drivetrain.moveInches(50, 0.4);
+        drivetrain.moveInches(60, 0.4);
         sleep(500);
         carousel.spin();
         sleep(4000);
@@ -37,7 +37,7 @@ public class AutoRedNear extends LinearOpMode {
 
     public void park() {
         highGoal();
-        drivetrain.moveInches(10, 0.5);
+        drivetrain.moveInches(3, 0.5);
         sleep(500);
         /*CHECK ANGLE!!!*/ drivetrain.turnPI(10, 0.25, 0.25, 2000);
         sleep(500);
