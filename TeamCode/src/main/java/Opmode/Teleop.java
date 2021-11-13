@@ -143,10 +143,11 @@ public class Teleop extends LinearOpMode {
             if (gamepad2.right_trigger > .5) arm.setPower(.1);
             else if (gamepad2.left_trigger > .5) arm.setPower(-.1);
             else arm.setPower(0);
-
             // Currently rotates the box either upright or to be slightly tilted downwards
-            if (gamepad2.y) wrist.setPosition(0); // Wrist out
-            if (gamepad2.x) wrist.setPosition(.75); // Wrist in
+
+            if(gamepad2.a) wrist.setPosition(.1);
+            if(gamepad2.b) wrist.setPosition(1);
+
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());

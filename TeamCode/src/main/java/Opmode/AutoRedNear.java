@@ -36,13 +36,10 @@ public class AutoRedNear extends LinearOpMode {
     public void park() {
         drivetrain.moveInches(5, -0.5);
         sleep(500);
-        drivetrain.turnPI(200, 0.25, 0.25, 2000);
+        drivetrain.turnPI(185, 0.25, 0.25, 2000);
         sleep(500);
-        /*
-        drivetrain.moveInches(90, .8);
+        drivetrain.moveInches(250, .8);
         sleep(500);
-        */
-
     }
 
     @Override
@@ -55,24 +52,6 @@ public class AutoRedNear extends LinearOpMode {
         carousel();
         park();
 
-
-            /*
-            park();
-            carousel.spin();
-            intake.collect();
-            drivetrain.moveForward(3);
-            if (barcode == 1) {
-                intake.out();
-            } else if (barcode == 2) {
-                intake.out();
-            } else {
-                intake.out();
-            }
-            //drivetrain.turnPD();
-            drivetrain.moveForward(3);
-            intake.collect();
-            intake.out();
-            drivetrain.stopMotors();*/
 
     }
 }
