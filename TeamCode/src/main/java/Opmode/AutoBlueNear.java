@@ -11,6 +11,7 @@ import Library.DuckBarcodeBitmap;
 import Library.Intake;
 import Library.Carousel;
 import Library.DuckBarcodeBitmap;
+import Library.Outtake;
 
 @Autonomous(name="AutoBlueNear", group="4546")
 public class AutoBlueNear extends LinearOpMode {
@@ -19,6 +20,7 @@ public class AutoBlueNear extends LinearOpMode {
     private DuckBarcodeBitmap vision;
     private Carousel carousel;
     private Intake intake;
+    private Outtake outake;
 
     public void carousel() {
         drivetrain.moveInches(7, 0.5);
@@ -33,13 +35,20 @@ public class AutoBlueNear extends LinearOpMode {
     }
 
     public void park() {
-        drivetrain.moveInches(5, -0.5);
+        highGoal();
+        drivetrain.moveInches(10, 0.5);
         sleep(500);
-        drivetrain.turnPI(-194, 0.25, 0.25, 2000);
+        /*CHECK ANGLE!!!*/ drivetrain.turnPI(-10, 0.25, 0.25, 2000);
         sleep(500);
-        drivetrain.moveInches(250, .8);
+        drivetrain.moveInches(250, -.8);
         sleep(500);
 
+    }
+
+    public void highGoal() {
+        drivetrain.moveInches(20, -.5);
+        sleep(500);
+        outake.highGoal();
     }
 
     @Override
