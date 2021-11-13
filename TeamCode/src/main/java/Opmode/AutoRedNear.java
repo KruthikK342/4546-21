@@ -36,7 +36,7 @@ public class AutoRedNear extends LinearOpMode {
     public void park() {
         drivetrain.moveInches(5, -0.5);
         sleep(500);
-        drivetrain.turnPI(185, 0.25, 0.25, 2000);
+        drivetrain.turnPI(183, 0.25, 0.25, 2000);
         sleep(500);
         drivetrain.moveInches(250, .8);
         sleep(500);

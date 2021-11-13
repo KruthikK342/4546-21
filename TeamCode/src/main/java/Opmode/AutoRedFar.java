@@ -3,15 +3,11 @@ package Opmode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import Library.Drivetrain;
 import Library.DuckBarcodeBitmap;
 import Library.Intake;
 import Library.Carousel;
-import Library.Outtake;
-import Library.DuckBarcodeBitmap;
 
 @Autonomous(name="AutoRedFar", group="4546")
 public class AutoRedFar extends LinearOpMode {
@@ -19,14 +15,11 @@ public class AutoRedFar extends LinearOpMode {
     private Drivetrain drivetrain;
     private DuckBarcodeBitmap vision;
     private Carousel carousel;
-    private Intake intake;
-    private Outtake outtake;
 
     public void highGoal() {
         drivetrain.moveInches(20, 0.5);
         drivetrain.turnPI(45, 0.25, 0.25, 2000);
         drivetrain.moveInches(20, 0.5);
-        outtake.highGoalServo();
         drivetrain.moveInches(10, -0.5);
         drivetrain.turnPI(45, 0.25, 0.25, 2000);
         drivetrain.moveInches(80, 1);
@@ -48,7 +41,6 @@ public class AutoRedFar extends LinearOpMode {
         // Vuforia stuff here
         vision = new DuckBarcodeBitmap(this);
         drivetrain = new Drivetrain(this);
-        outtake = new Outtake(this);
         waitForStart();
         park();
 
