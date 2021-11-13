@@ -30,7 +30,7 @@ public class AutoBlueFar extends LinearOpMode {
         sleep(1000);
         drivetrain.turnPI(-187.5, 0.25, 0.25, 2000);
         sleep(500);
-        drivetrain.moveInches(180, 1.0);
+        drivetrain.moveInches(160, 0.7);
         sleep(500);
     }
 
