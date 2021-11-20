@@ -13,13 +13,7 @@ public class Carousel {
         spinner = this.opMode.hardwareMap.dcMotor.get("carousel");
     }
 
-    public void spin() {
-<<<<<<< HEAD
-        spinner.setPower(-0.4);
-=======
-        spinner.setPower(-0.5);
->>>>>>> 96a9dc367a246527877252203782113971eba51b
-    }
+    public void spin() { spinner.setPower(-0.4); }
 
     public void stop() {
         spinner.setPower(0);

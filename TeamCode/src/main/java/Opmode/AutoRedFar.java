@@ -37,17 +37,9 @@ public class AutoRedFar extends LinearOpMode {
 
 
     public void park() {
-<<<<<<< HEAD
         drivetrain.moveInches(5, 0.5);
         sleep(500);
         drivetrain.turnPI(-45, 0.25, 0.25, 2000);
-=======
-        drivetrain.moveInches(5, 0.3);
-        sleep(1000);
-        drivetrain.turnPI(87.5, 0.25, 0.25, 2000);
-        sleep(500);
-        drivetrain.moveInches(160, 0.7);
->>>>>>> 96a9dc367a246527877252203782113971eba51b
         sleep(500);
         drivetrain.moveInches(30, 1);
     }
