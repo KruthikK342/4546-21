@@ -71,7 +71,13 @@ public class Teleop extends LinearOpMode {
         runtime.reset();
 
         // starting program
+        double power = 1.0;
         while (opModeIsActive()) {
+
+            if (gamepad1.dpad_down)
+                power = 0.5;
+            else if (gamepad1.dpad_up)
+                power = 1.0;
 
             // Driving [arcade mode]
 
@@ -90,7 +96,7 @@ public class Teleop extends LinearOpMode {
             If necessary account for alterations in wheel movements/positioning.
              */
             if (Math.abs(gamepad1.left_stick_y) > .05 || Math.abs(gamepad1.left_stick_x) > .05 || Math.abs(gamepad1.right_stick_x) > .05) {
-                driveTrainPower(-gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x * .78);
+                driveTrainPower(-power*gamepad1.left_stick_y, -power*gamepad1.left_stick_x, -power*gamepad1.right_stick_x * .78);
             } else {
                 driveTrainPower(0, 0, 0);
             }
@@ -149,20 +155,6 @@ public class Teleop extends LinearOpMode {
 
             if (gamepad2.y) wrist.setPosition(0); // Wrist In
             if (gamepad2.x) wrist.setPosition(.45); // Wrist Out
-//            if (gamepad2.left_bumper) {
-//                arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//                arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-//                while (arm.getCurrentPosition() < 2200) {
-//                    arm.setPower(.9);
-//                }
-//                wrist.setPosition(.45);
-//                arm.setPower(0);
-//                sleep(1500);
-//                wrist.setPosition(0);
-//                while (arm.getCurrentPosition() > 500) {
-//                    arm.setPower(-.9);
-//                }
-//            }
             // Currently rotates the box either upright or to be slightly tilted downwards
 
             if(gamepad2.a) wrist.setPosition(.1);
