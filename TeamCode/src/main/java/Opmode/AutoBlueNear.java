@@ -40,7 +40,7 @@ public class AutoBlueNear extends LinearOpMode {
         sleep(500);
         /*CHECK ANGLE!!!*/ drivetrain.turnPI(-10, 0.25, 0.25, 2000);
         sleep(500);
-        drivetrain.moveInches(250, -.8);
+        drivetrain.moveInches(150, -.8);
         sleep(500);
 
     }

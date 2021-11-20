@@ -143,26 +143,26 @@ public class Teleop extends LinearOpMode {
             // if the left trigger is pressed, the arm will retract back down. Otherwise rest.
             // Will likely combine with wrist movement and into different levels.
 
-            if (gamepad2.right_trigger > 0.5) arm.setPower(.1);
-            else if (gamepad2.left_trigger > 0.5) arm.setPower(-.1);
+            if (gamepad2.right_trigger > 0.5) arm.setPower(.7);
+            else if (gamepad2.left_trigger > 0.5) arm.setPower(-.7);
             else arm.setPower(0);
 
             if (gamepad2.y) wrist.setPosition(0); // Wrist In
             if (gamepad2.x) wrist.setPosition(.45); // Wrist Out
-            if (gamepad2.left_bumper) {
-                arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                while (arm.getCurrentPosition() < 2200) {
-                    arm.setPower(.7);
-                }
-                wrist.setPosition(.45);
-                arm.setPower(0);
-                sleep(1500);
-                wrist.setPosition(0);
-                while (arm.getCurrentPosition() > 500) {
-                    arm.setPower(-.7);
-                }
-            }
+//            if (gamepad2.left_bumper) {
+//                arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//                arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//                while (arm.getCurrentPosition() < 2200) {
+//                    arm.setPower(.9);
+//                }
+//                wrist.setPosition(.45);
+//                arm.setPower(0);
+//                sleep(1500);
+//                wrist.setPosition(0);
+//                while (arm.getCurrentPosition() > 500) {
+//                    arm.setPower(-.9);
+//                }
+//            }
             // Currently rotates the box either upright or to be slightly tilted downwards
 
             if(gamepad2.a) wrist.setPosition(.1);

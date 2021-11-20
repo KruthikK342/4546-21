@@ -14,7 +14,11 @@ public class Carousel {
     }
 
     public void spin() {
-        spinner.setPower(-0.2);
+<<<<<<< HEAD
+        spinner.setPower(-0.4);
+=======
+        spinner.setPower(-0.5);
+>>>>>>> 96a9dc367a246527877252203782113971eba51b
     }
 
     public void stop() {

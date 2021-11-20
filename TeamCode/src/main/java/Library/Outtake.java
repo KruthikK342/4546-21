@@ -19,27 +19,27 @@ public class Outtake {
 
     public void highGoal () {
         while (pulley.getCurrentPosition() < 2400) {
-            pulley.setPower(.4);
+            pulley.setPower(.7);
         }
         wrist.setPosition(.4);
         opMode.sleep(2000);
         wrist.setPosition(0);
         opMode.sleep(2000);
         while (pulley.getCurrentPosition() > 100) {
-            pulley.setPower(-.4);
+            pulley.setPower(-.7);
         }
     }
 
     public void midGoal () {
         while (pulley.getCurrentPosition() < 500) {
-            pulley.setPower(.4);
+            pulley.setPower(.7);
         }
         wrist.setPosition(1);
         opMode.sleep(1000);
         wrist.setPosition(0);
         opMode.sleep(1000);
         while (pulley.getCurrentPosition() > 100) {
-            pulley.setPower(-.4);
+            pulley.setPower(-.7);
         }
     }
 

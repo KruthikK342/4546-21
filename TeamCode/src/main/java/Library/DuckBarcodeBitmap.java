@@ -35,14 +35,6 @@ public class DuckBarcodeBitmap {
     private final int BLACK_GREEN_THRESHOLD = 25;
     private final int BLACK_BLUE_THRESHOLD = 25;
 
-    private final int RED_RED_THRESHOLD = 200;
-    private final int RED_GREEN_THRESHOLD = 35;
-    private final int RED_BLUE_THRESHOLD = 35;
-
-
-    private final int BLUE_RED_THRESHOLD = 100;
-    private final int BLUE_GREEN_THRESHOLD = 95;
-    private final int BLUE_BLUE_THRESHOLD = 245;
 
 
     public DuckBarcodeBitmap (LinearOpMode opMode){
