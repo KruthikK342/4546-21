@@ -10,6 +10,13 @@ import Library.Intake;
 import Library.Carousel;
 import Library.Outtake;
 
+/* Ports:
+0-Intake
+1-carousel
+2-arm
+3-outake
+ */
+
 @Autonomous(name="AutoBlueFar", group="4546")
 public class AutoBlueFar extends LinearOpMode {
     // front left, front right, back left, back right motors
@@ -20,17 +27,18 @@ public class AutoBlueFar extends LinearOpMode {
     private Outtake outake;
 
     public void highGoal() {
-        drivetrain.moveInches(15, 0.5);
+        
+        drivetrain.moveInches(15.2, 0.5);
         sleep(500);
-        drivetrain.turnPI(-135, 0.25, 0.25, 2000);
+        drivetrain.turnPI(-107, 0.25, 0.25, 2000);
         sleep(500);
-        /*
-        drivetrain.moveInches(20, -0.5);
+        drivetrain.moveInches(3, -0.5);
         sleep(500);
+
+
         outake.highGoal();
         sleep(500);
 
-         */
 
     }
 
@@ -47,9 +55,9 @@ public class AutoBlueFar extends LinearOpMode {
         // Vuforia stuff here
         vision = new DuckBarcodeBitmap(this);
         drivetrain = new Drivetrain(this);
+        outake = new Outtake(this);
         waitForStart();
         highGoal();
-        park();
 
     }
 }

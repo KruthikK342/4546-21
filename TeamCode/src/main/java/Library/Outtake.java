@@ -14,20 +14,37 @@ public class Outtake {
         this.opMode = opMode;
         outake = this.opMode.hardwareMap.dcMotor.get("outake");
         pulley = this.opMode.hardwareMap.dcMotor.get("arm");
-        wrist =  this.opMode.hardwareMap.servo.get("wrist");
+        wrist =  this.opMode.hardwareMap.get(Servo.class, "wrist");
+        pulley.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        pulley.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     public void highGoal () {
-        while (pulley.getCurrentPosition() < 2400) {
-            pulley.setPower(.7);
+        while (pulley.getCurrentPosition() < 2500) {
+
+            pulley.setPower(.5);
+            opMode.telemetry.addData("pulley position", pulley.getCurrentPosition());
+            opMode.telemetry.update();
+
         }
-        wrist.setPosition(.4);
+        pulley.setPower(0);
+        pulley.setPower(0);
+        wrist.setPosition(.45);
+        opMode.sleep(200);
+        wrist.setPosition(.3);
+        opMode.sleep(200);
+        wrist.setPosition(.45);
+        opMode.sleep(4000);
+        wrist.setPosition(0.2);
+
         opMode.sleep(2000);
-        wrist.setPosition(0);
-        opMode.sleep(2000);
+
         while (pulley.getCurrentPosition() > 100) {
-            pulley.setPower(-.7);
+            pulley.setPower(-.5);
         }
+        pulley.setPower(0);
+
+
     }
 
     public void midGoal () {
