@@ -28,15 +28,13 @@ public class AutoBlueFar extends LinearOpMode {
 
     public void highGoal() {
 
-        drivetrain.moveInches(18, 0.5);
+        drivetrain.moveInches(6, 0.5);
         sleep(500);
-        drivetrain.turnPI(-107.5, 0.25, 0.25, 2000);
+        drivetrain.turnPI(-120, 0.25, 0.25, 2000);
         sleep(500);
-
-        drivetrain.moveInches(1, -0.5);
+    /*
+        drivetrain.moveInches(3, -0.5);
         sleep(500);
-
-
         outake.highGoal();
         sleep(500);
 
@@ -46,12 +44,15 @@ public class AutoBlueFar extends LinearOpMode {
 
     public void park() {
 
-        drivetrain.moveInches(1.8, 0.5);
+        drivetrain.moveInches(1, 0.5);
         sleep(500);
-        drivetrain.turnPI(-193, 0.25, 0.25, 2000);
+        drivetrain.turnPI(-15, 0.25, 0.25, 2000);
         sleep(500);
-        /*
-        drivetrain.moveInches(10, .6);
+        drivetrain.moveInches(5.5, -.5);
+        sleep(500);
+        drivetrain.turnPI(95, 0.25, 0.25, 2000);
+        sleep(500);
+        drivetrain.moveInches(6, -.8);
         sleep(500);
         drivetrain.moveInches(30, -.8);
 */
@@ -64,7 +65,8 @@ public class AutoBlueFar extends LinearOpMode {
         drivetrain = new Drivetrain(this);
         outake = new Outtake(this);
         waitForStart();
-        //highGoal();
-        park();
+        highGoal();
+        //park();
+
     }
 }
