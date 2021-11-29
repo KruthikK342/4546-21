@@ -27,13 +27,9 @@ public class DuckBarcodeBitmap {
     private VuforiaLocalizer.CameraDirection CAMERA_CHOICE = VuforiaLocalizer.CameraDirection.BACK;
     private static final String VUFORIA_KEY = "AVFFxKT/////AAABmQTYeIgT6k6wv0phn1XaTKN+Z9RdP23vp3+6IEyv9haxqO0u2vStZKAjPLct97BEhaeSkeYivFGo2IDu8fWfJlBY+2JZ0FIf8M2N7yW5XExNYWbGNwwem7Wgzsl5ld4wr6xOeXqcwtVn1mgt5ELcypOfvRnnun3FWIBr7mx+AJRN1ZAnqVvfOphPVxNm9vpylN4d5nJu58aTxiXMCJadPhhyviOGVlI6tT//lTO5GJEBva9xN+SXpxsTnPEaegQNE+qzFxVzmtXabk+oAuMxDh1XR+6EbyZzZjQm3gI9DXkt7os7ZkM95GXEZN9MHRwPWdwbk1Bt/iGI3VcXp2VfUDhWYXaWJjvu/aZC2WqrhAef";
 
-    private final int YELLOW_RED_THRESHOLD = 225;
-    private final int YELLOW_GREEN_THRESHOLD = 225;
-    private final int YELLOW_BLUE_MAX = 130;
-
-    private final int BLACK_RED_THRESHOLD = 25;
-    private final int BLACK_GREEN_THRESHOLD = 25;
-    private final int BLACK_BLUE_THRESHOLD = 25;
+    private final int BLACK_RED_THRESHOLD = 20;
+    private final int BLACK_GREEN_THRESHOLD = 20;
+    private final int BLACK_BLUE_THRESHOLD = 20;
 
 
 
@@ -100,44 +96,39 @@ public class DuckBarcodeBitmap {
         Bitmap bitmap = getBitmap();
         int height = bitmap.getHeight();
         int width = bitmap.getWidth();
+        int teamElementPixelCount = 0, teamElementXPosition = 0;
 
-        boolean teamElementFound = false;
-        boolean duckFound = false;
-        int duckXPosition = 0;
-
-        for(int y= bitmap.getHeight() / 2; y < height-5; y++) {
-            int duckPixelCount = 0, teamElementPixelCount = 0;
-            for(int x=0; x<width; x++) {
+        for(int y = 0; y < height; y += 2) {
+            for(int x=0; x<width; x += 3) {
                 int pixel = bitmap.getPixel(x,y);
                 int redValue = red(pixel);
                 int blueValue  = blue(pixel);
                 int greenValue = green(pixel);
-                boolean isBlack =  redValue <= BLACK_RED_THRESHOLD && greenValue <= BLACK_GREEN_THRESHOLD && blueValue <= BLACK_BLUE_THRESHOLD;
-                boolean isYellow = redValue >= YELLOW_RED_THRESHOLD && greenValue >=YELLOW_GREEN_THRESHOLD && blueValue <= YELLOW_BLUE_MAX;
-                if(isYellow) {
+                boolean isBlack = redValue <= BLACK_RED_THRESHOLD && greenValue <= BLACK_GREEN_THRESHOLD && blueValue <= BLACK_BLUE_THRESHOLD;
+                if(isBlack) {
                     opMode.telemetry.addData("R: ", red(pixel));
                     opMode.telemetry.addData("G: ", green(pixel));
                     opMode.telemetry.addData("B: ", blue(pixel));
-                    duckPixelCount++;
-                    duckXPosition = x;
+                    teamElementPixelCount++;
+                    teamElementXPosition += x;
                     break;
                 }
             }
         }
         int barcode = 0;
         int section = width/3;
-        if(duckFound) {
-
-            if(duckXPosition >= 0 && duckXPosition <= section) {
+        if (teamElementPixelCount >= 1500) {
+            teamElementXPosition /= teamElementPixelCount;
+            if(teamElementXPosition >= 0 && teamElementXPosition <= section) {
                 barcode = 1;
-            }else if(duckXPosition > section && duckXPosition <= (section*2)) {
+            }else if(teamElementXPosition > section && teamElementXPosition <= (section*2)) {
                 barcode = 2;
             }else {
                 barcode = 3;
             }
 
         }
-        opMode.telemetry.addData("DuckxPosition: ", duckXPosition);
+        opMode.telemetry.addData("TeamElementxPosition: ", teamElementXPosition);
         opMode.telemetry.addData("section: ", section);
         opMode.telemetry.addData("width: ", width);
         opMode.telemetry.addData("Barcode: ", barcode);
