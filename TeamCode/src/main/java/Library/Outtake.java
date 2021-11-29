@@ -34,10 +34,10 @@ public class Outtake {
         wrist.setPosition(.3);
         opMode.sleep(200);
         wrist.setPosition(.45);
-        opMode.sleep(4000);
+        opMode.sleep(1000);
         wrist.setPosition(0.1);
 
-        opMode.sleep(2000);
+        opMode.sleep(400);
 
         while (pulley.getCurrentPosition() > 100) {
             pulley.setPower(-.5);

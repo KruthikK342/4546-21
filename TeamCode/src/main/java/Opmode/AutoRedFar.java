@@ -21,27 +21,28 @@ public class AutoRedFar extends LinearOpMode {
 
 
     public void highGoal() {
-        drivetrain.moveInches(15, 0.5);
+        drivetrain.moveInches(5.5, 0.5);
         sleep(500);
-        drivetrain.turnPI(135, 0.25, 0.25, 2000);
+        drivetrain.turnPI(120, 0.25, 0.25, 2000);
         sleep(500);
-        /*
-        drivetrain.moveInches(20, -0.5);
+        drivetrain.moveInches(6.15, -0.5);
         sleep(500);
         outake.highGoal();
         sleep(500);
-
-         */
 
     }
 
 
     public void park() {
-        drivetrain.moveInches(5, 0.5);
-        sleep(500);
+        drivetrain.moveInches(3., 0.5);
+        sleep(800);
+
         drivetrain.turnPI(-45, 0.25, 0.25, 2000);
         sleep(500);
-        drivetrain.moveInches(30, 1);
+
+        drivetrain.moveInches(7, -.8);
+        sleep(1000);
+        drivetrain.moveInches(25, -.9);
     }
 
     @Override
