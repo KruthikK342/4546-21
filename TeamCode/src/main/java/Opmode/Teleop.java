@@ -123,8 +123,8 @@ public class Teleop extends LinearOpMode {
             // If the left bumper is pressed down past a threshhold, the carousel will run at half
             // power. If right bumper, will run the opposite direction to spin the carousel.
             // If neither condition is met, automatically set power to 0 and rest.
-            if(gamepad1.left_bumper) spin.setPower(.3); //Outake
-            else if (gamepad1.right_bumper) spin.setPower(-.3);
+            if(gamepad1.left_bumper) spin.setPower(.7);
+            else if (gamepad1.right_bumper) spin.setPower(-.7);
             else spin.setPower(0);
 
             // Either adjust the servo to sort into the box or into the base outtake

@@ -59,9 +59,9 @@ public class AutoRedNear extends LinearOpMode {
         carousel = new Carousel(this);
         outake = new Outtake(this);
         waitForStart();
-        carousel();
-        park();
-
-
+        while (opModeIsActive()) {
+            carousel();
+            park();
+        }
     }
 }
