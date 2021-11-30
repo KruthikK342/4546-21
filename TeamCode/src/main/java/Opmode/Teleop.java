@@ -108,11 +108,6 @@ public class Teleop extends LinearOpMode {
             else if (gamepad1.left_trigger > .5) intake.setPower(1);
             else intake.setPower(0);
 
-            //Driver 1
-            if(gamepad1.right_trigger > .5) intake.setPower(-1); // Intake out
-            else if(gamepad1.left_trigger > .5) intake.setPower(1); //Intake in
-            else intake.setPower(0);
-
             if(gamepad1.a) outake.setPower(1); // Outake forward
             else if(gamepad1.b) outake.setPower(-1); //Outake reverse
             else outake.setPower(0);
@@ -149,16 +144,14 @@ public class Teleop extends LinearOpMode {
             // if the left trigger is pressed, the arm will retract back down. Otherwise rest.
             // Will likely combine with wrist movement and into different levels.
 
-            if (gamepad2.right_trigger > 0.5) arm.setPower(.7);
-            else if (gamepad2.left_trigger > 0.5) arm.setPower(-.7);
+            if (gamepad2.right_trigger > 0.5) arm.setPower(-.7);
+            else if (gamepad2.left_trigger > 0.5) arm.setPower(.7);
             else arm.setPower(0);
 
-            if (gamepad2.y) wrist.setPosition(0); // Wrist In
-            if (gamepad2.x) wrist.setPosition(.45); // Wrist Out
+            if  (gamepad2.a) wrist.setPosition(.1); // Wrist Rest
+            if (gamepad2.b) wrist.setPosition(.45); // Wrist Deposit
+            if (gamepad2.y) wrist.setPosition(.3); // Wrist Flick
             // Currently rotates the box either upright or to be slightly tilted downwards
-
-            if(gamepad2.a) wrist.setPosition(.1);
-            if(gamepad2.b) wrist.setPosition(1);
 
 
             // Show the elapsed game time and wheel power.

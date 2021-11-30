@@ -2,6 +2,7 @@ package Library;
 
 import android.graphics.Bitmap;
 
+import java.util.Collections;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.vuforia.Image;
 import com.vuforia.PIXEL_FORMAT;
@@ -27,9 +28,9 @@ public class DuckBarcodeBitmap {
     private VuforiaLocalizer.CameraDirection CAMERA_CHOICE = VuforiaLocalizer.CameraDirection.BACK;
     private static final String VUFORIA_KEY = "AVFFxKT/////AAABmQTYeIgT6k6wv0phn1XaTKN+Z9RdP23vp3+6IEyv9haxqO0u2vStZKAjPLct97BEhaeSkeYivFGo2IDu8fWfJlBY+2JZ0FIf8M2N7yW5XExNYWbGNwwem7Wgzsl5ld4wr6xOeXqcwtVn1mgt5ELcypOfvRnnun3FWIBr7mx+AJRN1ZAnqVvfOphPVxNm9vpylN4d5nJu58aTxiXMCJadPhhyviOGVlI6tT//lTO5GJEBva9xN+SXpxsTnPEaegQNE+qzFxVzmtXabk+oAuMxDh1XR+6EbyZzZjQm3gI9DXkt7os7ZkM95GXEZN9MHRwPWdwbk1Bt/iGI3VcXp2VfUDhWYXaWJjvu/aZC2WqrhAef";
 
-    private final int BLACK_RED_THRESHOLD = 20;
-    private final int BLACK_GREEN_THRESHOLD = 20;
-    private final int BLACK_BLUE_THRESHOLD = 20;
+    private final int BLACK_RED_THRESHOLD = 25;
+    private final int BLACK_GREEN_THRESHOLD = 25;
+    private final int BLACK_BLUE_THRESHOLD = 25;
 
 
 
@@ -95,43 +96,38 @@ public class DuckBarcodeBitmap {
     public int getBarcode() throws InterruptedException {
         Bitmap bitmap = getBitmap();
         int height = bitmap.getHeight();
-        int width = bitmap.getWidth();
-        int teamElementPixelCount = 0, teamElementXPosition = 0;
+        int width = bitmap.getWidth(); //bitmap.getWidth();
+        int teamElementXPosition = 0, teamElementPixelCount = 0;
 
-        for(int y = 0; y < height/3; y++) {
-            for(int x=0; x<width; x++) {
+        for(int y = 0; y < height/3; y += 3) {
+            for(int x= 0; x< bitmap.getWidth(); x += 2) {
                 int pixel = bitmap.getPixel(x,y);
                 int redValue = red(pixel);
                 int blueValue  = blue(pixel);
                 int greenValue = green(pixel);
                 boolean isBlack = redValue <= BLACK_RED_THRESHOLD && greenValue <= BLACK_GREEN_THRESHOLD && blueValue <= BLACK_BLUE_THRESHOLD;
                 if(isBlack) {
-                    opMode.telemetry.addData("R: ", red(pixel));
-                    opMode.telemetry.addData("G: ", green(pixel));
-                    opMode.telemetry.addData("B: ", blue(pixel));
-                    teamElementPixelCount++;
+                    ++teamElementPixelCount;
                     teamElementXPosition += x;
                 }
             }
         }
         int barcode = 0;
         int section = width/2;
-        if (teamElementPixelCount >= 1500) {
+        if (teamElementPixelCount >= 4500) {
             teamElementXPosition /= teamElementPixelCount;
-            if(teamElementXPosition >= 0 && teamElementXPosition <= section) {
-                barcode = 1;
-            }else if(teamElementXPosition > section && teamElementXPosition <= (section*2)) {
+            if(teamElementXPosition <= section) {
                 barcode = 2;
-            }else {
+            }else if(teamElementXPosition > section) {
                 barcode = 3;
             }
-
+        } else {
+            barcode = 1;
         }
 
-        opMode.telemetry.addData("TeamElementxPosition: ", teamElementXPosition);
-        opMode.telemetry.addData("section: ", section);
-        opMode.telemetry.addData("width: ", width);
-        opMode.telemetry.addData("Barcode: ", barcode);
+        opMode.telemetry.addData("TeamElementPixelCount: ", teamElementPixelCount);
+        opMode.telemetry.addData("TeamElementXPosition: ", teamElementXPosition);
+        opMode.telemetry.addData("Barcode ", barcode);
         opMode.telemetry.update();
         return barcode;
     }

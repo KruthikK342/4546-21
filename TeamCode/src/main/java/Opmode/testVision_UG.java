@@ -28,8 +28,6 @@ public class testVision_UG extends LinearOpMode {
         waitForStart();
         while (opModeIsActive())  {
             int barcode = db.getBarcode();
-            telemetry.addData("Barcode", barcode);
-            telemetry.update();
             sleep(5000);
         }
 
