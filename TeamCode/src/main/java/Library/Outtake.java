@@ -50,6 +50,36 @@ public class Outtake {
     }
 
     public void midGoal () {
+
+
+        wrist.setPosition(.1);
+        while (pulley.getCurrentPosition() < 2000) {
+
+            pulley.setPower(.5);
+            opMode.telemetry.addData("pulley position", pulley.getCurrentPosition());
+            opMode.telemetry.update();
+
+        }
+        pulley.setPower(0);
+        wrist.setPosition(.45);
+        opMode.sleep(200);
+        wrist.setPosition(.3);
+        opMode.sleep(200);
+        wrist.setPosition(.45);
+        opMode.sleep(1000);
+        wrist.setPosition(0.1);
+
+        opMode.sleep(400);
+
+        while (pulley.getCurrentPosition() > 100) {
+            pulley.setPower(-.5);
+            opMode.telemetry.addData("pulley position", pulley.getCurrentPosition());
+            opMode.telemetry.update();
+        }
+        pulley.setPower(0);
+
+
+        /*
         while (pulley.getCurrentPosition() < 500) {
             pulley.setPower(.7);
         }
@@ -60,6 +90,9 @@ public class Outtake {
         while (pulley.getCurrentPosition() > 100) {
             pulley.setPower(-.7);
         }
+
+
+         */
     }
 
     public void lowGoal () {

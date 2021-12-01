@@ -27,7 +27,7 @@ public class AutoRedFar extends LinearOpMode {
         sleep(500);
         drivetrain.moveInches(6.15, -0.5);
         sleep(500);
-        outake.highGoal();
+        //outake.highGoal();
         sleep(500);
 
     }

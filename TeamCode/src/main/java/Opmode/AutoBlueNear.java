@@ -23,26 +23,40 @@ public class AutoBlueNear extends LinearOpMode {
     private Outtake outake;
 
     public void carousel() {
-        drivetrain.moveInches(7, 0.5);
+        drivetrain.moveInches(10, 0.5);
         sleep(500);
-        drivetrain.turnPI(98, 0.25, 0.25, 2000);
+        drivetrain.turnPI(90, 0.25, 0.25, 2000);
         sleep(500);
+        drivetrain.moveInches(10, 0.5);
+        sleep(500);
+        drivetrain.turnPI(100, 0.25, 0.25, 2000);
+
+        /*
         drivetrain.moveInches(50, 0.4);
         sleep(500);
         carousel.spin();
         sleep(3000);
         carousel.stop();
+
+         */
     }
 
     public void park() {
+        drivetrain.moveInches(21, 0.5);
+        sleep(500);
+        drivetrain.turnPI(87, 0.25, 0.25, 2000);
+        sleep(500);
+        drivetrain.moveInches(20, 0.5);
+        sleep(500);
+        /*
         highGoal();
         drivetrain.moveInches(10, 0.5);
         sleep(500);
-        /*CHECK ANGLE!!!*/ drivetrain.turnPI(-10, 0.25, 0.25, 2000);
+        drivetrain.turnPI(-10, 0.25, 0.25, 2000);
         sleep(500);
         drivetrain.moveInches(150, -.8);
         sleep(500);
-
+        */
     }
 
     public void highGoal() {
@@ -58,8 +72,8 @@ public class AutoBlueNear extends LinearOpMode {
         drivetrain = new Drivetrain(this);
         carousel = new Carousel(this);
         waitForStart();
-        carousel();
         park();
+
 
     }
 }
