@@ -10,6 +10,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
+import Library.DuckBarcodeBitmap;
+
 
 @TeleOp(name="TeleOp", group="4546")
 public class Teleop extends LinearOpMode {
@@ -25,6 +27,8 @@ public class Teleop extends LinearOpMode {
     private DcMotor spin = null; // carousel control motor
     private DcMotor arm = null; // pulley motor
     private Servo wrist = null; // wrist like outake
+
+
 
     public double WeightAvg(double x, double y, double z) {
         double speed_D = 0;
@@ -42,6 +46,9 @@ public class Teleop extends LinearOpMode {
         bL.setPower(WeightAvg(forward,-strafe,-rotate));
         bR.setPower(WeightAvg(forward,strafe,rotate));
     }
+
+
+
 
     @Override
     public void runOpMode() {
@@ -66,12 +73,17 @@ public class Teleop extends LinearOpMode {
         arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+
+
+
         // Waits for the game to start (driver presses PLAY)
+
         waitForStart();
         runtime.reset();
 
         // starting program
         double power = 1.0;
+
         while (opModeIsActive()) {
 
             if (gamepad1.dpad_down)
@@ -107,10 +119,16 @@ public class Teleop extends LinearOpMode {
             if(gamepad1.right_trigger > .5) intake.setPower(-1); // Intake out
             else if (gamepad1.left_trigger > .5) intake.setPower(1);
             else intake.setPower(0);
-
-            if(gamepad1.a) outake.setPower(1); // Outake forward
-            else if(gamepad1.b) outake.setPower(-1); //Outake reverse
-            else outake.setPower(0);
+            //outake
+            if(gamepad1.a) {
+                outake.setPower(1); // Outake forward
+            }
+            else if(gamepad1.b)  {
+                outake.setPower(-1); //Outake reverse
+            }
+            else  {
+                outake.setPower(0);
+            }
 
 
 
@@ -118,12 +136,13 @@ public class Teleop extends LinearOpMode {
             // If the left bumper is pressed down past a threshhold, the carousel will run at half
             // power. If right bumper, will run the opposite direction to spin the carousel.
             // If neither condition is met, automatically set power to 0 and rest.
-            if(gamepad1.left_bumper) spin.setPower(.7);
-            else if (gamepad1.right_bumper) spin.setPower(-.7);
+            if(gamepad1.left_bumper) spin.setPower(.5);
+            else if (gamepad1.right_bumper) spin.setPower(-.5);
             else spin.setPower(0);
 
             // Either adjust the servo to sort into the box or into the base outtake
             if (gamepad1.x) sort.setPosition(.5); //Sorting into box
+
             if (gamepad1.y) sort.setPosition(0); //sorting into base outtake
 
             //Driver 2
