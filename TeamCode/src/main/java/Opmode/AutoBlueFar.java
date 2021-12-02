@@ -28,17 +28,16 @@ public class AutoBlueFar extends LinearOpMode {
     private int barcode;
 
     public void midGoal() {
-        drivetrain.moveInches(5.5, 0.5);
-        sleep(800);
-        drivetrain.turnPI(-120, 0.25, 0.25, 2000);
-        sleep(500);
-        drivetrain.moveInches(6.1, -0.45);
-        sleep(500);
-        outake.midGoal();
-        sleep(500);
-
-
-
+        while (opModeIsActive()) {
+            drivetrain.moveInches(5.5, 0.5);
+            sleep(800);
+            drivetrain.turnPI(-120, 0.25, 0.25, 2000);
+            sleep(500);
+            drivetrain.moveInches(6.3, -0.45);
+            sleep(500);
+            outake.midGoal();
+            sleep(500);
+        }
     }
 
     public void highGoal() {
@@ -73,15 +72,17 @@ public class AutoBlueFar extends LinearOpMode {
 
     public void park() {
 
-        drivetrain.moveInches(2.5, 0.5);
-        sleep(800);
+        while (opModeIsActive()) {
+            drivetrain.moveInches(2.5, 0.5);
+            sleep(800);
 
-        drivetrain.turnPI(50, 0.25, 0.25, 2000);
-        sleep(500);
+            drivetrain.turnPI(20, 0.1, 0.25, 2000);
+            sleep(500);
 
-        drivetrain.moveInches(7, -.8);
-        sleep(1000);
-        drivetrain.moveInches(25, -1);
+            drivetrain.moveInches(7, -.8);
+            sleep(1000);
+            drivetrain.moveInches(25, -1);
+        }
 
     }
 
@@ -91,21 +92,29 @@ public class AutoBlueFar extends LinearOpMode {
         vision = new DuckBarcodeBitmap(this);
         drivetrain = new Drivetrain(this);
         outake = new Outtake(this);
+        telemetry.addLine("Robot Initialized");
+        telemetry.update();
+        while(!isStarted())
+        {
+            telemetry.addData("Team Element Pixel Count: ", vision.getTeamElementPixelCount());
+            telemetry.addData("Barcode: ", vision.getBarcode());
+            telemetry.update();
+        }
         waitForStart();
         barcode = vision.getBarcode();
 
-        if (barcode == 2) {
-            midGoal();
-        }
-        else if (barcode == 3) {
-            highGoal();
-        }
-        else {
-            lowGoal();
-        }
+        while(opModeIsActive()) {
+            if (barcode == 2) {
+                midGoal();
+            } else if (barcode == 3) {
+                highGoal();
+            } else {
+                lowGoal();
+            }
 
-        park();
+            park();
 
+        }
 
     }
 }
