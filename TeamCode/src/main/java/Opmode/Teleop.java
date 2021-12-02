@@ -10,9 +10,6 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-import Library.DuckBarcodeBitmap;
-
-
 @TeleOp(name="TeleOp", group="4546")
 public class Teleop extends LinearOpMode {
 
@@ -72,6 +69,7 @@ public class Teleop extends LinearOpMode {
         bR.setDirection(DcMotor.Direction.FORWARD);
         arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
 
 
@@ -117,14 +115,14 @@ public class Teleop extends LinearOpMode {
             // power. If left trigger, will run the opposite direction to clear the robot.
             // If neither condition is met, automatically set power to 0 and rest.
             if(gamepad1.right_trigger > .5) intake.setPower(-1); // Intake out
-            else if (gamepad1.left_trigger > .5) intake.setPower(1);
+            else if (gamepad1.left_trigger > .5) intake.setPower(1); // Intake in
             else intake.setPower(0);
             //outake
             if(gamepad1.a) {
-                outake.setPower(1); // Outake forward
+                outake.setPower(.7); // Outake forward
             }
             else if(gamepad1.b)  {
-                outake.setPower(-1); //Outake reverse
+                outake.setPower(-.7); //Outake reverse
             }
             else  {
                 outake.setPower(0);
@@ -163,8 +161,8 @@ public class Teleop extends LinearOpMode {
             // if the left trigger is pressed, the arm will retract back down. Otherwise rest.
             // Will likely combine with wrist movement and into different levels.
 
-            if (gamepad2.right_trigger > 0.5) arm.setPower(-.7);
-            else if (gamepad2.left_trigger > 0.5) arm.setPower(.7);
+            if (gamepad2.right_trigger > 0.5 && arm.getCurrentPosition() > -10) arm.setPower(-.7);
+            else if (gamepad2.left_trigger > 0.5 && arm.getCurrentPosition() < 2600) arm.setPower(1);
             else arm.setPower(0);
 
             if  (gamepad2.a) wrist.setPosition(.1); // Wrist Rest
@@ -174,7 +172,11 @@ public class Teleop extends LinearOpMode {
 
 
             // Show the elapsed game time and wheel power.
-            telemetry.addData("Status", "Run Time: " + runtime.toString());
+            telemetry.addData("Pulley Encoder", arm.getCurrentPosition());
+            telemetry.addData("fR:", fR.getPower());
+            telemetry.addData("fL:", fL.getPower());
+            telemetry.addData("bR:", bR.getPower());
+            telemetry.addData("bL:", bL.getPower());
             telemetry.update();
         }
     }
