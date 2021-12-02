@@ -17,6 +17,7 @@ public class Outtake {
         wrist = this.opMode.hardwareMap.get(Servo.class, "wrist");
         pulley.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         pulley.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        pulley.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
     public void highGoal() {
@@ -53,7 +54,7 @@ public class Outtake {
 
 
         wrist.setPosition(.1);
-        while (pulley.getCurrentPosition() < 2000) {
+        while (pulley.getCurrentPosition() < 2200) {
 
             pulley.setPower(.5);
             opMode.telemetry.addData("pulley position", pulley.getCurrentPosition());

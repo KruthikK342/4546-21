@@ -28,16 +28,15 @@ public class AutoBlueFar extends LinearOpMode {
     private int barcode;
 
     public void midGoal() {
-        while (opModeIsActive()) {
-            drivetrain.moveInches(5.5, 0.5);
-            sleep(800);
-            drivetrain.turnPI(-120, 0.25, 0.25, 2000);
-            sleep(500);
-            drivetrain.moveInches(6.3, -0.45);
-            sleep(500);
-            outake.midGoal();
-            sleep(500);
-        }
+        drivetrain.moveInches(5.5, 0.5);
+        sleep(800);
+        // drivetrain.turnPI(-255, 0.05, 0, 2000);
+        drivetrain.turnPI(-120, 0.25, 0.25, 2000);
+        sleep(500);
+        drivetrain.moveInches(6.3, -0.45);
+        sleep(500);
+        outake.midGoal();
+        sleep(500);
     }
 
     public void highGoal() {
@@ -72,18 +71,15 @@ public class AutoBlueFar extends LinearOpMode {
 
     public void park() {
 
-        while (opModeIsActive()) {
-            drivetrain.moveInches(2.5, 0.5);
-            sleep(800);
+        drivetrain.moveInches(2.5, 0.5);
+        sleep(800);
 
-            drivetrain.turnPI(20, 0.1, 0.25, 2000);
-            sleep(500);
+        drivetrain.turnPI(20, 0.1, 0.25, 2000);
+        sleep(500);
 
-            drivetrain.moveInches(7, -.8);
-            sleep(1000);
-            drivetrain.moveInches(25, -1);
-        }
-
+        drivetrain.moveInches(7, -.8);
+        sleep(1000);
+        drivetrain.moveInches(25, -1);
     }
 
     @Override
@@ -103,18 +99,15 @@ public class AutoBlueFar extends LinearOpMode {
         waitForStart();
         barcode = vision.getBarcode();
 
-        while(opModeIsActive()) {
-            if (barcode == 2) {
-                midGoal();
-            } else if (barcode == 3) {
-                highGoal();
-            } else {
-                lowGoal();
-            }
-
-            park();
-
+        if (barcode == 2) {
+            midGoal();
+        } else if (barcode == 3) {
+            highGoal();
+        } else {
+            lowGoal();
         }
+        park();
+
 
     }
 }
