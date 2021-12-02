@@ -27,7 +27,7 @@ public class AutoRedFar extends LinearOpMode {
         sleep(500);
         drivetrain.moveInches(6.15, -0.5);
         sleep(500);
-        //outake.highGoal();
+        outake.highGoal();
         sleep(500);
 
     }
@@ -50,6 +50,11 @@ public class AutoRedFar extends LinearOpMode {
         // Vuforia stuff here
         vision = new DuckBarcodeBitmap(this);
         drivetrain = new Drivetrain(this);
+        while(!isStarted())
+        {
+            telemetry.addData("Barcode: ", vision.getBarcode());
+            telemetry.update();
+        }
         waitForStart();
         highGoal();
         park();
