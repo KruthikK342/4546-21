@@ -70,7 +70,7 @@ public class Sensors {
 
     //returns -x if the robot needs to turn x degrees to the left, or x if the robot needs to turn x degrees to the right
     public double getTrueDiff(double origAngle) {
-        double currAngle = getGyroYaw();
+        double currAngle = getGyroYaw(); //getGyroRoll()
         if (currAngle >= 0 && origAngle >= 0 || currAngle <= 0 && origAngle <= 0)
             return -(currAngle - origAngle);
         else if (Math.abs(currAngle - origAngle) <= 180)
