@@ -131,6 +131,28 @@ public class DuckBarcodeBitmap {
         opMode.telemetry.update();
         return barcode;
     }
+
+    public int getTeamElementPixelCount() throws InterruptedException {
+        Bitmap bitmap = getBitmap();
+        int height = bitmap.getHeight();
+        int width = bitmap.getWidth(); //bitmap.getWidth();
+        int teamElementXPosition = 0, teamElementPixelCount = 0;
+
+        for(int y = 0; y < height/3; y += 3) {
+            for(int x= 0; x< bitmap.getWidth(); x += 2) {
+                int pixel = bitmap.getPixel(x,y);
+                int redValue = red(pixel);
+                int blueValue  = blue(pixel);
+                int greenValue = green(pixel);
+                boolean isBlack = redValue <= BLACK_RED_THRESHOLD && greenValue <= BLACK_GREEN_THRESHOLD && blueValue <= BLACK_BLUE_THRESHOLD;
+                if(isBlack) {
+                    ++teamElementPixelCount;
+                    teamElementXPosition += x;
+                }
+            }
+        }
+        return teamElementPixelCount;
+    }
 }
 
 
