@@ -93,14 +93,14 @@ public class DuckBarcodeBitmap {
         return bitmap.getWidth();
     }
 
-    public int getBarcode() throws InterruptedException {
+    public int getBarcode(boolean isred) throws InterruptedException {
         Bitmap bitmap = getBitmap();
         int height = bitmap.getHeight();
-        int width = bitmap.getWidth(); //bitmap.getWidth();
+        int width = (!isred) ? (int) (940.0/1280 * bitmap.getWidth()) : bitmap.getWidth();
         int teamElementXPosition = 0, teamElementPixelCount = 0;
 
         for(int y = 0; y < height/3; y += 3) {
-            for(int x= 0; x< bitmap.getWidth(); x += 2) {
+            for(int x= 0; x<width; x += 2) {
                 int pixel = bitmap.getPixel(x,y);
                 int redValue = red(pixel);
                 int blueValue  = blue(pixel);

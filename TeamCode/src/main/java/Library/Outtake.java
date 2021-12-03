@@ -20,9 +20,36 @@ public class Outtake {
         pulley.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
+
+    public void goal() {
+        wrist.setPosition(.1);
+        while (pulley.getCurrentPosition() < 2500) {
+
+            pulley.setPower(.5);
+            opMode.telemetry.addData("pulley position", pulley.getCurrentPosition());
+            opMode.telemetry.update();
+
+        }
+        pulley.setPower(0);
+        opMode.sleep(500);
+        wrist.setPosition(.475);
+        opMode.sleep(1500);
+        wrist.setPosition(0.1);
+
+        opMode.sleep(400);
+
+        while (pulley.getCurrentPosition() > 100) {
+            pulley.setPower(-.5);
+            opMode.telemetry.addData("pulley position", pulley.getCurrentPosition());
+            opMode.telemetry.update();
+        }
+        pulley.setPower(0);
+
+
+    }
     public void highGoal() {
         wrist.setPosition(.1);
-        while (pulley.getCurrentPosition() < 2600) {
+        while (pulley.getCurrentPosition() < 2550) {
 
             pulley.setPower(.5);
             opMode.telemetry.addData("pulley position", pulley.getCurrentPosition());
@@ -31,7 +58,7 @@ public class Outtake {
         }
         pulley.setPower(0);
         wrist.setPosition(.45);
-        opMode.sleep(1000);
+        opMode.sleep(200);
         wrist.setPosition(.3);
         opMode.sleep(200);
         wrist.setPosition(.45);
@@ -98,7 +125,7 @@ public class Outtake {
 
     public void lowGoal() {
         wrist.setPosition(.1);
-        while (pulley.getCurrentPosition() < 1650) {
+        while (pulley.getCurrentPosition() < 1600) {
 
             pulley.setPower(.5);
             opMode.telemetry.addData("pulley position", pulley.getCurrentPosition());
@@ -106,12 +133,9 @@ public class Outtake {
 
         }
         pulley.setPower(0);
-        wrist.setPosition(.45);
         opMode.sleep(200);
-        wrist.setPosition(.3);
-        opMode.sleep(200);
-        wrist.setPosition(.45);
-        opMode.sleep(1000);
+        wrist.setPosition(.5);
+        opMode.sleep(3000);
         wrist.setPosition(0.1);
 
         opMode.sleep(400);

@@ -40,12 +40,12 @@ public class AutoBlueFar extends LinearOpMode {
     }
 
     public void highGoal() {
-        drivetrain.moveInches(5, 0.5);
+        drivetrain.moveInches(4.5, 0.5);
         sleep(800);
 
-        drivetrain.turnPD(-135, 0.45, 0.25, 2000);
+        drivetrain.turnPD(-130, 0.45, 0.25, 2000);
         sleep(500);
-        drivetrain.moveInches(6.4, -0.45);
+        drivetrain.moveInches(6.7, -0.45);
         sleep(500);
         outake.highGoal();
         sleep(500);
@@ -76,11 +76,11 @@ public class AutoBlueFar extends LinearOpMode {
 
         drivetrain.turnPD(3, 0.30, 0.25, 2000);
         sleep(500);
-        drivetrain.turnPD(93,.25,.25,2000);
+        drivetrain.turnPD(100,.25,.25,2000);
 
         drivetrain.moveInches(7, -.8);
         sleep(1000);
-        drivetrain.moveInches(35, -1);
+        drivetrain.moveInches(40, -1);
 
 
     }
@@ -93,22 +93,29 @@ public class AutoBlueFar extends LinearOpMode {
         outake = new Outtake(this);
         telemetry.addLine("Robot Initialized");
         telemetry.update();
-        while(!isStarted())
+
+        while (!isStarted())
         {
+            telemetry.addData("xpos: ", vision.getImageWidth());
             telemetry.addData("Team Element Pixel Count: ", vision.getTeamElementPixelCount());
-            telemetry.addData("Barcode: ", vision.getBarcode());
+            telemetry.addData("Barcode: ", vision.getBarcode(false));
             telemetry.update();
+            sleep (6000);
         }
         waitForStart();
-        barcode = vision.getBarcode();
 
-        if (barcode == 2) {
-            midGoal();
+        barcode = vision.getBarcode(false);
+        telemetry.addData("barcode", barcode);
+        telemetry.update();
+
+        if (barcode == 1) {
+            lowGoal();
         } else if (barcode == 3) {
             highGoal();
         } else {
-            lowGoal();
+            midGoal();
         }
+
         park();
 
 
