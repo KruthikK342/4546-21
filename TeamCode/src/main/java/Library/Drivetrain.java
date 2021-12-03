@@ -182,6 +182,9 @@ public class Drivetrain {
             }
             opMode.telemetry.addData("P", (angleDiff * kP));
             opMode.telemetry.addData("D", ((Math.abs(angleDiff) - Math.abs(prevAngleDiff)) / dT * kD));
+            opMode.telemetry.addData("Gyro Roll: ", sensor.getGyroRoll());
+            opMode.telemetry.addData("Gyro Yaw: ", sensor.getGyroYaw());
+            opMode.telemetry.addData("Gyro Pitch: ", sensor.getGyroPitch());
             opMode.telemetry.update();
             prevAngleDiff = angleDiff;
         }

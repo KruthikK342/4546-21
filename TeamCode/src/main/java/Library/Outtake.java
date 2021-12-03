@@ -22,7 +22,7 @@ public class Outtake {
 
     public void highGoal() {
         wrist.setPosition(.1);
-        while (pulley.getCurrentPosition() < 2500) {
+        while (pulley.getCurrentPosition() < 2600) {
 
             pulley.setPower(.5);
             opMode.telemetry.addData("pulley position", pulley.getCurrentPosition());
@@ -31,7 +31,7 @@ public class Outtake {
         }
         pulley.setPower(0);
         wrist.setPosition(.45);
-        opMode.sleep(200);
+        opMode.sleep(1000);
         wrist.setPosition(.3);
         opMode.sleep(200);
         wrist.setPosition(.45);
