@@ -74,12 +74,14 @@ public class AutoBlueFar extends LinearOpMode {
         drivetrain.moveInches(2.5, 0.5);
         sleep(800);
 
-        drivetrain.turnPD(55, 0.25, 0.25, 2000);
+        drivetrain.turnPD(-147, 0.25, 0.25, 2000);
         sleep(500);
-
+/*
         drivetrain.moveInches(7, -.8);
         sleep(1000);
         drivetrain.moveInches(25, -1);
+        */
+
     }
 
     @Override
