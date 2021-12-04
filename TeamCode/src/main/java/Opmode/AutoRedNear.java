@@ -29,7 +29,7 @@ public class AutoRedNear extends LinearOpMode {
         sleep(500);
         drivetrain.moveInches(57, .4);
         sleep(500);
-        carousel.spin();
+        carousel.spin(-.5);
         sleep(3500);
         carousel.stop();
     }

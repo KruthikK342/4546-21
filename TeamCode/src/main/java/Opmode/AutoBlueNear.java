@@ -23,22 +23,20 @@ public class AutoBlueNear extends LinearOpMode {
     private Outtake outake;
 
     public void carousel() {
-        drivetrain.moveInches(10, 0.5);
+        drivetrain.moveInches(5, 0.5); // Move forward to turn
         sleep(500);
-        drivetrain.turnPI(90, 0.25, 0.25, 2000);
+        drivetrain.turnPI(90, 0.25, 0.1, 3000); // Turn right 90
         sleep(500);
-        drivetrain.moveInches(10, 0.5);
+        drivetrain.moveInches(8, 0.5); // Move forward
         sleep(500);
-        drivetrain.turnPI(100, 0.25, 0.25, 2000);
-
-        /*
-        drivetrain.moveInches(50, 0.4);
+        drivetrain.turnPI(145, .25, .15, 3000); //Turn towards carousel
         sleep(500);
-        carousel.spin();
+        drivetrain.moveInches(11, .5); // Approach Carousel
+        sleep(500);
+        carousel.spin(.3); //Spin Carousel
         sleep(3000);
         carousel.stop();
 
-         */
     }
 
     public void park() {
@@ -60,9 +58,15 @@ public class AutoBlueNear extends LinearOpMode {
     }
 
     public void highGoal() {
+        drivetrain.moveInches(11,-.5); // Back up from Carousel;
+        sleep(500);
+        drivetrain.turnPI(90, .25, .1, 3000); // Turn towards warehouse
+        sleep(500);
         drivetrain.moveInches(20, -.5);
         sleep(500);
-        outake.highGoal();
+        drivetrain.turnPI(145, .25, .1, 3000);
+        sleep(500);
+        drivetrain.moveInches(5,-.5);
     }
 
     @Override
@@ -70,9 +74,22 @@ public class AutoBlueNear extends LinearOpMode {
         // Vuforia stuff here
         vision = new DuckBarcodeBitmap(this);
         drivetrain = new Drivetrain(this);
+        outake = new Outtake(this);
         carousel = new Carousel(this);
+        telemetry.addLine("Robot Initialized");
+        telemetry.update();
+
+        while (!isStarted())
+        {
+            telemetry.addData("xpos: ", vision.getImageWidth());
+            telemetry.addData("Team Element Pixel Count: ", vision.getTeamElementPixelCount());
+            telemetry.addData("Barcode: ", vision.getBarcode(false));
+            telemetry.update();
+        }
+
         waitForStart();
-        park();
+        carousel();
+        highGoal();
 
 
     }

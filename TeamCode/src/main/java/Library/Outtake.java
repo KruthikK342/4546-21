@@ -23,7 +23,7 @@ public class Outtake {
 
     public void goal() {
         wrist.setPosition(.1);
-        while (pulley.getCurrentPosition() < 2500) {
+        while (pulley.getCurrentPosition() < 2500 && opMode.opModeIsActive()) {
 
             pulley.setPower(.5);
             opMode.telemetry.addData("pulley position", pulley.getCurrentPosition());
@@ -38,7 +38,7 @@ public class Outtake {
 
         opMode.sleep(400);
 
-        while (pulley.getCurrentPosition() > 100) {
+        while (pulley.getCurrentPosition() > 100 && opMode.opModeIsActive()) {
             pulley.setPower(-.5);
             opMode.telemetry.addData("pulley position", pulley.getCurrentPosition());
             opMode.telemetry.update();
@@ -49,7 +49,7 @@ public class Outtake {
     }
     public void highGoal() {
         wrist.setPosition(.1);
-        while (pulley.getCurrentPosition() < 2550) {
+        while (pulley.getCurrentPosition() < 2550 && opMode.opModeIsActive()) {
 
             pulley.setPower(.5);
             opMode.telemetry.addData("pulley position", pulley.getCurrentPosition());
@@ -67,7 +67,7 @@ public class Outtake {
 
         opMode.sleep(400);
 
-        while (pulley.getCurrentPosition() > 100) {
+        while (pulley.getCurrentPosition() > 100 && opMode.opModeIsActive()) {
             pulley.setPower(-.5);
             opMode.telemetry.addData("pulley position", pulley.getCurrentPosition());
             opMode.telemetry.update();
@@ -81,7 +81,7 @@ public class Outtake {
 
 
         wrist.setPosition(.1);
-        while (pulley.getCurrentPosition() < 2200) {
+        while (pulley.getCurrentPosition() < 2200 && opMode.opModeIsActive()) {
 
             pulley.setPower(.5);
             opMode.telemetry.addData("pulley position", pulley.getCurrentPosition());
@@ -99,7 +99,7 @@ public class Outtake {
 
         opMode.sleep(400);
 
-        while (pulley.getCurrentPosition() > 100) {
+        while (pulley.getCurrentPosition() > 100 && opMode.opModeIsActive()) {
             pulley.setPower(-.5);
             opMode.telemetry.addData("pulley position", pulley.getCurrentPosition());
             opMode.telemetry.update();
@@ -125,7 +125,7 @@ public class Outtake {
 
     public void lowGoal() {
         wrist.setPosition(.1);
-        while (pulley.getCurrentPosition() < 1600) {
+        while (pulley.getCurrentPosition() < 1600 && opMode.opModeIsActive()) {
 
             pulley.setPower(.5);
             opMode.telemetry.addData("pulley position", pulley.getCurrentPosition());
@@ -140,7 +140,7 @@ public class Outtake {
 
         opMode.sleep(400);
 
-        while (pulley.getCurrentPosition() > 100) {
+        while (pulley.getCurrentPosition() > 100 && opMode.opModeIsActive()) {
             pulley.setPower(-.5);
             opMode.telemetry.addData("pulley position", pulley.getCurrentPosition());
             opMode.telemetry.update();

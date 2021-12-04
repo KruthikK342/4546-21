@@ -121,7 +121,7 @@ public class Drivetrain {
 
     public void moveInches(double inches, double power){
         resetEncoders();
-        while (getEncoderAvg() < inches * countsPerInch){
+        while (getEncoderAvg() < inches * countsPerInch && opMode.opModeIsActive()){
             startMotors(power, power);
         }
         stopMotors();
@@ -201,7 +201,7 @@ public class Drivetrain {
         double I = 0;
         double angleDiff = sensor.getTrueDiff(angle);
         double changePID = 0;
-        while (Math.abs(angleDiff) > .5 && time.milliseconds() < timeout) {
+        while (Math.abs(angleDiff) > .5 && time.milliseconds() < timeout && opMode.opModeIsActive()) {
             pastTime = currentTime;
             currentTime = time.milliseconds();
             double dT = currentTime - pastTime;
@@ -214,6 +214,7 @@ public class Drivetrain {
             opMode.telemetry.addData("diff", angleDiff);
             opMode.telemetry.addData("P", P);
             opMode.telemetry.addData("I", I);
+            opMode.telemetry.addData("Gyro Yaw: ", sensor.getGyroYaw());
             opMode.telemetry.addData("motorBR power: ", motorBR.getPower());
             opMode.telemetry.update();
             if (changePID < 0) {
@@ -223,6 +224,16 @@ public class Drivetrain {
             }
         }
         stopMotors();
+    }
+
+    public void turnPID(double angle, double p, double i, double d, double timeout) {
+        time.reset();
+        double kP = p / 90;
+        double kI = i / 100000;
+        double kD = d;
+        double currentTime = time.milliseconds();
+        double pastTime = 0;
+
     }
 
 
