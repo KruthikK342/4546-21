@@ -94,6 +94,7 @@ public class AutoBlueFar extends LinearOpMode {
         telemetry.addLine("Robot Initialized");
         telemetry.update();
 
+
         while (!isStarted())
         {
             telemetry.addData("xpos: ", vision.getImageWidth());
@@ -102,6 +103,8 @@ public class AutoBlueFar extends LinearOpMode {
             telemetry.update();
         }
         waitForStart();
+
+        barcode = vision.getBarcode(false);
 
         if (barcode == 1) {
             lowGoal();

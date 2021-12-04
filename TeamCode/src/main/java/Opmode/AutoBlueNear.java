@@ -21,6 +21,7 @@ public class AutoBlueNear extends LinearOpMode {
     private Carousel carousel;
     private Intake intake;
     private Outtake outake;
+    private int barcode;
 
     public void carousel() {
         drivetrain.moveInches(5, 0.5); // Move forward to turn
@@ -40,12 +41,15 @@ public class AutoBlueNear extends LinearOpMode {
     }
 
     public void park() {
-        drivetrain.moveInches(21, 0.5);
+        drivetrain.moveInches(5, 0.5);
         sleep(500);
-        drivetrain.turnPI(87, 0.25, 0.25, 2000);
+        drivetrain.turnPI(90, 0.25, 0.1, 3000);
         sleep(500);
-        drivetrain.moveInches(20, 0.5);
+        drivetrain.moveInches(30, 0.5);
         sleep(500);
+        drivetrain.turnPI(0, .25, .1, 3000);
+        sleep(500);
+        drivetrain.moveInches(10, .5);
         /*
         highGoal();
         drivetrain.moveInches(10, 0.5);
@@ -67,6 +71,36 @@ public class AutoBlueNear extends LinearOpMode {
         drivetrain.turnPI(145, .25, .1, 3000);
         sleep(500);
         drivetrain.moveInches(5,-.5);
+        sleep(500);
+        outake.highGoal();
+    }
+
+    public void midGoal() {
+        drivetrain.moveInches(11,-.5); // Back up from Carousel;
+        sleep(500);
+        drivetrain.turnPI(90, .25, .1, 3000); // Turn towards warehouse
+        sleep(500);
+        drivetrain.moveInches(20, -.5);
+        sleep(500);
+        drivetrain.turnPI(155, .25, .1, 3000);
+        sleep(500);
+        drivetrain.moveInches(4,-.5);
+        sleep(500);
+        outake.midGoal();
+    }
+
+    public void lowGoal() {
+        drivetrain.moveInches(11,-.5); // Back up from Carousel;
+        sleep(500);
+        drivetrain.turnPI(90, .25, .1, 3000); // Turn towards warehouse
+        sleep(500);
+        drivetrain.moveInches(20, -.5);
+        sleep(500);
+        drivetrain.turnPI(145, .25, .1, 3000);
+        sleep(500);
+        drivetrain.moveInches(3,-.5);
+        sleep(500);
+        outake.lowGoal();
     }
 
     @Override
@@ -88,8 +122,22 @@ public class AutoBlueNear extends LinearOpMode {
         }
 
         waitForStart();
-        carousel();
-        highGoal();
+
+        barcode = vision.getBarcode(false);
+
+        if (barcode == 3) {
+            carousel();
+            highGoal();
+            park();
+        } else if (barcode == 2) {
+            carousel();
+            midGoal();
+            park();
+        } else {
+            carousel();
+            highGoal();
+            park();
+        }
 
 
     }

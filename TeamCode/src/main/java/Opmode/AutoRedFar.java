@@ -40,7 +40,7 @@ public class AutoRedFar extends LinearOpMode {
         drivetrain.moveInches(5.5, 0.5);
         sleep(800);
         // drivetrain.turnPI(-255, 0.05, 0, 2000);
-        drivetrain.turnPD(-135, 0.45, 0.25, 2000);
+        drivetrain.turnPD(145, 0.45, 0.25, 2000);
         sleep(500);
         drivetrain.moveInches(6.3, -0.45);
         sleep(500);
@@ -52,14 +52,12 @@ public class AutoRedFar extends LinearOpMode {
         drivetrain.moveInches(4.5, 0.5);
         sleep(800);
 
-        drivetrain.turnPD(-130, 0.45, 0.25, 2000);
+        drivetrain.turnPD(140, 0.45, 0.25, 2000);
         sleep(500);
         drivetrain.moveInches(6.7, -0.45);
         sleep(500);
         outake.highGoal();
         sleep(500);
-
-
 
     }
 
@@ -67,7 +65,7 @@ public class AutoRedFar extends LinearOpMode {
         drivetrain.moveInches(5.5, 0.5);
         sleep(800);
 
-        drivetrain.turnPD(-135, 0.45, 0.25, 2000);
+        drivetrain.turnPD(145, 0.45, 0.25, 2000);
         sleep(500);
         drivetrain.moveInches(6.1, -0.45);
         sleep(500);
@@ -81,12 +79,12 @@ public class AutoRedFar extends LinearOpMode {
         vision = new DuckBarcodeBitmap(this);
         drivetrain = new Drivetrain(this);
         outake = new Outtake(this);
-        barcode = vision.getBarcode(true);
         while(!isStarted()) {
-            telemetry.addData("Barcode: ", barcode);
+            telemetry.addData("Barcode: ", vision.getBarcode(true));
             telemetry.update();
         }
         waitForStart();
+        barcode = vision.getBarcode(true);
         if (barcode == 1) {
             lowGoal();
         } else if (barcode == 3) {
@@ -94,7 +92,6 @@ public class AutoRedFar extends LinearOpMode {
         } else {
             midGoal();
         }
-        //park();
-
+        park();
     }
 }

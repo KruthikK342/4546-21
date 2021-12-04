@@ -114,7 +114,7 @@ public class Teleop extends LinearOpMode {
             // If the right trigger is pressed down past a threshhold, the intake will run at full
             // power. If left trigger, will run the opposite direction to clear the robot.
             // If neither condition is met, automatically set power to 0 and rest.
-            if(gamepad1.right_trigger > .5) intake.setPower(-1); // Intake out
+            if(gamepad1.right_trigger > .5) intake.setPower(-.5); // Intake out
             else if (gamepad1.left_trigger > .5) intake.setPower(1); // Intake in
             else intake.setPower(0);
             //outake
@@ -134,12 +134,24 @@ public class Teleop extends LinearOpMode {
             // If the left bumper is pressed down past a threshhold, the carousel will run at half
             // power. If right bumper, will run the opposite direction to spin the carousel.
             // If neither condition is met, automatically set power to 0 and rest.
-            if(gamepad1.left_bumper) spin.setPower(.5);
-            else if (gamepad1.right_bumper) spin.setPower(-.5);
+            if(gamepad1.left_bumper) {
+                spin.setPower(.5);
+                fL.setPower(.05);
+                fR.setPower(.05);
+                bL.setPower(.05);
+                bR.setPower(.05);
+            }
+            else if (gamepad1.right_bumper) {
+                spin.setPower(-.5);
+                fL.setPower(.05);
+                fR.setPower(.05);
+                bL.setPower(.05);
+                bR.setPower(.05);
+            }
             else spin.setPower(0);
 
             // Either adjust the servo to sort into the box or into the base outtake
-            if (gamepad1.x) sort.setPosition(.5); //Sorting into box
+            if (gamepad1.x) sort.setPosition(.55); //Sorting into box
 
             if (gamepad1.y) sort.setPosition(0); //sorting into base outtake
 

@@ -21,6 +21,7 @@ public class AutoRedNear extends LinearOpMode {
     private Carousel carousel;
     private Intake intake;
     private Outtake outake;
+    private int barcode;
 
     public void carousel() {
         drivetrain.moveInches(3, 0.5);
@@ -34,20 +35,55 @@ public class AutoRedNear extends LinearOpMode {
         carousel.stop();
     }
 
-
     public void park() {
-        drivetrain.moveInches(3, 0.5);
+
+        drivetrain.moveInches(2.5, 0.5);
+        sleep(800);
+
+        drivetrain.turnPD(-3, 0.30, 0.25, 2000);
         sleep(500);
-        /*CHECK ANGLE!!!*/ drivetrain.turnPI(10, 0.25, 0.25, 2000);
+        drivetrain.turnPD(113,.25,.25,2000);
+
+        drivetrain.moveInches(7, -.8);
+        sleep(1000);
+        drivetrain.moveInches(40, -1);
+    }
+
+    public void midGoal() {
+        drivetrain.moveInches(5.5, 0.5);
+        sleep(800);
+        // drivetrain.turnPI(-255, 0.05, 0, 2000);
+        drivetrain.turnPD(145, 0.45, 0.25, 2000);
         sleep(500);
-        drivetrain.moveInches(250, -.8);
+        drivetrain.moveInches(6.3, -0.45);
+        sleep(500);
+        outake.midGoal();
         sleep(500);
     }
 
     public void highGoal() {
-        drivetrain.moveInches(20, -.5);
+        drivetrain.moveInches(4.5, 0.5);
+        sleep(800);
+
+        drivetrain.turnPD(140, 0.45, 0.25, 2000);
+        sleep(500);
+        drivetrain.moveInches(6.7, -0.45);
         sleep(500);
         outake.highGoal();
+        sleep(500);
+
+    }
+
+    public void lowGoal() {
+        drivetrain.moveInches(5.5, 0.5);
+        sleep(800);
+
+        drivetrain.turnPD(-145, 0.45, 0.25, 2000);
+        sleep(500);
+        drivetrain.moveInches(6.1, -0.45);
+        sleep(500);
+        outake.lowGoal();
+        sleep(500);
     }
 
     @Override
@@ -55,11 +91,22 @@ public class AutoRedNear extends LinearOpMode {
         // Vuforia stuff here
         vision = new DuckBarcodeBitmap(this);
         drivetrain = new Drivetrain(this);
-        carousel = new Carousel(this);
         outake = new Outtake(this);
+        barcode = vision.getBarcode(true);
+        while(!isStarted()) {
+            telemetry.addData("Barcode: ", barcode);
+            telemetry.update();
+        }
         waitForStart();
-            carousel();
-            //park();
-
+        barcode = vision.getBarcode(true);
+        if (barcode == 1) {
+            lowGoal();
+        } else if (barcode == 3) {
+            highGoal();
+        } else {
+            midGoal();
+        }
+        park();
     }
+
 }
