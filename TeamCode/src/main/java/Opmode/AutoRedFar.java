@@ -21,9 +21,8 @@ public class AutoRedFar extends LinearOpMode {
     private int barcode;
 
 
+
     public void park() {
-
-
         drivetrain.moveInches(2.5, 0.5);
         sleep(800);
 
@@ -84,6 +83,12 @@ public class AutoRedFar extends LinearOpMode {
             telemetry.update();
         }
         waitForStart();
+        /*
+           Get the barcode for vision so we can determine what level to put the
+           freight on. The boolean variable in getBarcode() is used to differentiate
+           between the red and blue side. After that, we use the barcode to execute
+           the corresponding ___Goal() function and then park.
+        */
         barcode = vision.getBarcode(true);
         if (barcode == 1) {
             lowGoal();

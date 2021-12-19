@@ -96,11 +96,33 @@ public class DuckBarcodeBitmap {
     public int getBarcode(boolean isred) throws InterruptedException {
         Bitmap bitmap = getBitmap();
         int height = bitmap.getHeight();
-        int width = (!isred) ? (int) (940.0/1280 * bitmap.getWidth()) : bitmap.getWidth();
+        /*
+            This ternary expression accounts for the bitmap resizing the image taken
+            by the camera. We only need to do this for the blue side since the width
+            has to be shortened there. Otherwise, if it's red, then we can just use the
+            whole width.
+        */
+        int width = (!isred) ? (int) (940.0/1280 * bitmap.getWidth()) : bitmap.getWidth();          //me when
         int teamElementXPosition = 0, teamElementPixelCount = 0;
 
+        /*
+            In this loop, we obtain pixel values from the bitmap to determine
+            the average X position of the bitmap. Based on a threshold, we can
+            then determine where the barcode is (1, 2, or 3). When looping over
+            the bitmap, we skip every third y value and every second x value so
+            that we can go over the entire bitmap in a timely manner. The height
+            used here is 1/3 of the bitmap height (this avoids black pixels in
+            the background from being included).
+        */
         for(int y = 0; y < height/3; y += 3) {
-            for(int x= 0; x<width; x += 2) {
+            for(int x = 0; x<width; x += 2) {
+                /*
+                * Get the pixel value
+                * Get red, blue, and green values for pixel
+                * Check if the pixel falls within the threshold
+                * If it  does, then we count that as a black pixel
+                * and get its X position.
+                */
                 int pixel = bitmap.getPixel(x,y);
                 int redValue = red(pixel);
                 int blueValue  = blue(pixel);
@@ -112,7 +134,16 @@ public class DuckBarcodeBitmap {
                 }
             }
         }
+
         int barcode = 0;
+        /*
+            The section variable is half the width since only
+            two of the barcodes are visible. The left half of the
+            screen contains the second barcode and the right half contains
+            the third barcode. If the minimum threshold of black pixels is
+            not met, then we can assume that the barcode must be the first
+            one. The threshold was decided through experimentation.
+        */
         int section = width/2;
         if (teamElementPixelCount >= 4500) {
             teamElementXPosition /= teamElementPixelCount;

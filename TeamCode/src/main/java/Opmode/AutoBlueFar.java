@@ -49,9 +49,6 @@ public class AutoBlueFar extends LinearOpMode {
         sleep(500);
         outake.highGoal();
         sleep(500);
-
-
-
     }
 
     public void lowGoal() {
@@ -64,13 +61,9 @@ public class AutoBlueFar extends LinearOpMode {
         sleep(500);
         outake.lowGoal();
         sleep(500);
-
-
-
     }
 
     public void park() {
-
         drivetrain.moveInches(2.5, 0.5);
         sleep(800);
 
@@ -81,8 +74,6 @@ public class AutoBlueFar extends LinearOpMode {
         drivetrain.moveInches(7, -.8);
         sleep(1000);
         drivetrain.moveInches(40, -1);
-
-
     }
 
     @Override
