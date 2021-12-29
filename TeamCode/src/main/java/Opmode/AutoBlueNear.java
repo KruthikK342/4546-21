@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import Library.Drivetrain;
 import Library.DuckBarcodeBitmap;
@@ -23,6 +24,7 @@ public class AutoBlueNear extends LinearOpMode {
     private Outtake outake;
     private int barcode;
 
+
     public void carousel() {
         drivetrain.moveInches(5, 0.5); // Move forward to turn
         sleep(500);
@@ -35,7 +37,7 @@ public class AutoBlueNear extends LinearOpMode {
         drivetrain.moveInches(16, .3); // Approach Carousel
         sleep(500);
         carousel.spin(.45); //Spin Carousel
-        sleep(2000);
+        sleep(2500);
         carousel.stop();
 
     }
@@ -91,15 +93,15 @@ public class AutoBlueNear extends LinearOpMode {
 
     public void lowGoal() {
         drivetrain.moveInches(11,-.5); // Back up from Carousel;
-        sleep(750);
-        drivetrain.turnPI(90, .25, .1, 3000); // Turn towards warehouse
-        sleep(750);
+        sleep(650);
+        drivetrain.turnPI(90, .35, .1, 3000); // Turn towards warehouse
+        sleep(650);
         drivetrain.moveInches(20, -.5);
-        sleep(750);
-        drivetrain.turnPI(155, .25, .1, 3000);
-        sleep(750);
+        sleep(650);
+        drivetrain.turnPI(155, .35, .1, 3000);
+        sleep(650);
         drivetrain.moveInches(3,-.5);
-        sleep(750);
+        sleep(650);
         outake.lowGoal();
     }
 
@@ -122,9 +124,9 @@ public class AutoBlueNear extends LinearOpMode {
         }
 
         waitForStart();
-
+        Servo sArm = hardwareMap.get(Servo.class, "shippingArm");
+        sArm.setPosition(.05);
         barcode = vision.getBarcode(false);
-
         if (barcode == 3) {
             carousel();
             highGoal();
@@ -138,7 +140,5 @@ public class AutoBlueNear extends LinearOpMode {
             lowGoal();
             park();
         }
-
-
     }
 }
