@@ -26,16 +26,16 @@ public class AutoBlueNear extends LinearOpMode {
     public void carousel() {
         drivetrain.moveInches(5, 0.5); // Move forward to turn
         sleep(500);
-        drivetrain.turnPI(90, 0.25, 0.1, 3000); // Turn right 90
+        drivetrain.turnPI(90, 0.3, 0.1, 3000); // Turn right 90
         sleep(500);
-        drivetrain.moveInches(8, 0.5); // Move forward
+        drivetrain.moveInches(9, 0.5); // Move forward
         sleep(500);
-        drivetrain.turnPI(145, .25, .15, 3000); //Turn towards carousel
+        drivetrain.turnPI(145, .35, .3, 3000); //Turn towards carousel
         sleep(500);
-        drivetrain.moveInches(11, .5); // Approach Carousel
+        drivetrain.moveInches(16, .3); // Approach Carousel
         sleep(500);
-        carousel.spin(.3); //Spin Carousel
-        sleep(3000);
+        carousel.spin(.45); //Spin Carousel
+        sleep(2000);
         carousel.stop();
 
     }
@@ -63,43 +63,43 @@ public class AutoBlueNear extends LinearOpMode {
 
     public void highGoal() {
         drivetrain.moveInches(11,-.5); // Back up from Carousel;
-        sleep(500);
+        sleep(750);
         drivetrain.turnPI(90, .25, .1, 3000); // Turn towards warehouse
-        sleep(500);
+        sleep(750);
         drivetrain.moveInches(20, -.5);
-        sleep(500);
-        drivetrain.turnPI(145, .25, .1, 3000);
-        sleep(500);
+        sleep(750);
+        drivetrain.turnPI(160,.4, .1, 3000);
+        sleep(750);
         drivetrain.moveInches(5,-.5);
-        sleep(500);
+        sleep(750);
         outake.highGoal();
     }
 
     public void midGoal() {
         drivetrain.moveInches(11,-.5); // Back up from Carousel;
-        sleep(500);
+        sleep(750);
         drivetrain.turnPI(90, .25, .1, 3000); // Turn towards warehouse
-        sleep(500);
+        sleep(750);
         drivetrain.moveInches(20, -.5);
-        sleep(500);
+        sleep(750);
         drivetrain.turnPI(155, .25, .1, 3000);
-        sleep(500);
+        sleep(750);
         drivetrain.moveInches(4,-.5);
-        sleep(500);
+        sleep(750);
         outake.midGoal();
     }
 
     public void lowGoal() {
         drivetrain.moveInches(11,-.5); // Back up from Carousel;
-        sleep(500);
+        sleep(750);
         drivetrain.turnPI(90, .25, .1, 3000); // Turn towards warehouse
-        sleep(500);
+        sleep(750);
         drivetrain.moveInches(20, -.5);
-        sleep(500);
-        drivetrain.turnPI(145, .25, .1, 3000);
-        sleep(500);
+        sleep(750);
+        drivetrain.turnPI(155, .25, .1, 3000);
+        sleep(750);
         drivetrain.moveInches(3,-.5);
-        sleep(500);
+        sleep(750);
         outake.lowGoal();
     }
 
@@ -135,7 +135,7 @@ public class AutoBlueNear extends LinearOpMode {
             park();
         } else {
             carousel();
-            highGoal();
+            lowGoal();
             park();
         }
 

@@ -114,8 +114,8 @@ public class Teleop extends LinearOpMode {
             // If the right trigger is pressed down past a threshhold, the intake will run at full
             // power. If left trigger, will run the opposite direction to clear the robot.
             // If neither condition is met, automatically set power to 0 and rest.
-            if(gamepad1.right_trigger > .5) intake.setPower(-.5); // Intake out
-            else if (gamepad1.left_trigger > .5) intake.setPower(1); // Intake in
+            if(gamepad1.right_trigger > .5) intake.setPower(-1); // Intake out
+            else if (gamepad1.left_trigger > .5) intake.setPower(.5); // Intake in
             else intake.setPower(0);
             //outake
             if(gamepad1.a) {
@@ -135,14 +135,14 @@ public class Teleop extends LinearOpMode {
             // power. If right bumper, will run the opposite direction to spin the carousel.
             // If neither condition is met, automatically set power to 0 and rest.
             if(gamepad1.left_bumper) {
-                spin.setPower(.5);
+                spin.setPower(.45);
                 fL.setPower(.05);
                 fR.setPower(.05);
                 bL.setPower(.05);
                 bR.setPower(.05);
             }
             else if (gamepad1.right_bumper) {
-                spin.setPower(-.5);
+                spin.setPower(-.45);
                 fL.setPower(.05);
                 fR.setPower(.05);
                 bL.setPower(.05);
@@ -174,11 +174,11 @@ public class Teleop extends LinearOpMode {
             // Will likely combine with wrist movement and into different levels.
 
             if (gamepad2.right_trigger > 0.5 && arm.getCurrentPosition() > -10) arm.setPower(-.7);
-            else if (gamepad2.left_trigger > 0.5 && arm.getCurrentPosition() < 2600) arm.setPower(1);
+            else if (gamepad2.left_trigger > 0.5 && arm.getCurrentPosition() < 1400) arm.setPower(1);
             else arm.setPower(0);
 
             if  (gamepad2.a) wrist.setPosition(.1); // Wrist Rest
-            if (gamepad2.b) wrist.setPosition(.45); // Wrist Deposit
+            if (gamepad2.b) wrist.setPosition(.8); // Wrist Deposit
             if (gamepad2.y) wrist.setPosition(.3); // Wrist Flick
             // Currently rotates the box either upright or to be slightly tilted downwards
 

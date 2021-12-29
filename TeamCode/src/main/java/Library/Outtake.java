@@ -125,7 +125,7 @@ public class Outtake {
 
     public void lowGoal() {
         wrist.setPosition(.1);
-        while (pulley.getCurrentPosition() < 1600 && opMode.opModeIsActive()) {
+        while (pulley.getCurrentPosition() < 1700 && opMode.opModeIsActive()) {
 
             pulley.setPower(.5);
             opMode.telemetry.addData("pulley position", pulley.getCurrentPosition());
