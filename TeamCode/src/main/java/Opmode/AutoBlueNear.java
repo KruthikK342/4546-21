@@ -39,7 +39,30 @@ public class AutoBlueNear extends LinearOpMode {
         carousel.spin(.45); //Spin Carousel
         sleep(2500);
         carousel.stop();
+        //intake.collect();
+        sleep(3000);
+        //intake.stop();
 
+    }
+    public void duckPickup() {
+        //preset code
+        //collect duck
+        drivetrain.moveInches(-2.5, 0.5);
+        sleep(500);
+        drivetrain.turnPI(130, .35, .3, 3000);
+        sleep(500);
+        drivetrain.moveInches(2.5, 0.4);
+        sleep(500);
+        //intake.collect();
+        sleep(500);
+        //set robot in proper pos to do shipping hub
+        drivetrain.turnPI(-90, 0.3, 0.1, 3000); // Turn left 90
+        sleep(500);
+        drivetrain.moveInches(3, 0.5);
+        sleep(500);
+        drivetrain.turnPI(-45, .3, .3, 3000);
+        sleep(500);
+        drivetrain.moveInches(3, 0.5);
     }
 
     public void park() {
@@ -111,6 +134,7 @@ public class AutoBlueNear extends LinearOpMode {
         vision = new DuckBarcodeBitmap(this);
         drivetrain = new Drivetrain(this);
         outake = new Outtake(this);
+        //intake = new Intake(this);
         carousel = new Carousel(this);
         telemetry.addLine("Robot Initialized");
         telemetry.update();
@@ -124,7 +148,8 @@ public class AutoBlueNear extends LinearOpMode {
         }
 
         waitForStart();
-        Servo sArm = hardwareMap.get(Servo.class, "shippingArm");
+        carousel();
+        /*Servo sArm = hardwareMap.get(Servo.class, "shippingArm");
         sArm.setPosition(.05);
         barcode = vision.getBarcode(false);
         if (barcode == 3) {
@@ -139,6 +164,6 @@ public class AutoBlueNear extends LinearOpMode {
             carousel();
             lowGoal();
             park();
-        }
+        }*/
     }
 }

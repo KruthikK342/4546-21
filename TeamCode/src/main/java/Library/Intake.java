@@ -5,8 +5,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 public class Intake {
 
-    LinearOpMode opMode;
+    private LinearOpMode opMode;
     private DcMotor intake;
+    private Drivetrain drivetrain;
 
     public Intake(LinearOpMode opMode) {
         this.opMode = opMode;
@@ -14,7 +15,12 @@ public class Intake {
     }
 
     public void collect() {
+
         intake.setPower(1);
+
+    }
+    public void stop() {
+        intake.setPower(0);
     }
 
     public void out() {

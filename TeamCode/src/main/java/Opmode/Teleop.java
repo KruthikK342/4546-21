@@ -24,6 +24,11 @@ public class Teleop extends LinearOpMode {
     private DcMotor spin = null; // carousel control motor
     private DcMotor arm = null; // pulley motor
     private Servo wrist = null; // wrist like outake
+    private Servo shippingArm = null;
+    private Servo hook = null;
+
+
+
 
 
 
@@ -63,6 +68,8 @@ public class Teleop extends LinearOpMode {
         arm = hardwareMap.get(DcMotor.class, "arm");
         wrist = hardwareMap.get(Servo.class, "wrist");
         sort = hardwareMap.get(Servo.class, "sort");
+        shippingArm = hardwareMap.get(Servo.class, "shippingArm");
+        hook = hardwareMap.get(Servo.class, "hook");
         fL.setDirection(DcMotor.Direction.REVERSE);
         bL.setDirection(DcMotor.Direction.REVERSE);
         fR.setDirection(DcMotor.Direction.FORWARD);
@@ -71,8 +78,15 @@ public class Teleop extends LinearOpMode {
         arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-
-
+        // Variables to store positions
+        double sPos = .05;
+        double hPos = .05;
+        String liftState = "down";
+        double wristDeposit = .8;
+        double wristRest = .1;
+        double wristTilt = .4;
+        double liftMax = 1400;
+        double liftMin = 0;
 
         // Waits for the game to start (driver presses PLAY)
 
@@ -81,12 +95,56 @@ public class Teleop extends LinearOpMode {
 
         // starting program
         double power = 1.0;
+        shippingArm.setPosition(.05);
+        hook.setPosition(.05);
 
         while (opModeIsActive()) {
 
-            if (gamepad1.dpad_down)
+            // Lift Macro
+            switch(liftState) {
+                case("raise"): {
+                    wrist.setPosition(wristTilt); // Tilt box back
+                    arm.setPower(1); // Lift arm, increase encoder
+                    if (arm.getCurrentPosition() > liftMax) { // Reaches top
+                        arm.setPower(0); // Stop lift
+                        liftState = "deposit"; // Change case by changing state
+                        runtime.reset(); // Reset time, used for depositing
+                    }
+                    break;
+                }
+                case("deposit"): {
+                    wrist.setPosition(1); // Deposit, Box points straight down
+                    if (runtime.time() > 500) { // Allows half a second to allow freight to deposit
+                        wrist.setPosition(wristRest); // Tilts box back to resting position
+                        liftState = "retract"; // Change case
+                    }
+                    break;
+                }
+
+                case("retract"): {
+                    arm.setPower(-.7); // Retract lift
+                    if (arm.getCurrentPosition() < liftMin) { // Checks if lift at bottom
+                        arm.setPower(0); // Stops lift
+                        liftState = "down"; // Change case back to resting
+                    }
+                    break;
+                }
+
+                default: { // Should never be reached as liftState will never de NULL
+                    liftState = "down";
+                }
+            }
+
+            if (gamepad1.dpad_right) { // Begin lift sequence
+                liftState = "raise";
+            }
+            if (gamepad1.dpad_left) { // Interrupt and stop lift sequence
+                liftState = "down";
+            }
+
+            if (gamepad1.dpad_down) // Half-power mode
                 power = 0.5;
-            else if (gamepad1.dpad_up)
+            else if (gamepad1.dpad_up) // Full-power mode
                 power = 1.0;
 
             // Driving [arcade mode]
@@ -114,21 +172,14 @@ public class Teleop extends LinearOpMode {
             // If the right trigger is pressed down past a threshhold, the intake will run at full
             // power. If left trigger, will run the opposite direction to clear the robot.
             // If neither condition is met, automatically set power to 0 and rest.
-            if(gamepad1.right_trigger > .5) intake.setPower(-1); // Intake out
-            else if (gamepad1.left_trigger > .5) intake.setPower(.5); // Intake in
+            if(gamepad1.right_trigger > .5) intake.setPower(-1); // Intake in
+            else if (gamepad1.left_trigger > .5) intake.setPower(.5); // Intake out
             else intake.setPower(0);
+
             //outake
-            if(gamepad1.a) {
-                outake.setPower(.7); // Outake forward
-            }
-            else if(gamepad1.b)  {
-                outake.setPower(-.7); //Outake reverse
-            }
-            else  {
-                outake.setPower(0);
-            }
-
-
+            if(gamepad1.a) outake.setPower(.7); // Outake forward
+            else if(gamepad1.b) outake.setPower(-.7); //Outake reverse
+            else outake.setPower(0);
 
 
             // If the left bumper is pressed down past a threshhold, the carousel will run at half
@@ -151,9 +202,9 @@ public class Teleop extends LinearOpMode {
             else spin.setPower(0);
 
             // Either adjust the servo to sort into the box or into the base outtake
-            if (gamepad1.x) sort.setPosition(.55); //Sorting into box
+            if (gamepad1.x) sort.setPosition(.55); // Sorting into box
+            if (gamepad1.y) sort.setPosition(0); // Sorting into base outtake
 
-            if (gamepad1.y) sort.setPosition(0); //sorting into base outtake
 
             //Driver 2
             /*
@@ -173,22 +224,45 @@ public class Teleop extends LinearOpMode {
             // if the left trigger is pressed, the arm will retract back down. Otherwise rest.
             // Will likely combine with wrist movement and into different levels.
 
-            if (gamepad2.right_trigger > 0.5 && arm.getCurrentPosition() > -10) arm.setPower(-.7);
-            else if (gamepad2.left_trigger > 0.5 && arm.getCurrentPosition() < 1400) arm.setPower(1);
-            else arm.setPower(0);
+            if (gamepad2.right_trigger > 0.5 && arm.getCurrentPosition() > 10) arm.setPower(-.7);
+            else if (gamepad2.left_trigger > 0.5 && arm.getCurrentPosition() < 1350) arm.setPower(1);
+            else if (liftState == "down") arm.setPower(0);
 
-            if  (gamepad2.a) wrist.setPosition(.1); // Wrist Rest
-            if (gamepad2.b) wrist.setPosition(.8); // Wrist Deposit
-            if (gamepad2.y) wrist.setPosition(.3); // Wrist Flick
-            // Currently rotates the box either upright or to be slightly tilted downwards
+            if  (gamepad2.a) wrist.setPosition(wristRest); // Wrist Rest
+            if (gamepad2.b) wrist.setPosition(wristDeposit); // Wrist Deposit
+            if (gamepad2.y) wrist.setPosition(wristTilt); // Wrist Tilt
+            // Currently rotates the box either upright, tilt back slightly, or deposit element
 
 
-            // Show the elapsed game time and wheel power.
+            // Shipping arm rotates
+            // CURRENTLY ONLY FOR TESTING, NOT READY FOR GAME USE
+            if (gamepad2.dpad_down) shippingArm.setPosition(.8);
+            else if (gamepad2.dpad_up) shippingArm.setPosition(.6);
+
+            // Hook rotates
+            // Left most position hooks
+            // CURRENTLY ONLY FOR TESTING, NOT READY FOR GAME USE
+            if (gamepad2.dpad_left) {
+                hPos += .05;
+                hook.setPosition(hPos);
+            }
+            else if (gamepad2.dpad_right) {
+                hPos -= .05;
+                hook.setPosition(hPos);
+            }
+
+
+            // Show the arm encoder position and wheel power.
             telemetry.addData("Pulley Encoder", arm.getCurrentPosition());
             telemetry.addData("fR:", fR.getPower());
             telemetry.addData("fL:", fL.getPower());
             telemetry.addData("bR:", bR.getPower());
             telemetry.addData("bL:", bL.getPower());
+            /*telemetry.addData("sArm pos:", shippingArm.getPosition());
+            telemetry.addData("hArm pos:", hook.getPosition());
+            telemetry.addData("sPos:", sPos);
+            telemetry.addData("hPos:", hPos);*/
+            telemetry.addData("State: ", liftState);
             telemetry.update();
         }
     }
