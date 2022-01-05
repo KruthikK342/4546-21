@@ -84,7 +84,7 @@ public class Teleop extends LinearOpMode {
         String liftState = "down";
         double wristDeposit = .8;
         double wristRest = .1;
-        double wristTilt = .4;
+        double wristTilt = .41;
         double liftMax = 1400;
         double liftMin = 0;
 
@@ -113,8 +113,9 @@ public class Teleop extends LinearOpMode {
                     break;
                 }
                 case("deposit"): {
-                    wrist.setPosition(1); // Deposit, Box points straight down
-                    if (runtime.time() > 500) { // Allows half a second to allow freight to deposit
+                    wrist.setPosition(wristDeposit); // Deposit, Box points straight down
+                    runtime.reset();
+                    if (runtime.time() > 1) { // Allows a second to allow freight to deposit
                         wrist.setPosition(wristRest); // Tilts box back to resting position
                         liftState = "retract"; // Change case
                     }
@@ -135,10 +136,10 @@ public class Teleop extends LinearOpMode {
                 }
             }
 
-            if (gamepad1.dpad_right) { // Begin lift sequence
+            if (gamepad2.dpad_up) { // Begin lift sequence
                 liftState = "raise";
             }
-            if (gamepad1.dpad_left) { // Interrupt and stop lift sequence
+            if (gamepad2.dpad_down) { // Part 2, deposit and retract
                 liftState = "down";
             }
 
@@ -236,8 +237,8 @@ public class Teleop extends LinearOpMode {
 
             // Shipping arm rotates
             // CURRENTLY ONLY FOR TESTING, NOT READY FOR GAME USE
-            if (gamepad2.dpad_down) shippingArm.setPosition(.8);
-            else if (gamepad2.dpad_up) shippingArm.setPosition(.6);
+        //    if (gamepad2.dpad_down) shippingArm.setPosition(.8);
+          //  else if (gamepad2.dpad_up) shippingArm.setPosition(.6);
 
             // Hook rotates
             // Left most position hooks
