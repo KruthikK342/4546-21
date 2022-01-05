@@ -20,6 +20,7 @@ public class Intake {
 
     }
     public void stop() {
+
         intake.setPower(0);
     }
 

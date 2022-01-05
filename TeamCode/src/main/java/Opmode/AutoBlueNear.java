@@ -39,9 +39,10 @@ public class AutoBlueNear extends LinearOpMode {
         carousel.spin(.45); //Spin Carousel
         sleep(2500);
         carousel.stop();
-        //intake.collect();
+        sleep(500);
+        intake.collect();
         sleep(3000);
-        //intake.stop();
+        intake.stop();
 
     }
     public void duckPickup() {
@@ -134,7 +135,7 @@ public class AutoBlueNear extends LinearOpMode {
         vision = new DuckBarcodeBitmap(this);
         drivetrain = new Drivetrain(this);
         outake = new Outtake(this);
-        //intake = new Intake(this);
+        intake = new Intake(this);
         carousel = new Carousel(this);
         telemetry.addLine("Robot Initialized");
         telemetry.update();
