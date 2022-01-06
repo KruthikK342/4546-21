@@ -1,21 +1,22 @@
 package Opmode;
 
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvCameraFactory;
+import org.openftc.easyopencv.OpenCvCameraRotation;
+import org.openftc.easyopencv.OpenCvInternalCamera;
+
+import Library.Carousel;
 import Library.Drivetrain;
 import Library.DuckBarcodeBitmap;
 import Library.Intake;
-import Library.Carousel;
-import Library.DuckBarcodeBitmap;
 import Library.Outtake;
 
 @Autonomous(name="AutoBlueNear", group="4546")
-public class AutoBlueNear extends LinearOpMode {
+public class AutoBlueNearOCV extends LinearOpMode {
     // front left, front right, back left, back right motors
     private Drivetrain drivetrain;
     private DuckBarcodeBitmap vision;
