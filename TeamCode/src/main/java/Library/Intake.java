@@ -27,4 +27,8 @@ public class Intake {
     public void out() {
         intake.setPower(-1);
     }
+
+    public void autoIntake() {
+        intake.setPower(1);
+    }
 }

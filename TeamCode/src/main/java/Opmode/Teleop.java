@@ -136,10 +136,10 @@ public class Teleop extends LinearOpMode {
                 }
             }
 
-            if (gamepad2.dpad_up) { // Begin lift sequence
+            if (gamepad1.dpad_right) { // Begin lift sequence
                 liftState = "raise";
             }
-            if (gamepad2.dpad_down) { // Part 2, deposit and retract
+            if (gamepad1.dpad_left) { // Part 2, deposit and retract
                 liftState = "down";
             }
 

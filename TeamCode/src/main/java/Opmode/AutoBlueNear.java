@@ -23,26 +23,36 @@ public class AutoBlueNear extends LinearOpMode {
     private Intake intake;
     private Outtake outake;
     private int barcode;
+    private boolean carousel
 
 
     public void carousel() {
+
         drivetrain.moveInches(5, 0.5); // Move forward to turn
         sleep(500);
         drivetrain.turnPI(90, 0.3, 0.1, 3000); // Turn right 90
         sleep(500);
         drivetrain.moveInches(9, 0.5); // Move forward
         sleep(500);
-        drivetrain.turnPI(145, .35, .3, 3000); //Turn towards carousel
+        drivetrain.turnPI(152.5, .25, .35, 3000); //Turn towards carousel
         sleep(500);
-        drivetrain.moveInches(16, .3); // Approach Carousel
+        drivetrain.moveInches(14, .3); // Approach Carousel
         sleep(500);
-        carousel.spin(.45); //Spin Carousel
-        sleep(2500);
+
+
+        switch ()
+        carousel.spin(.35); //Spin Carousel
+        sleep(4500);
         carousel.stop();
         sleep(500);
-        intake.collect();
-        sleep(3000);
-        intake.stop();
+/*
+        drivetrain.moveInches(2, -.3);
+        sleep(500);
+*/
+
+
+
+
 
     }
     public void duckPickup() {
