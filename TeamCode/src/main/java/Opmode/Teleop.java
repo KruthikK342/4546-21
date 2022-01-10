@@ -62,7 +62,7 @@ public class Teleop extends LinearOpMode {
         bL  = hardwareMap.get(DcMotor.class, "bL");
         fR  = hardwareMap.get(DcMotor.class, "fR");
         bR  = hardwareMap.get(DcMotor.class, "bR");
-        intake  = hardwareMap.get(DcMotor.class, "Intake");
+        intake  = hardwareMap.get(DcMotor.class, "intake");
         outake = hardwareMap.get(DcMotor.class, "outake");
         spin = hardwareMap.get(DcMotor.class, "carousel");
         arm = hardwareMap.get(DcMotor.class, "arm");
@@ -85,8 +85,8 @@ public class Teleop extends LinearOpMode {
         double wristDeposit = .8;
         double wristRest = .1;
         double wristTilt = .41;
-        double liftMax = 1400;
-        double liftMin = 0;
+        double liftMax = 1350;
+        double liftMin = 50;
 
         // Waits for the game to start (driver presses PLAY)
 
@@ -114,7 +114,6 @@ public class Teleop extends LinearOpMode {
                 }
                 case("deposit"): {
                     wrist.setPosition(wristDeposit); // Deposit, Box points straight down
-                    runtime.reset();
                     if (runtime.time() > 1) { // Allows a second to allow freight to deposit
                         wrist.setPosition(wristRest); // Tilts box back to resting position
                         liftState = "retract"; // Change case
