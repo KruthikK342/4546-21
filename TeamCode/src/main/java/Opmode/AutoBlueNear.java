@@ -23,7 +23,6 @@ public class AutoBlueNear extends LinearOpMode {
     private Intake intake;
     private Outtake outake;
     private int barcode;
-    private boolean carousel
 
 
     public void carousel() {
