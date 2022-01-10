@@ -39,8 +39,6 @@ public class AutoBlueNear extends LinearOpMode {
         drivetrain.moveInches(14, .3); // Approach Carousel
         sleep(500);
 
-
-        switch ()
         carousel.spin(.35); //Spin Carousel
         sleep(4500);
         carousel.stop();
