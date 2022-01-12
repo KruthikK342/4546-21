@@ -20,12 +20,16 @@ import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
+import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvCameraFactory;
+import org.openftc.easyopencv.OpenCvCameraRotation;
+import org.openftc.easyopencv.OpenCvInternalCamera;
 import org.openftc.easyopencv.OpenCvPipeline;
 import java.util.ArrayList;
 import java.util.concurrent.BlockingQueue;
 
 
-public class VisionOCV extends OpenCvPipeline{
+public class VisionPipeline extends OpenCvPipeline{
     Telemetry telemetry;
 
     Mat mat = new Mat();
@@ -36,7 +40,7 @@ public class VisionOCV extends OpenCvPipeline{
     }
     private Location location;
 
-    public VisionOCV(Telemetry t) { telemetry = t; }
+    public VisionPipeline(Telemetry t) { telemetry = t; }
 
     static final Rect spot3 = new Rect(
             new Point(650, 50),

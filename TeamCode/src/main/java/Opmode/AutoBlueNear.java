@@ -16,7 +16,7 @@ import Library.Intake;
 import Library.Outtake;
 
 @Autonomous(name="AutoBlueNear", group="4546")
-public class AutoBlueNearOCV extends LinearOpMode {
+public class AutoBlueNear extends LinearOpMode {
     // front left, front right, back left, back right motors
     private Drivetrain drivetrain;
     private DuckBarcodeBitmap vision;
