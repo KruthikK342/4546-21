@@ -33,12 +33,12 @@ public class VisionPipeline extends OpenCvPipeline{
     Telemetry telemetry;
 
     Mat mat = new Mat();
-    public enum Location {
+    /*private enum Location {
         LOC1,
         LOC2,
         LOC3
-    }
-    private Location location;
+    }*/
+    private int location;
 
     public VisionPipeline(Telemetry t) { telemetry = t; }
 
@@ -72,15 +72,15 @@ public class VisionPipeline extends OpenCvPipeline{
         int elementLoc = Integer.parseInt(null); //will determine location
 
         if (!elementLeft && !elementRight) {
-            location = Location.LOC1;
+            location = 1;
             telemetry.addData("Element Location", "location 1");
         }
         else if (elementLeft) {
-            location = Location.LOC2;
+            location = 2;
             telemetry.addData("Skystone Location", "location 2");
         }
         else {
-            location = Location.LOC3;
+            location = 3;
             telemetry.addData("Skystone Location", "location 3");
         }
         telemetry.update();
@@ -90,12 +90,12 @@ public class VisionPipeline extends OpenCvPipeline{
         Scalar background = new Scalar(255, 0, 0);
         Scalar element = new Scalar(0, 255, 0);
 
-        Imgproc.rectangle(mat, spot2, location == Location.LOC2? element:background); //draws the rect
-        Imgproc.rectangle(mat, spot3, location == Location.LOC3? element:background);
+        Imgproc.rectangle(mat, spot2, location == 2? element:background); //draws the rect
+        Imgproc.rectangle(mat, spot3, location == 3? element:background);
 
         return mat;
     }
-    public Location getLocation() {
+    public int getLocation() {
         return location;
     }
 }

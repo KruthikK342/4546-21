@@ -40,41 +40,47 @@ public class TestOCV extends LinearOpMode {
 
     OpenCvWebcam webcam;
     VisionPipeline pipeline;
-
     OpenCvCamera botCam;
+
 
     @Override
     public void runOpMode() throws InterruptedException {
         int cameraMonitorViewId = hardwareMap.appContext
                 .getResources().getIdentifier("cameraMonitorViewId",
                         "id", hardwareMap.appContext.getPackageName());
-        botCam = OpenCvCameraFactory.getInstance()
-                .createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
+
+        botCam = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
         VisionPipeline detector = new VisionPipeline(telemetry);
         botCam.setPipeline(detector);
-        botCam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
-        {
+
+        botCam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
             @Override
             public void onOpened() {
-                botCam.startStreaming(1280, 720, OpenCvCameraRotation.SIDEWAYS_LEFT );
+                botCam.startStreaming(1280, 720);
+            }
 
-        }
 
             @Override
             public void onError(int errorCode) {
 
-            });
-                waitForStart();
-        switch (detector.getLocation()) {
-            case 1:
-                // ...
-                break;
-            case 2:
-                // ...
-                break;
-            case 3:
-                // ...
-        }
+            }
+        });
+        waitForStart();
+            switch(detector.getLocation()){
+                case (1): {
+                    // ...
+                    break;
+                }
+                case (2): {
+                    // ...
+                    break;
+                }
+                case (3): {
+                    // ...
+                    break;
+                }
+                default: { }
+            }
         botCam.stopStreaming();
-    }
+        }
 }
