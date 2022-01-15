@@ -33,16 +33,22 @@ public class AutoBlueNear extends LinearOpMode {
         sleep(500);
         drivetrain.moveInches(9, 0.5); // Move forward
         sleep(500);
-        drivetrain.turnPI(145, .35, .3, 3000); //Turn towards carousel
+        drivetrain.turnPI(147, .35, .3, 3000); //Turn towards carousel
         sleep(500);
-        drivetrain.moveInches(16, .3); // Approach Carousel
+        drivetrain.moveInches(20, .3); // Approach Carousel
         sleep(500);
         carousel.spin(.45); //Spin Carousel
         sleep(2500);
         carousel.stop();
         sleep(500);
         intake.collect();
-        sleep(3000);
+        sleep(500);
+        drivetrain.moveInches(13, -.2);
+        sleep(500);
+        drivetrain.turnPI(185, .7, 0, 3000);
+        sleep(500);
+        drivetrain.moveInches(8, .3);
+        sleep(300);
         intake.stop();
 
     }
