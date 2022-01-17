@@ -16,7 +16,7 @@ public class Intake {
 
     public void collect() {
 
-        intake.setPower(1);
+        intake.setPower(-1);
 
     }
     public void stop() {
