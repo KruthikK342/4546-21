@@ -116,7 +116,7 @@ public class AutoBlueNear extends LinearOpMode {
     }
 
     public void reliablePark() {
-        drivetrain.moveInches(34, -.4);
+        drivetrain.moveInches(6.5, -.4);
     }
 
 

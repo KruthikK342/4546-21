@@ -34,7 +34,7 @@ public class AutoRedNear extends LinearOpMode {
         sleep(450);
 
 
-        //start carousel spin
+
 
         carousel.spin(-.42);
         sleep(2600);
@@ -57,7 +57,7 @@ public class AutoRedNear extends LinearOpMode {
     }
 
     public void park() {
-        drivetrain.moveInches(6.5,-.4);
+        drivetrain.moveInches(6.2,-.4);
     }
 
 
@@ -145,9 +145,9 @@ public class AutoRedNear extends LinearOpMode {
          */
         highGoal();
         carousel();
-        sleep(500);
-        intake();
-       // park();
+
+
+        park();
     }
 
 }
