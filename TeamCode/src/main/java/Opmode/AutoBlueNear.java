@@ -1,17 +1,19 @@
 package Opmode;
 
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.Servo;
 
+import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvCameraFactory;
+import org.openftc.easyopencv.OpenCvCameraRotation;
+import org.openftc.easyopencv.OpenCvInternalCamera;
+
+import Library.Carousel;
 import Library.Drivetrain;
 import Library.DuckBarcodeBitmap;
 import Library.Intake;
-import Library.Carousel;
-import Library.DuckBarcodeBitmap;
 import Library.Outtake;
 
 @Autonomous(name="AutoBlueNear", group="4546")
@@ -26,23 +28,37 @@ public class AutoBlueNear extends LinearOpMode {
 
 
     public void carousel() {
-        drivetrain.moveInches(5, 0.5); // Move forward to turn
+        drivetrain.moveInches(3, 0.5); // Move forward to turn
         sleep(500);
-        drivetrain.turnPI(90, 0.3, 0.1, 3000); // Turn right 90
+        drivetrain.turnPD(90, 0.8, 0, 3000); // Turn right 90
+        sleep(250);
+        drivetrain.moveInches(40, 0.5); // Move forward
         sleep(500);
-        drivetrain.moveInches(9, 0.5); // Move forward
+        drivetrain.turnPD(155, .8, 0, 3000);
+        sleep(250);
+        drivetrain.moveInches(22, .5);
         sleep(500);
-        drivetrain.turnPI(145, .35, .3, 3000); //Turn towards carousel
-        sleep(500);
-        drivetrain.moveInches(16, .3); // Approach Carousel
-        sleep(500);
-        carousel.spin(.45); //Spin Carousel
-        sleep(2500);
-        carousel.stop();
-        //intake.collect();
+        carousel.spin(.45);
         sleep(3000);
-        //intake.stop();
-
+        carousel.stop();
+        intake.collect();
+        sleep(500);
+        drivetrain.moveInches(3,.5);
+        sleep(500);
+        drivetrain.turnPI(190, 1, .1, 3000);
+        sleep(250);
+        drivetrain.moveInches(3,.5);
+        sleep(500);
+        drivetrain.turnPI(180, 1, .1, 3000);
+        sleep(250);
+        drivetrain.moveInches(55, -.5);
+        intake.stop();
+        sleep(500);
+        drivetrain.turnPD(90, .8, .1, 3000);
+        sleep(250);
+        drivetrain.moveInches(30, -.5);
+        sleep(500);
+        outake.highGoal();
     }
     public void duckPickup() {
         //preset code
@@ -87,7 +103,21 @@ public class AutoBlueNear extends LinearOpMode {
     }
 
     public void highGoal() {
-        drivetrain.moveInches(11,-.5); // Back up from Carousel;
+        drivetrain.moveInches(9,.4); // Back up from Carousel;
+        sleep(750);
+        drivetrain.turnPI(90, .25, .1, 3000); // Turn towards warehouse
+        sleep(750);
+        drivetrain.moveInches(20, -.5);
+        sleep(750);
+        drivetrain.turnPI(160,.4, .1, 3000);
+        sleep(750);
+        drivetrain.moveInches(10,-.5);
+        sleep(750);
+        outake.highGoal();
+    }
+
+    public void midGoal() {
+        drivetrain.moveInches(9,.4); // Back up from Carousel;
         sleep(750);
         drivetrain.turnPI(90, .25, .1, 3000); // Turn towards warehouse
         sleep(750);
@@ -100,31 +130,17 @@ public class AutoBlueNear extends LinearOpMode {
         outake.highGoal();
     }
 
-    public void midGoal() {
-        drivetrain.moveInches(11,-.5); // Back up from Carousel;
+    public void lowGoal() {
+        drivetrain.moveInches(9,.4); // Back up from Carousel;
         sleep(750);
         drivetrain.turnPI(90, .25, .1, 3000); // Turn towards warehouse
         sleep(750);
         drivetrain.moveInches(20, -.5);
         sleep(750);
-        drivetrain.turnPI(155, .25, .1, 3000);
+        drivetrain.turnPI(160,.4, .1, 3000);
         sleep(750);
-        drivetrain.moveInches(4,-.5);
+        drivetrain.moveInches(1,-.5);
         sleep(750);
-        outake.midGoal();
-    }
-
-    public void lowGoal() {
-        drivetrain.moveInches(11,-.5); // Back up from Carousel;
-        sleep(650);
-        drivetrain.turnPI(90, .35, .1, 3000); // Turn towards warehouse
-        sleep(650);
-        drivetrain.moveInches(20, -.5);
-        sleep(650);
-        drivetrain.turnPI(155, .35, .1, 3000);
-        sleep(650);
-        drivetrain.moveInches(3,-.5);
-        sleep(650);
         outake.lowGoal();
     }
 
@@ -134,8 +150,16 @@ public class AutoBlueNear extends LinearOpMode {
         vision = new DuckBarcodeBitmap(this);
         drivetrain = new Drivetrain(this);
         outake = new Outtake(this);
-        //intake = new Intake(this);
+        intake = new Intake(this);
         carousel = new Carousel(this);
+        DcMotor fL  = hardwareMap.get(DcMotor.class, "fL");
+        DcMotor bL  = hardwareMap.get(DcMotor.class, "bL");
+        DcMotor fR  = hardwareMap.get(DcMotor.class, "fR");
+        DcMotor bR  = hardwareMap.get(DcMotor.class, "bR");
+        fL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        bL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        fR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        bR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         telemetry.addLine("Robot Initialized");
         telemetry.update();
 
@@ -148,6 +172,7 @@ public class AutoBlueNear extends LinearOpMode {
         }
 
         waitForStart();
+        highGoal();
         carousel();
         /*Servo sArm = hardwareMap.get(Servo.class, "shippingArm");
         sArm.setPosition(.05);
