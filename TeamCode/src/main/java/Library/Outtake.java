@@ -51,7 +51,7 @@ public class Outtake {
         wrist.setPosition(.41);
         while (pulley.getCurrentPosition() < 1350 && opMode.opModeIsActive()) {
 
-            pulley.setPower(.8);
+            pulley.setPower(1);
             opMode.telemetry.addData("pulley position", pulley.getCurrentPosition());
             opMode.telemetry.update();
 
