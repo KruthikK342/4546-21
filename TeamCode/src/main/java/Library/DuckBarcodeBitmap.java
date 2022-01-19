@@ -115,7 +115,7 @@ public class DuckBarcodeBitmap {
             the background from being included).
         */
         for(int y = 0; y < height/3; y += 3) {
-            for(int x = 0; x<width; x += 2) {
+            for(int x = 0; x < width; x += 2) {
                 /*
                 * Get the pixel value
                 * Get red, blue, and green values for pixel
@@ -145,7 +145,7 @@ public class DuckBarcodeBitmap {
             one. The threshold was decided through experimentation.
         */
         int section = width/2;
-        if (teamElementPixelCount >= 4500) {
+        if (teamElementPixelCount >= 2000) {
             teamElementXPosition /= teamElementPixelCount;
             if(teamElementXPosition <= section) {
                 barcode = 2;
