@@ -4,8 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 public class Carousel {
-
-    private LinearOpMode opMode;
+    LinearOpMode opMode;
     private DcMotor spinner;
     private Drivetrain drivetrain;
 

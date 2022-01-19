@@ -28,37 +28,41 @@ public class AutoBlueNear extends LinearOpMode {
 
 
     public void carousel() {
+
         drivetrain.moveInches(3, 0.5); // Move forward to turn
-        sleep(500);
+        sleep(450);
         drivetrain.turnPD(90, 0.8, 0, 3000); // Turn right 90
-        sleep(250);
+        sleep(300);
         drivetrain.moveInches(40, 0.5); // Move forward
-        sleep(500);
+        sleep(450);
         drivetrain.turnPD(155, .8, 0, 3000);
-        sleep(250);
-        drivetrain.moveInches(22, .5);
-        sleep(500);
-        carousel.spin(.45);
+        sleep(300);
+        drivetrain.moveInches(23, .5);
+        sleep(200);
+        //start carousel spin
+
+        carousel.spin(.5);
         sleep(3000);
         carousel.stop();
+
+        //intake code
+
         intake.collect();
-        sleep(500);
+        sleep(300);
         drivetrain.moveInches(3,.5);
-        sleep(500);
+        sleep(400);
         drivetrain.turnPI(190, 1, .1, 3000);
         sleep(250);
         drivetrain.moveInches(3,.5);
-        sleep(500);
-        drivetrain.turnPI(180, 1, .1, 3000);
-        sleep(250);
-        drivetrain.moveInches(55, -.5);
+        sleep(300);
+        //drivetrain.turnPI(180, 1, .1, 3000);
+        //sleep(250);
+
         intake.stop();
-        sleep(500);
-        drivetrain.turnPD(90, .8, .1, 3000);
-        sleep(250);
-        drivetrain.moveInches(30, -.5);
-        sleep(500);
-        outake.highGoal();
+
+        //intake stopped
+
+
     }
     public void duckPickup() {
         //preset code
@@ -102,45 +106,59 @@ public class AutoBlueNear extends LinearOpMode {
         */
     }
 
+    public void duckHighGoal() {
+        sleep(500);
+        drivetrain.turnPD(90, .8, .1, 3000);
+        sleep(250);
+        drivetrain.moveInches(28, -.5);
+        sleep(500);
+        outake.highGoal();
+    }
+
+    public void reliablePark() {
+        drivetrain.moveInches(34, -.4);
+    }
+
+
     public void highGoal() {
         drivetrain.moveInches(9,.4); // Back up from Carousel;
-        sleep(750);
+        sleep(400);
         drivetrain.turnPI(90, .25, .1, 3000); // Turn towards warehouse
-        sleep(750);
+        sleep(400);
         drivetrain.moveInches(20, -.5);
-        sleep(750);
+        sleep(400);
         drivetrain.turnPI(160,.4, .1, 3000);
-        sleep(750);
+        sleep(550);
         drivetrain.moveInches(10,-.5);
-        sleep(750);
+        sleep(600);
         outake.highGoal();
     }
 
     public void midGoal() {
         drivetrain.moveInches(9,.4); // Back up from Carousel;
-        sleep(750);
+        sleep(400);
         drivetrain.turnPI(90, .25, .1, 3000); // Turn towards warehouse
-        sleep(750);
+        sleep(400);
         drivetrain.moveInches(20, -.5);
-        sleep(750);
+        sleep(400);
         drivetrain.turnPI(160,.4, .1, 3000);
-        sleep(750);
+        sleep(550);
         drivetrain.moveInches(5,-.5);
-        sleep(750);
+        sleep(700);
         outake.highGoal();
     }
 
     public void lowGoal() {
         drivetrain.moveInches(9,.4); // Back up from Carousel;
-        sleep(750);
+        sleep(400);
         drivetrain.turnPI(90, .25, .1, 3000); // Turn towards warehouse
-        sleep(750);
+        sleep(400);
         drivetrain.moveInches(20, -.5);
-        sleep(750);
+        sleep(400);
         drivetrain.turnPI(160,.4, .1, 3000);
-        sleep(750);
+        sleep(550);
         drivetrain.moveInches(1,-.5);
-        sleep(750);
+        sleep(700);
         outake.lowGoal();
     }
 
@@ -174,6 +192,7 @@ public class AutoBlueNear extends LinearOpMode {
         waitForStart();
         highGoal();
         carousel();
+        reliablePark();
         /*Servo sArm = hardwareMap.get(Servo.class, "shippingArm");
         sArm.setPosition(.05);
         barcode = vision.getBarcode(false);
