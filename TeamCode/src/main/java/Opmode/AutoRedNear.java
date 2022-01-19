@@ -24,66 +24,86 @@ public class AutoRedNear extends LinearOpMode {
     private int barcode;
 
     public void carousel() {
-        drivetrain.moveInches(3, 0.5);
+
+        drivetrain.moveInches(3, 0.5); // Move forward to turn
+        sleep(450);
+        drivetrain.turnPD(-106.5, 0.63, .1, 3000);
         sleep(300);
-        drivetrain.turnPI(-87, 0.25, 0.25, 2000);
-        sleep(500);
-        drivetrain.moveInches(57, .4);
-        sleep(500);
-        carousel.spin(-.5);
-        sleep(3500);
+
+        drivetrain.moveInches(56, 0.45); // Move forward
+        sleep(450);
+
+
+
+
+        carousel.spin(-.42);
+        sleep(2600);
+        sleep(300);
+        carousel.spin(.3);
+        sleep(800);
         carousel.stop();
+
+    }
+
+    public void intake() {
+        //intake code
+        intake.collect();
+        sleep(100);
+        drivetrain.moveInches(3,.5);
+        sleep(200);
+        drivetrain.turnPI(210, 1, .1, 3000);
+        sleep(1500);
+        intake.stop();
     }
 
     public void park() {
-
-        drivetrain.moveInches(2.5, 0.5);
-        sleep(800);
-
-        drivetrain.turnPD(-3, 0.30, 0.25, 2000);
-        sleep(500);
-        drivetrain.turnPD(113,.25,.25,2000);
-
-        drivetrain.moveInches(7, -.8);
-        sleep(1000);
-        drivetrain.moveInches(40, -1);
+        drivetrain.moveInches(6.2,-.4);
     }
 
+
+
     public void midGoal() {
-        drivetrain.moveInches(5.5, 0.5);
-        sleep(800);
-        // drivetrain.turnPI(-255, 0.05, 0, 2000);
-        drivetrain.turnPD(145, 0.45, 0.25, 2000);
+        drivetrain.moveInches(9,.4); // Back up from Carousel;
+        sleep(400);
+        drivetrain.turnPI(-90, .25, .1, 3000); // Turn towards warehouse
+        sleep(400);
+        drivetrain.moveInches(15, -.5);
         sleep(500);
-        drivetrain.moveInches(6.3, -0.45);
+        drivetrain.turnPI(177,.38, .1, 3000);
+        sleep(450);
+        drivetrain.moveInches(2, -.4);
         sleep(500);
         outake.midGoal();
-        sleep(500);
     }
 
     public void highGoal() {
-        drivetrain.moveInches(4.5, 0.5);
-        sleep(800);
-
-        drivetrain.turnPD(140, 0.45, 0.25, 2000);
+        drivetrain.moveInches(9,.4); // Back up from Carousel;
+        sleep(400);
+        drivetrain.turnPI(-90, .25, .1, 3000); // Turn towards warehouse
+        sleep(400);
+        drivetrain.moveInches(15, -.5);
         sleep(500);
-        drivetrain.moveInches(6.7, -0.45);
+        drivetrain.turnPI(177,.38,.08, 3000);
+        sleep(500);
+        drivetrain.moveInches(2.3, -.4);
         sleep(500);
         outake.highGoal();
-        sleep(500);
+
 
     }
 
     public void lowGoal() {
-        drivetrain.moveInches(5.5, 0.5);
-        sleep(800);
-
-        drivetrain.turnPD(-145, 0.45, 0.25, 2000);
+        drivetrain.moveInches(9,.4); // Back up from Carousel;
+        sleep(400);
+        drivetrain.turnPI(-90, .25, .1, 3000); // Turn towards warehouse
+        sleep(400);
+        drivetrain.moveInches(15, -.5);
         sleep(500);
-        drivetrain.moveInches(6.1, -0.45);
+        drivetrain.turnPI(177,.38, .1, 3000);
+        sleep(450);
+        drivetrain.moveInches(2, -.4);
         sleep(500);
         outake.lowGoal();
-        sleep(500);
     }
 
     @Override
@@ -92,12 +112,26 @@ public class AutoRedNear extends LinearOpMode {
         vision = new DuckBarcodeBitmap(this);
         drivetrain = new Drivetrain(this);
         outake = new Outtake(this);
+        intake = new Intake(this);
         barcode = vision.getBarcode(true);
+        carousel = new Carousel(this);
+        /*
+        DcMotor fL  = hardwareMap.get(DcMotor.class, "fL");
+        DcMotor bL  = hardwareMap.get(DcMotor.class, "bL");
+        DcMotor fR  = hardwareMap.get(DcMotor.class, "fR");
+        DcMotor bR  = hardwareMap.get(DcMotor.class, "bR");
+        fL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        bL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        fR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        bR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+         */
         while(!isStarted()) {
             telemetry.addData("Barcode: ", barcode);
             telemetry.update();
         }
         waitForStart();
+        /*
         barcode = vision.getBarcode(true);
         if (barcode == 1) {
             lowGoal();
@@ -106,6 +140,13 @@ public class AutoRedNear extends LinearOpMode {
         } else {
             midGoal();
         }
+        park();
+
+         */
+        highGoal();
+        carousel();
+
+
         park();
     }
 
