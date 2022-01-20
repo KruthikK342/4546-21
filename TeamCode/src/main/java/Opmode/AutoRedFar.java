@@ -32,7 +32,7 @@ public class AutoRedFar extends LinearOpMode {
 
         drivetrain.moveInches(7, -.8);
         sleep(1000);
-        drivetrain.moveInches(40, -1);
+        drivetrain.moveInches(60, -1);
     }
 
     public void midGoal() {
