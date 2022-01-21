@@ -40,6 +40,7 @@ public class AutoBlueFar extends LinearOpMode {
     }
 
     public void highGoal() {
+        /*
         drivetrain.moveInches(4.5, 0.5);
         sleep(800);
 
@@ -49,6 +50,19 @@ public class AutoBlueFar extends LinearOpMode {
         sleep(500);
         outake.highGoal();
         sleep(500);
+
+         */
+        drivetrain.moveInches(9,.4); //
+        sleep(400);
+        drivetrain.turnPI(-90, .25, .1, 3000); //
+        sleep(400);
+        drivetrain.moveInches(10, -.5);
+        sleep(400);
+        drivetrain.turnPI(191,.4, .1, 3000);
+        sleep(550);
+        drivetrain.moveInches(.8,-.5);
+        sleep(600);
+        outake.highGoal();
     }
 
     public void lowGoal() {
@@ -64,7 +78,7 @@ public class AutoBlueFar extends LinearOpMode {
     }
 
     public void park() {
-        drivetrain.moveInches(2.5, 0.5);
+        drivetrain.moveInches(2, 0.5);
         sleep(800);
 
         drivetrain.turnPI(0, 0.25, 0.1, 3000);
@@ -96,16 +110,20 @@ public class AutoBlueFar extends LinearOpMode {
         waitForStart();
 
         barcode = vision.getBarcode(false);
+        telemetry.addData("Barcode: ", barcode);
+        telemetry.update();
 
+        /*
         if (barcode == 1) {
             lowGoal();
         } else if (barcode == 3) {
             highGoal();
         } else {
             midGoal();
-        }
+        }*/
 
-        park();
+        //highGoal();
+        //park();
 
 
     }

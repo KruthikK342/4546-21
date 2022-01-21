@@ -28,9 +28,9 @@ public class DuckBarcodeBitmap {
     private VuforiaLocalizer.CameraDirection CAMERA_CHOICE = VuforiaLocalizer.CameraDirection.BACK;
     private static final String VUFORIA_KEY = "AVFFxKT/////AAABmQTYeIgT6k6wv0phn1XaTKN+Z9RdP23vp3+6IEyv9haxqO0u2vStZKAjPLct97BEhaeSkeYivFGo2IDu8fWfJlBY+2JZ0FIf8M2N7yW5XExNYWbGNwwem7Wgzsl5ld4wr6xOeXqcwtVn1mgt5ELcypOfvRnnun3FWIBr7mx+AJRN1ZAnqVvfOphPVxNm9vpylN4d5nJu58aTxiXMCJadPhhyviOGVlI6tT//lTO5GJEBva9xN+SXpxsTnPEaegQNE+qzFxVzmtXabk+oAuMxDh1XR+6EbyZzZjQm3gI9DXkt7os7ZkM95GXEZN9MHRwPWdwbk1Bt/iGI3VcXp2VfUDhWYXaWJjvu/aZC2WqrhAef";
 
-    private final int BLACK_RED_THRESHOLD = 25;
-    private final int BLACK_GREEN_THRESHOLD = 25;
-    private final int BLACK_BLUE_THRESHOLD = 25;
+    private final int RED_THRESHOLD = 168;
+    private final int GREEN_THRESHOLD = 118;
+    private final int BLUE_THRESHOLD = 150;
 
 
 
@@ -102,7 +102,7 @@ public class DuckBarcodeBitmap {
             has to be shortened there. Otherwise, if it's red, then we can just use the
             whole width.
         */
-        int width = (!isred) ? (int) (940.0/1280 * bitmap.getWidth()) : bitmap.getWidth();          //me when
+        int width = bitmap.getWidth();          //me when
         int teamElementXPosition = 0, teamElementPixelCount = 0;
 
         /*
@@ -114,7 +114,7 @@ public class DuckBarcodeBitmap {
             used here is 1/3 of the bitmap height (this avoids black pixels in
             the background from being included).
         */
-        for(int y = 0; y < height/3; y += 3) {
+        for(int y = 0; y < height; y += 3) {
             for(int x = 0; x<width; x += 2) {
                 /*
                 * Get the pixel value
@@ -127,8 +127,10 @@ public class DuckBarcodeBitmap {
                 int redValue = red(pixel);
                 int blueValue  = blue(pixel);
                 int greenValue = green(pixel);
-                boolean isBlack = redValue <= BLACK_RED_THRESHOLD && greenValue <= BLACK_GREEN_THRESHOLD && blueValue <= BLACK_BLUE_THRESHOLD;
-                if(isBlack) {
+                boolean isRed = 167 >= redValue && redValue < 170;
+                boolean isGreen = 118 >= greenValue && greenValue < 125;
+                boolean isBlue = 118 >= blueValue && blueValue < 150;
+                if(isRed && isGreen && isBlue) {
                     ++teamElementPixelCount;
                     teamElementXPosition += x;
                 }
@@ -145,14 +147,13 @@ public class DuckBarcodeBitmap {
             one. The threshold was decided through experimentation.
         */
         int section = width/2;
-        if (teamElementPixelCount >= 4500) {
-            teamElementXPosition /= teamElementPixelCount;
             if(teamElementXPosition <= section) {
                 barcode = 2;
-            }else if(teamElementXPosition > section) {
+            }
+            else if(teamElementXPosition > section) {
                 barcode = 3;
             }
-        } else {
+        else {
             barcode = 1;
         }
 
@@ -175,7 +176,7 @@ public class DuckBarcodeBitmap {
                 int redValue = red(pixel);
                 int blueValue  = blue(pixel);
                 int greenValue = green(pixel);
-                boolean isBlack = redValue <= BLACK_RED_THRESHOLD && greenValue <= BLACK_GREEN_THRESHOLD && blueValue <= BLACK_BLUE_THRESHOLD;
+                boolean isBlack = redValue >= RED_THRESHOLD && greenValue >= GREEN_THRESHOLD && blueValue >= BLUE_THRESHOLD;
                 if(isBlack) {
                     ++teamElementPixelCount;
                     teamElementXPosition += x;
