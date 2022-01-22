@@ -96,14 +96,16 @@ public class DuckBarcodeBitmap {
     public int getBarcode(boolean isred) throws InterruptedException {
         Bitmap bitmap = getBitmap();
         int height = bitmap.getHeight();
+        int width = bitmap.getWidth();
+        int teamElementXPosition = 0;
+
+
         /*
             This ternary expression accounts for the bitmap resizing the image taken
             by the camera. We only need to do this for the blue side since the width
             has to be shortened there. Otherwise, if it's red, then we can just use the
             whole width.
         */
-        int width = (!isred) ? (int) (940.0/1280 * bitmap.getWidth()) : bitmap.getWidth();          //me when
-        int teamElementXPosition = 0, teamElementPixelCount = 0;
 
         /*
             In this loop, we obtain pixel values from the bitmap to determine
@@ -114,51 +116,52 @@ public class DuckBarcodeBitmap {
             used here is 1/3 of the bitmap height (this avoids black pixels in
             the background from being included).
         */
-        for(int y = 0; y < height/3; y += 3) {
-            for(int x = 0; x < width; x += 2) {
-                /*
-                * Get the pixel value
-                * Get red, blue, and green values for pixel
-                * Check if the pixel falls within the threshold
-                * If it  does, then we count that as a black pixel
-                * and get its X position.
-                */
-                int pixel = bitmap.getPixel(x,y);
-                int redValue = red(pixel);
-                int blueValue  = blue(pixel);
-                int greenValue = green(pixel);
-                boolean isBlack = redValue <= BLACK_RED_THRESHOLD && greenValue <= BLACK_GREEN_THRESHOLD && blueValue <= BLACK_BLUE_THRESHOLD;
-                if(isBlack) {
-                    ++teamElementPixelCount;
-                    teamElementXPosition += x;
+
+        barcode = 1;
+        // barcode 2, 3
+        int heightLow[] = {40, 46};
+        int heightHigh[] = {240, 245};
+        int widthLow[] = {34, 340};
+        int widthHigh[] = {144, 445};
+        int j = 0, m = 0;
+        for (int i = 0; i < 2; i++) {
+            int teamElementPixelCount = 0;
+            for (int y = heightLow[i]; y < heightHigh[i]; y += 3) {
+                for (int x = widthLow[i]; x < widthHigh[i]; x += 2) {
+                    int pixel = bitmap.getPixel(x, y);
+                    int redValue = red(pixel);
+                    int blueValue = blue(pixel);
+                    int greenValue = green(pixel);
+                    boolean isBlack = redValue <= BLACK_RED_THRESHOLD && blueValue <= BLACK_BLUE_THRESHOLD && greenValue <= BLACK_GREEN_THRESHOLD;
+                    if (isBlack) {
+                        ++teamElementPixelCount;
+                        teamElementXPosition += x;
+                    }
                 }
             }
-        }
 
-        int barcode = 0;
-        /*
-            The section variable is half the width since only
-            two of the barcodes are visible. The left half of the
-            screen contains the second barcode and the right half contains
-            the third barcode. If the minimum threshold of black pixels is
-            not met, then we can assume that the barcode must be the first
-            one. The threshold was decided through experimentation.
-        */
-        int section = width/2;
-        if (teamElementPixelCount >= 2000) {
-            teamElementXPosition /= teamElementPixelCount;
-            if(teamElementXPosition <= section) {
+            /* j and m are for telemetry; j is barcode 2 and m is barcode 3 */
+            if (i == 0)
+                j = teamElementPixelCount; // barcode 2
+            if (i == 1)
+                m = teamElementPixelCount; // barcode 3
+
+
+            if (teamElementPixelCount >= 2500 && i == 0) {
                 barcode = 2;
-            }else if(teamElementXPosition > section) {
+            } else if (teamElementPixelCount >= 2500 && i == 1) {
                 barcode = 3;
             }
-        } else {
-            barcode = 1;
         }
 
-        opMode.telemetry.addData("TeamElementPixelCount: ", teamElementPixelCount);
-        opMode.telemetry.addData("TeamElementXPosition: ", teamElementXPosition);
+
+
+
+        opMode.telemetry.addData("Width: ", bitmap.getWidth());
+        opMode.telemetry.addData("Height: ", bitmap.getHeight());
         opMode.telemetry.addData("Barcode ", barcode);
+        opMode.telemetry.addData("bar2: ", j);
+        opMode.telemetry.addData("bar3: ", m);
         opMode.telemetry.update();
         return barcode;
     }

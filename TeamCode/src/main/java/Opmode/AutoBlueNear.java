@@ -190,11 +190,10 @@ public class AutoBlueNear extends LinearOpMode {
         }
 
         waitForStart();
+        barcode = vision.getBarcode(false);
         highGoal();
         carousel();
         reliablePark();
-        /*Servo sArm = hardwareMap.get(Servo.class, "shippingArm");
-        sArm.setPosition(.05);
         barcode = vision.getBarcode(false);
         if (barcode == 3) {
             carousel();
@@ -208,6 +207,6 @@ public class AutoBlueNear extends LinearOpMode {
             carousel();
             lowGoal();
             park();
-        }*/
+        }
     }
 }
