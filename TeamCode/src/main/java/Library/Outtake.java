@@ -59,7 +59,7 @@ public class Outtake {
         pulley.setPower(0);
         wrist.setPosition(.8);
         opMode.sleep(500);
-        wrist.setPosition(.41);
+        wrist.setPosition(.1);
         opMode.sleep(500);
 
         while (pulley.getCurrentPosition() > 50 && opMode.opModeIsActive()) {

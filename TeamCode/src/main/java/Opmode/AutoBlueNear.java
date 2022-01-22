@@ -95,15 +95,6 @@ public class AutoBlueNear extends LinearOpMode {
         drivetrain.turnPI(0, .25, .1, 3000);
         sleep(500);
         drivetrain.moveInches(10, .5);
-        /*
-        highGoal();
-        drivetrain.moveInches(10, 0.5);
-        sleep(500);
-        drivetrain.turnPI(-10, 0.25, 0.25, 2000);
-        sleep(500);
-        drivetrain.moveInches(150, -.8);
-        sleep(500);
-        */
     }
 
     public void duckHighGoal() {
