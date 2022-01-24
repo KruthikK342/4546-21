@@ -82,10 +82,10 @@ public class Teleop extends LinearOpMode {
         double sPos = .05;
         double hPos = .05;
         String liftState = "down";
-        double wristDeposit = .8;
+        double wristDeposit = .6;
         double wristRest = .1;
         double wristTilt = .41;
-        double liftMax = 1350;
+        double liftMax = 1250;
         double liftMin = 50;
 
         // Waits for the game to start (driver presses PLAY)

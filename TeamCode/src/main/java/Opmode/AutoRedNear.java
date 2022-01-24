@@ -56,10 +56,25 @@ public class AutoRedNear extends LinearOpMode {
         intake.stop();
     }
 
+    /*
     public void park() {
         drivetrain.moveInches(6.2,-.4);
     }
+    /
+     */
 
+    public void park() {
+        drivetrain.moveInches(2.5, 0.5);
+        sleep(800);
+
+        drivetrain.turnPD(-3, 0.30, 0.25, 2000);
+        sleep(500);
+        drivetrain.turnPD(-113,.25,.25,2000);
+
+        drivetrain.moveInches(7, -.8);
+        sleep(1000);
+        drivetrain.moveInches(60, -1);
+    }
 
 
     public void midGoal() {
@@ -131,8 +146,10 @@ public class AutoRedNear extends LinearOpMode {
             telemetry.update();
         }
         waitForStart();
-        /*
+
         barcode = vision.getBarcode(true);
+        sleep(
+                6000);
         if (barcode == 1) {
             lowGoal();
         } else if (barcode == 3) {
@@ -140,13 +157,8 @@ public class AutoRedNear extends LinearOpMode {
         } else {
             midGoal();
         }
-        park();
 
-         */
-        highGoal();
         carousel();
-
-
         park();
     }
 

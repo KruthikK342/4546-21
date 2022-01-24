@@ -23,16 +23,12 @@ public class AutoRedFar extends LinearOpMode {
 
 
     public void park() {
-        drivetrain.moveInches(2.5, 0.5);
-        sleep(800);
-
-        drivetrain.turnPD(-3, 0.30, 0.25, 2000);
-        sleep(500);
-        drivetrain.turnPD(-113,.25,.25,2000);
-
-        drivetrain.moveInches(7, -.8);
-        sleep(1000);
-        drivetrain.moveInches(60, -1);
+       drivetrain.moveInches(3, -.5);
+       sleep(500);
+       drivetrain.turnPI(180, .25, .1, 3000);
+       sleep(500);
+       drivetrain.moveInches(9, -.5);
+       sleep(500);
     }
 
     public void midGoal() {
@@ -90,6 +86,7 @@ public class AutoRedFar extends LinearOpMode {
            the corresponding ___Goal() function and then park.
         */
         barcode = vision.getBarcode(true);
+        sleep(5000);
         if (barcode == 1) {
             lowGoal();
         } else if (barcode == 3) {
