@@ -24,13 +24,9 @@ public class AutoRedCarouselLite extends LinearOpMode {
     public void carousel() {
         drivetrain.moveInches(24, 0.5); // Move forward to turn
         sleep(450);
-        drivetrain.turnPD(-90, 0.5, 0.1, 3000); // Turn right 90
+        drivetrain.turnPD(-120, 0.5, 0.1, 3000); // Turn right 90
         sleep(300);
-        drivetrain.moveInches(29, 0.5); // Move forward
-        sleep(450);
-        drivetrain.turnPD(-180, 0.5, 0.1, 3000);
-        sleep(450);
-        drivetrain.moveInches(17, 0.5); // Move forward
+        drivetrain.moveInches(44, 0.5); // Move forward
         sleep(450);
         carousel.spin(-.3);
         sleep(4000);
@@ -41,7 +37,7 @@ public class AutoRedCarouselLite extends LinearOpMode {
     public void park() {
         drivetrain.turnPD(-180, 0.5, 0.05, 3000);
         sleep(450);
-        drivetrain.moveInches(24.5, -0.5);
+        drivetrain.moveInches(27.5, -0.5);
     }
 
 
