@@ -10,12 +10,8 @@ import Library.DuckBarcodeBitmap;
 import Library.Intake;
 import Library.Outtake;
 
-
-
-
-
-@Autonomous(name="AutoRedCarouselLite", group="4546")
-public class AutoRedCarouselLite extends LinearOpMode {
+@Autonomous(name="AutoRedCarouselMid", group="4546")
+public class AutoRedCarouselMid extends LinearOpMode {
     // front left, front right, back left, back right motors
     private Drivetrain drivetrain;
     private DuckBarcodeBitmap vision;
@@ -29,20 +25,39 @@ public class AutoRedCarouselLite extends LinearOpMode {
         drivetrain.moveInches(3, 0.5); // Move forward to turn
         sleep(450);
         drivetrain.turnPD(-90, 0.5, 0.1, 3000); // Turn right 90
-        sleep(300);
-        drivetrain.moveInches(32, 0.5); // Move forward
         sleep(450);
-        carousel.spin(-.3);
-        sleep(4000);
+        drivetrain.moveInches(33, 0.5); // Move forward
+        sleep(450);
+        carousel.spin(-.4);
+        sleep(3500);
         carousel.stop();
+    }
+    public void goal() {
+
+        drivetrain.turnPD(-180, 0.5, 0.05, 3000);
+        sleep(450);
+        drivetrain.moveInches(44.5, -0.5);
+
+        sleep(450);
+
+        drivetrain.turnPD(-90, 0.45, 0.25, 2000);
+        sleep(300);
+        drivetrain.moveInches(36.5, -0.45);
+        sleep(450);
+
+
+        outake.highGoal();
+        sleep(400);
     }
 
 
     public void park() {
+        drivetrain.moveInches(35, 0.6);
+        sleep(300);
+        drivetrain.turnPD(-180, 0.45, 0.25, 2000);
+        sleep(300);
+        drivetrain.moveInches(18, 0.5);
 
-        drivetrain.turnPD(-180, 0.5, 0.05, 3000);
-        sleep(450);
-        drivetrain.moveInches(25, -0.5);
     }
 
 
@@ -77,11 +92,9 @@ public class AutoRedCarouselLite extends LinearOpMode {
             telemetry.update();
         }
 
-        waitForStart();
         carousel();
+        goal();
         park();
     }
 }
-
-
 

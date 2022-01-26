@@ -95,6 +95,15 @@ public class AutoBlueNear extends LinearOpMode {
         drivetrain.turnPI(0, .25, .1, 3000);
         sleep(500);
         drivetrain.moveInches(10, .5);
+        /*
+        highGoal();
+        drivetrain.moveInches(10, 0.5);
+        sleep(500);
+        drivetrain.turnPI(-10, 0.25, 0.25, 2000);
+        sleep(500);
+        drivetrain.moveInches(150, -.8);
+        sleep(500);
+        */
     }
 
     public void duckHighGoal() {
@@ -118,9 +127,9 @@ public class AutoBlueNear extends LinearOpMode {
         sleep(400);
         drivetrain.moveInches(20, -.5);
         sleep(400);
-        drivetrain.turnPI(160,.4, .1, 3000);
+        drivetrain.turnPI(177,.4, .1, 3000);
         sleep(550);
-        drivetrain.moveInches(10,-.5);
+        drivetrain.moveInches(.5,-.5);
         sleep(600);
         outake.highGoal();
     }
@@ -181,10 +190,11 @@ public class AutoBlueNear extends LinearOpMode {
         }
 
         waitForStart();
-        barcode = vision.getBarcode(false);
         highGoal();
         carousel();
         reliablePark();
+        /*Servo sArm = hardwareMap.get(Servo.class, "shippingArm");
+        sArm.setPosition(.05);
         barcode = vision.getBarcode(false);
         if (barcode == 3) {
             carousel();
@@ -198,6 +208,6 @@ public class AutoBlueNear extends LinearOpMode {
             carousel();
             lowGoal();
             park();
-        }
+        }*/
     }
 }

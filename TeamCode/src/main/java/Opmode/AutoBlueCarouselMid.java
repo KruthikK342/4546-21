@@ -10,12 +10,8 @@ import Library.DuckBarcodeBitmap;
 import Library.Intake;
 import Library.Outtake;
 
-
-
-
-
-@Autonomous(name="AutoRedCarouselLite", group="4546")
-public class AutoRedCarouselLite extends LinearOpMode {
+@Autonomous(name="AutoBlueCarouselMid", group="4546")
+public class AutoBlueCarouselMid extends LinearOpMode {
     // front left, front right, back left, back right motors
     private Drivetrain drivetrain;
     private DuckBarcodeBitmap vision;
@@ -26,23 +22,42 @@ public class AutoRedCarouselLite extends LinearOpMode {
 
 
     public void carousel() {
-        drivetrain.moveInches(3, 0.5); // Move forward to turn
+        drivetrain.moveInches(24, 0.5); // Move forward to turn
         sleep(450);
-        drivetrain.turnPD(-90, 0.5, 0.1, 3000); // Turn right 90
+        drivetrain.turnPD(90, 0.5, 0.1, 3000); // Turn right 90
         sleep(300);
-        drivetrain.moveInches(32, 0.5); // Move forward
+        drivetrain.moveInches(29, 0.5); // Move forward
         sleep(450);
-        carousel.spin(-.3);
+        drivetrain.turnPD(180, 0.5, 0.1, 3000);
+        sleep(450);
+        drivetrain.moveInches(17, 0.5); // Move forward
+        sleep(450);
+        carousel.spin(.3);
         sleep(4000);
         carousel.stop();
+    }
+    public void goal() {
+
+        drivetrain.moveInches(48, -0.5);
+        sleep(500);
+        // drivetrain.turnPI(-255, 0.05, 0, 2000);
+        drivetrain.turnPD(90, 0.45, 0.25, 2000);
+        sleep(500);
+        drivetrain.moveInches(36.5, -0.45);
+        sleep(500);
+
+
+        outake.highGoal();
+        sleep(500);
     }
 
 
     public void park() {
-
-        drivetrain.turnPD(-180, 0.5, 0.05, 3000);
+        drivetrain.moveInches(36.5, 0.5);
+        sleep(500);
+        drivetrain.turnPD(180, 0.5, 0.05, 3000);
         sleep(450);
-        drivetrain.moveInches(25, -0.5);
+        drivetrain.moveInches(28, 0.5);
     }
 
 
@@ -77,11 +92,8 @@ public class AutoRedCarouselLite extends LinearOpMode {
             telemetry.update();
         }
 
-        waitForStart();
         carousel();
+        goal();
         park();
     }
 }
-
-
-

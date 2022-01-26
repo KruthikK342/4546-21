@@ -22,14 +22,7 @@ public class AutoRedFar extends LinearOpMode {
 
 
 
-    public void park() {
-       drivetrain.moveInches(3, -.5);
-       sleep(500);
-       drivetrain.turnPI(180, .25, .1, 3000);
-       sleep(500);
-       drivetrain.moveInches(9, -.5);
-       sleep(500);
-    }
+
 
     public void midGoal() {
         drivetrain.moveInches(5.5, 0.5);
@@ -44,6 +37,7 @@ public class AutoRedFar extends LinearOpMode {
     }
 
     public void highGoal() {
+        /*
         drivetrain.moveInches(4.5, 0.5);
         sleep(800);
 
@@ -53,7 +47,18 @@ public class AutoRedFar extends LinearOpMode {
         sleep(500);
         outake.highGoal();
         sleep(500);
-
+*/
+        drivetrain.moveInches(9,.4); //
+        sleep(400);
+        drivetrain.turnPI(90, .25, .1, 3000); //
+        sleep(400);
+        drivetrain.moveInches(10, -.5);
+        sleep(400);
+        drivetrain.turnPI(172,.4, .1, 3000);
+        sleep(550);
+        drivetrain.moveInches(.5,-.5);
+        sleep(600);
+        outake.highGoal();
     }
 
     public void lowGoal() {
@@ -66,6 +71,19 @@ public class AutoRedFar extends LinearOpMode {
         sleep(500);
         outake.lowGoal();
         sleep(500);
+    }
+
+    public void park() {
+        drivetrain.moveInches(2.5, 0.5);
+        sleep(800);
+
+        drivetrain.turnPD(-3, 0.30, 0.25, 2000);
+        sleep(500);
+        drivetrain.turnPD(-113,.25,.25,2000);
+
+        drivetrain.moveInches(10, -.8);
+        sleep(500);
+        drivetrain.moveInches(50, -1);
     }
 
     @Override
@@ -85,8 +103,8 @@ public class AutoRedFar extends LinearOpMode {
            between the red and blue side. After that, we use the barcode to execute
            the corresponding ___Goal() function and then park.
         */
+        /*
         barcode = vision.getBarcode(true);
-        sleep(5000);
         if (barcode == 1) {
             lowGoal();
         } else if (barcode == 3) {
@@ -94,6 +112,9 @@ public class AutoRedFar extends LinearOpMode {
         } else {
             midGoal();
         }
+
+         */
+        highGoal();
         park();
     }
 }
