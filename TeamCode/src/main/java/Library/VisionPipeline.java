@@ -38,7 +38,8 @@ public class VisionPipeline extends OpenCvPipeline{
         LOC2,
         LOC3
     }*/
-    private int location;
+    private int location = 0;
+    private int lastResult = 0;
 
     public VisionPipeline(Telemetry t) { telemetry = t; }
 
@@ -71,16 +72,19 @@ public class VisionPipeline extends OpenCvPipeline{
         boolean elementRight = rightValue > PERCENT_COLOR_THRESHOLD;
         int elementLoc = Integer.parseInt(null); //will determine location
 
-        if (!elementLeft && !elementRight) {
+        if (!elementLeft && !elementRight) { //these if statements output the location to OpModes
             location = 1;
+            lastResult = 1;
             telemetry.addData("Element Location", "location 1");
         }
         else if (elementLeft) {
             location = 2;
+            lastResult = 2;
             telemetry.addData("Skystone Location", "location 2");
         }
         else {
             location = 3;
+            lastResult = 3;
             telemetry.addData("Skystone Location", "location 3");
         }
         telemetry.update();
@@ -95,6 +99,8 @@ public class VisionPipeline extends OpenCvPipeline{
 
         return mat;
     }
+
+    public int getLatestResults(){ return lastResult; } //basically the same as getLocation
     public int getLocation() {
         return location;
     }

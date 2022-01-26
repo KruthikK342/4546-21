@@ -33,30 +33,30 @@ import Library.Intake;
 import Library.Carousel;
 import Library.DuckBarcodeBitmap;
 import Library.Outtake;
+import Library.Vision;
 import Library.VisionPipeline;
 
 @Autonomous(name="TestOCV", group="4546")
 public class TestOCV extends LinearOpMode {
 
-    OpenCvWebcam webcam;
+    OpenCvCamera webcam;
     VisionPipeline pipeline;
-    OpenCvCamera botCam;
-
 
     @Override
     public void runOpMode() throws InterruptedException {
         int cameraMonitorViewId = hardwareMap.appContext
                 .getResources().getIdentifier("cameraMonitorViewId",
                         "id", hardwareMap.appContext.getPackageName());
-
-        botCam = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
+        webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
         VisionPipeline detector = new VisionPipeline(telemetry);
-        botCam.setPipeline(detector);
+        webcam.setPipeline(detector);
 
-        botCam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
+        webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
             @Override
             public void onOpened() {
-                botCam.startStreaming(1280, 720);
+                webcam.setViewportRenderer(OpenCvCamera.ViewportRenderer.GPU_ACCELERATED);
+                webcam.startStreaming(1280, 720, OpenCvCameraRotation.SIDEWAYS_LEFT);
+                webcam.setPipeline(pipeline);
             }
 
 
@@ -81,6 +81,6 @@ public class TestOCV extends LinearOpMode {
                 }
                 default: { }
             }
-        botCam.stopStreaming();
+        webcam.stopStreaming();
         }
 }
