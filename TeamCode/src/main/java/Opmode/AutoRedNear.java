@@ -23,6 +23,60 @@ public class AutoRedNear extends LinearOpMode {
     private Outtake outake;
     private int barcode;
 
+    public void carousel() {
+
+        drivetrain.moveInches(3, 0.5); // Move forward to turn
+        sleep(450);
+        drivetrain.turnPD(-106.5, 0.63, .1, 3000);
+        sleep(300);
+
+        drivetrain.moveInches(56, 0.45); // Move forward
+        sleep(450);
+
+
+
+
+        carousel.spin(-.42);
+        sleep(2600);
+        sleep(300);
+        carousel.spin(.3);
+        sleep(800);
+        carousel.stop();
+
+    }
+
+    public void intake() {
+        //intake code
+        intake.collect();
+        sleep(100);
+        drivetrain.moveInches(3,.5);
+        sleep(200);
+        drivetrain.turnPI(210, 1, .1, 3000);
+        sleep(1500);
+        intake.stop();
+    }
+
+    /*
+    public void park() {
+        drivetrain.moveInches(6.2,-.4);
+    }
+    /
+     */
+
+    public void park() {
+        drivetrain.moveInches(2.5, 0.5);
+        sleep(800);
+
+        drivetrain.turnPD(-3, 0.30, 0.25, 2000);
+        sleep(500);
+        drivetrain.turnPD(-113,.25,.25,2000);
+
+        drivetrain.moveInches(7, -.8);
+        sleep(1000);
+        drivetrain.moveInches(60, -1);
+    }
+
+
     public void midGoal() {
         drivetrain.moveInches(9,.4); // Back up from Carousel;
         sleep(400);
@@ -66,46 +120,6 @@ public class AutoRedNear extends LinearOpMode {
         sleep(500);
         outake.lowGoal();
     }
-    public void carousel() {
-
-        drivetrain.moveInches(3, 0.5); // Move forward to turn
-        sleep(450);
-        drivetrain.turnPD(-106.5, 0.63, .1, 3000);
-        sleep(300);
-
-        drivetrain.moveInches(56, 0.45); // Move forward
-        sleep(450);
-
-
-
-
-        carousel.spin(-.5);
-        sleep(2600);
-        carousel.stop();
-
-    }
-
-    public void intake() {
-        //intake code
-        intake.collect();
-        sleep(100);
-        drivetrain.moveInches(3,.5);
-        sleep(200);
-        drivetrain.turnPI(210, 1, .1, 3000);
-        sleep(1500);
-        intake.stop();
-    }
-
-    public void park() {
-
-        drivetrain.moveInches(3,-.5);
-        sleep(500);
-        drivetrain.turnPI(180, .25, .1, 3000);
-        sleep(500);
-        drivetrain.moveInches(9,-.5);
-        sleep(500);
-
-    }
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -132,8 +146,10 @@ public class AutoRedNear extends LinearOpMode {
             telemetry.update();
         }
         waitForStart();
-        /*
+
         barcode = vision.getBarcode(true);
+        sleep(
+                6000);
         if (barcode == 1) {
             lowGoal();
         } else if (barcode == 3) {
@@ -141,10 +157,7 @@ public class AutoRedNear extends LinearOpMode {
         } else {
             midGoal();
         }
-        park();
 
-         */
-        highGoal();
         carousel();
         park();
     }

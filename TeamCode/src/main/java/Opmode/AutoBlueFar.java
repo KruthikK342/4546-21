@@ -3,6 +3,7 @@ package Opmode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 import Library.Drivetrain;
 import Library.DuckBarcodeBitmap;
@@ -40,29 +41,18 @@ public class AutoBlueFar extends LinearOpMode {
     }
 
     public void highGoal() {
-        /*
-        drivetrain.moveInches(4.5, 0.5);
-        sleep(800);
-
-        drivetrain.turnPD(-130, 0.45, 0.15, 3000);
+        drivetrain.moveInches(10, 0.5);
         sleep(500);
-        drivetrain.moveInches(6.7, -0.45);
+        drivetrain.turnPD(-90, 0.6, 0.1, 3000);
+        sleep(500);
+        drivetrain.moveInches(30, -0.5);
+        sleep(500);
+        drivetrain.turnPD(-180, .5,0,3000);
+        sleep(500);
+        drivetrain.moveInches(9, -.5);
         sleep(500);
         outake.highGoal();
         sleep(500);
-
-         */
-        drivetrain.moveInches(9,.4); //
-        sleep(400);
-        drivetrain.turnPI(-90, .25, .1, 3000); //
-        sleep(400);
-        drivetrain.moveInches(10, -.5);
-        sleep(400);
-        drivetrain.turnPI(191,.4, .1, 3000);
-        sleep(550);
-        drivetrain.moveInches(.8,-.5);
-        sleep(600);
-        outake.highGoal();
     }
 
     public void lowGoal() {
@@ -71,23 +61,23 @@ public class AutoBlueFar extends LinearOpMode {
 
         drivetrain.turnPI(-135, 0.25, 0.1, 3000);
         sleep(500);
-        drivetrain.moveInches(4, -0.45);
+        drivetrain.moveInches(8, -0.45);
         sleep(500);
         outake.lowGoal();
         sleep(500);
     }
 
     public void park() {
-        drivetrain.moveInches(2, 0.5);
+        drivetrain.moveInches(2.5, 0.5);
         sleep(800);
 
-        drivetrain.turnPI(0, 0.25, 0.1, 3000);
+        drivetrain.turnPI(0, 0.4, 0.1,3000);
         sleep(500);
-        drivetrain.turnPI(80,.25,.1,3000);
+        drivetrain.turnPI(80,.4,.1,3000);
 
         drivetrain.moveInches(7, -.8);
         sleep(1000);
-        drivetrain.moveInches(40, -1);
+        drivetrain.moveInches(60, -1);
     }
 
     @Override
@@ -96,6 +86,14 @@ public class AutoBlueFar extends LinearOpMode {
         vision = new DuckBarcodeBitmap(this);
         drivetrain = new Drivetrain(this);
         outake = new Outtake(this);
+        DcMotor fL  = hardwareMap.get(DcMotor.class, "fL");
+        DcMotor bL  = hardwareMap.get(DcMotor.class, "bL");
+        DcMotor fR  = hardwareMap.get(DcMotor.class, "fR");
+        DcMotor bR  = hardwareMap.get(DcMotor.class, "bR");
+        fL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        bL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        fR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        bR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         telemetry.addLine("Robot Initialized");
         telemetry.update();
 
@@ -110,20 +108,16 @@ public class AutoBlueFar extends LinearOpMode {
         waitForStart();
 
         barcode = vision.getBarcode(false);
-        telemetry.addData("Barcode: ", barcode);
-        telemetry.update();
 
-        /*
-        if (barcode == 1) {
-            lowGoal();
-        } else if (barcode == 3) {
+        if (barcode == 3) {
             highGoal();
-        } else {
+        } else if (barcode == 2) {
             midGoal();
-        }*/
+        } else {
+            lowGoal();
+        }
 
-        //highGoal();
-        //park();
+        park();
 
 
     }

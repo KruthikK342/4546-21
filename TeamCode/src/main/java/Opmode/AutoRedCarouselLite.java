@@ -1,5 +1,6 @@
 package Opmode;
 
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -9,10 +10,6 @@ import Library.Drivetrain;
 import Library.DuckBarcodeBitmap;
 import Library.Intake;
 import Library.Outtake;
-
-
-
-
 
 @Autonomous(name="AutoRedCarouselLite", group="4546")
 public class AutoRedCarouselLite extends LinearOpMode {
@@ -24,13 +21,12 @@ public class AutoRedCarouselLite extends LinearOpMode {
     private Outtake outake;
     private int barcode;
 
-
     public void carousel() {
-        drivetrain.moveInches(3, 0.5); // Move forward to turn
+        drivetrain.moveInches(24, 0.5); // Move forward to turn
         sleep(450);
-        drivetrain.turnPD(-90, 0.5, 0.1, 3000); // Turn right 90
+        drivetrain.turnPD(-120, 0.5, 0.1, 3000); // Turn right 90
         sleep(300);
-        drivetrain.moveInches(32, 0.5); // Move forward
+        drivetrain.moveInches(44, 0.5); // Move forward
         sleep(450);
         carousel.spin(-.3);
         sleep(4000);
@@ -39,10 +35,9 @@ public class AutoRedCarouselLite extends LinearOpMode {
 
 
     public void park() {
-
         drivetrain.turnPD(-180, 0.5, 0.05, 3000);
         sleep(450);
-        drivetrain.moveInches(25, -0.5);
+        drivetrain.moveInches(27.5, -0.5);
     }
 
 
@@ -55,7 +50,6 @@ public class AutoRedCarouselLite extends LinearOpMode {
         outake = new Outtake(this);
         intake = new Intake(this);
         carousel = new Carousel(this);
-
         DcMotor fL  = hardwareMap.get(DcMotor.class, "fL");
         DcMotor bL  = hardwareMap.get(DcMotor.class, "bL");
         DcMotor fR  = hardwareMap.get(DcMotor.class, "fR");
@@ -64,8 +58,6 @@ public class AutoRedCarouselLite extends LinearOpMode {
         bL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         fR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         bR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-
         telemetry.addLine("Robot Initialized");
         telemetry.update();
 
@@ -82,6 +74,3 @@ public class AutoRedCarouselLite extends LinearOpMode {
         park();
     }
 }
-
-
-
