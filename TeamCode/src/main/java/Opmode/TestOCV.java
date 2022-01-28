@@ -59,7 +59,6 @@ public class TestOCV extends LinearOpMode {
                 webcam.setPipeline(pipeline);
             }
 
-
             @Override
             public void onError(int errorCode) {
 
@@ -72,7 +71,7 @@ public class TestOCV extends LinearOpMode {
                     break;
                 }
                 case (2): {
-                    // ...
+
                     break;
                 }
                 case (3): {

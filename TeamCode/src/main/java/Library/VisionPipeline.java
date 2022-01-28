@@ -45,18 +45,18 @@ public class VisionPipeline extends OpenCvPipeline{
 
     static final Rect spot3 = new Rect(
             new Point(650, 50),
-            new Point(1000, 350));
+            new Point(910, 400));
     static final Rect spot2 = new Rect(
-            new Point(100, 50),
-            new Point(420, 350));
-    static double PERCENT_COLOR_THRESHOLD = 0.4; //the percent of the bounding box the need to be black
+            new Point(60, 65),
+            new Point(300, 370));
+    static double PERCENT_COLOR_THRESHOLD = 0.6; //the percent of the bounding box the need to be black
 
     @Override
     public Mat processFrame(Mat input) {
         Imgproc.cvtColor(input, mat, Imgproc.COLOR_RGB2HSV); //moves from rgb to hsv (hue(color), saturation(intensity), value(brightness))
         Imgproc.cvtColor(input, mat, Imgproc.COLOR_RGB2HSV);
-        Scalar lowHSV = new Scalar(23, 50, 70);
-        Scalar highHSV = new Scalar(32, 255, 255);
+        Scalar lowHSV = new Scalar(160, 0, 0);
+        Scalar highHSV = new Scalar(160, 0, 45);
 
         Core.inRange(mat, lowHSV, highHSV, mat);
 
