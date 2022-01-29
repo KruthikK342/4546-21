@@ -41,7 +41,7 @@ public class Outtake {
         while (pulley.getCurrentPosition() > 100 && opMode.opModeIsActive()) {
             pulley.setPower(-.5);
             opMode.telemetry.addData("pulley position", pulley.getCurrentPosition());
-            opMode.telemetry.update();
+            //opMode.telemetry.update();
         }
         pulley.setPower(0);
 
@@ -53,7 +53,7 @@ public class Outtake {
 
             pulley.setPower(0.5);
             opMode.telemetry.addData("pulley position", pulley.getCurrentPosition());
-            opMode.telemetry.update();
+            //opMode.telemetry.update();
 
         }
         pulley.setPower(0);
@@ -65,7 +65,7 @@ public class Outtake {
         while (pulley.getCurrentPosition() > 50 && opMode.opModeIsActive()) {
             pulley.setPower(-.7);
             opMode.telemetry.addData("pulley position", pulley.getCurrentPosition());
-            opMode.telemetry.update();
+            //opMode.telemetry.update();
         }
         pulley.setPower(0);
 
@@ -80,7 +80,7 @@ public class Outtake {
 
             pulley.setPower(.5);
             opMode.telemetry.addData("pulley position", pulley.getCurrentPosition());
-            opMode.telemetry.update();
+            //opMode.telemetry.update();
 
         }
         pulley.setPower(0);
@@ -92,7 +92,7 @@ public class Outtake {
         while (pulley.getCurrentPosition() > 50 && opMode.opModeIsActive()) {
             pulley.setPower(-.7);
             opMode.telemetry.addData("pulley position", pulley.getCurrentPosition());
-            opMode.telemetry.update();
+            //opMode.telemetry.update();
         }
         pulley.setPower(0);
 
@@ -119,7 +119,7 @@ public class Outtake {
 
             pulley.setPower(1);
             opMode.telemetry.addData("pulley position", pulley.getCurrentPosition());
-            opMode.telemetry.update();
+            //opMode.telemetry.update();
 
         }
         pulley.setPower(0);
@@ -131,7 +131,7 @@ public class Outtake {
         while (pulley.getCurrentPosition() > 50 && opMode.opModeIsActive()) {
             pulley.setPower(-.7);
             opMode.telemetry.addData("pulley position", pulley.getCurrentPosition());
-            opMode.telemetry.update();
+            //opMode.telemetry.update();
         }
         pulley.setPower(0);
 
