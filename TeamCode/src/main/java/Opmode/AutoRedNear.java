@@ -29,25 +29,18 @@ public class AutoRedNear extends LinearOpMode {
         sleep(450);
         drivetrain.turnPD(-106.5, 0.63, .1, 3000);
         sleep(300);
-
         drivetrain.moveInches(56, 0.45); // Move forward
         sleep(450);
 
-
-
-
         carousel.spin(-.42);
-        sleep(2600);
-        sleep(300);
+        sleep(2900);
         carousel.spin(.3);
         sleep(800);
         carousel.stop();
 
-    }
 
-    public void intake() {
         //intake code
-        intake.collect();
+        intake.collect(.7);
         sleep(100);
         drivetrain.moveInches(3,.5);
         sleep(200);

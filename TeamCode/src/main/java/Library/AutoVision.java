@@ -49,8 +49,8 @@ public class AutoVision {
         @Override
         public Mat processFrame(Mat input) {
             Imgproc.cvtColor(input, mat, Imgproc.COLOR_RGB2HSV); //moves from rgb to hsv (hue(color), saturation(intensity), value(brightness))
-            Scalar lowHSV = new Scalar(160, 0, 0);
-            Scalar highHSV = new Scalar(160, 0, 45);
+            Scalar lowHSV = new Scalar(150, 0, 0);
+            Scalar highHSV = new Scalar(170, 0, 45);
             Mat hsvMat = new Mat();
 
             Core.inRange(mat, lowHSV, highHSV, hsvMat);

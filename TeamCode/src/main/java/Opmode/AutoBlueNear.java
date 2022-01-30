@@ -33,11 +33,11 @@ public class AutoBlueNear extends LinearOpMode {
         sleep(450);
         drivetrain.turnPD(90, 0.8, 0, 3000); // Turn right 90
         sleep(300);
-        drivetrain.moveInches(40, 0.5); // Move forward
+        drivetrain.moveInches(50, 0.5); // Move forward
         sleep(450);
-        drivetrain.turnPD(155, .8, 0, 3000);
+        drivetrain.turnPD(165, .8, 0, 3000);
         sleep(300);
-        drivetrain.moveInches(23, .5);
+        drivetrain.moveInches(23.5, .5);
         sleep(200);
         //start carousel spin
 
@@ -47,14 +47,14 @@ public class AutoBlueNear extends LinearOpMode {
 
         //intake code
 
-        intake.collect();
+        intake.collect(.8);
         sleep(300);
         drivetrain.moveInches(3,.5);
         sleep(400);
-        drivetrain.turnPI(190, 1, .1, 3000);
+        drivetrain.turnPI(200, .85, .1, 4000);
         sleep(250);
         drivetrain.moveInches(3,.5);
-        sleep(300);
+        sleep(1000);
         //drivetrain.turnPI(180, 1, .1, 3000);
         //sleep(250);
 
@@ -114,11 +114,11 @@ public class AutoBlueNear extends LinearOpMode {
     public void highGoal() {
         drivetrain.moveInches(9,.4); // Back up from Carousel;
         sleep(400);
-        drivetrain.turnPI(90, .25, .1, 3000); // Turn towards warehouse
+        drivetrain.turnPI(90, .25, .1, 2000); // Turn towards warehouse
         sleep(400);
         drivetrain.moveInches(20, -.5);
         sleep(400);
-        drivetrain.turnPI(160,.4, .1, 3000);
+        drivetrain.turnPI(160,.4, .1, 2000);
         sleep(550);
         drivetrain.moveInches(10,-.5);
         sleep(600);
@@ -186,7 +186,7 @@ public class AutoBlueNear extends LinearOpMode {
         carousel();
         reliablePark();
         barcode = vision.getBarcode(false);
-        if (barcode == 3) {
+        /*if (barcode == 3) {
             carousel();
             highGoal();
             park();
@@ -198,6 +198,6 @@ public class AutoBlueNear extends LinearOpMode {
             carousel();
             lowGoal();
             park();
-        }
+        }*/
     }
 }
