@@ -48,12 +48,13 @@ public class AutoBlueNear extends LinearOpMode {
         //intake code
 
         intake.collect(.8);
+        drivetrain.moveInches(1,.8);
         sleep(300);
-        drivetrain.moveInches(3,.5);
+        drivetrain.moveInches(3,.6);
         sleep(400);
         drivetrain.turnPI(200, .85, .1, 4000);
         sleep(250);
-        drivetrain.moveInches(3,.5);
+        drivetrain.moveInches(5,.5);
         sleep(1000);
         //drivetrain.turnPI(180, 1, .1, 3000);
         //sleep(250);
@@ -62,7 +63,14 @@ public class AutoBlueNear extends LinearOpMode {
 
         //intake stopped
 
+        //deposits
 
+        drivetrain.moveInches(-3,1);
+        drivetrain.turnPI(130, .9, .1, 3000);
+        sleep(150);
+        drivetrain.moveInches(60, -1);
+        sleep(150);
+        outake.highGoal();
     }
     public void duckPickup() {
         //preset code
