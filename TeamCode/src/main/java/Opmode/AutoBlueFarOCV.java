@@ -14,7 +14,7 @@ import Library.Carousel; //team imports
 import Library.Drivetrain;
 import Library.Intake;
 import Library.Outtake;
-import Library.VisionPipeline;
+import Library.AutoVision;
 
 
 /* Ports:
@@ -29,7 +29,7 @@ public class AutoBlueFarOCV extends LinearOpMode {
 
     private Drivetrain drivetrain;
     private OpenCvCamera webcam;
-    private VisionPipeline pipeline;
+    private AutoVision pipeline;
     private Carousel carousel;
     private Intake intake;
     private Outtake outake;
@@ -41,7 +41,7 @@ public class AutoBlueFarOCV extends LinearOpMode {
         sleep(500);
         drivetrain.turnPD(-90, 0.6, 0.1, 3000);
         sleep(500);
-        drivetrain.moveInches(30, -0.5);
+        drivetrain.moveInches(33, -0.5);
         sleep(500);
         drivetrain.turnPD(-180, .5, 0, 3000);
         sleep(500);
@@ -69,7 +69,7 @@ public class AutoBlueFarOCV extends LinearOpMode {
 
         drivetrain.turnPI(-135, 0.25, 0.1, 3000);
         sleep(500);
-        drivetrain.moveInches(8, -0.45);
+        drivetrain.moveInches(30, -0.45);
         sleep(500);
         outake.lowGoal();
         sleep(500);
@@ -107,16 +107,14 @@ public class AutoBlueFarOCV extends LinearOpMode {
         int cameraMonitorViewId = hardwareMap.appContext
                 .getResources().getIdentifier("cameraMonitorViewId",
                         "id", hardwareMap.appContext.getPackageName());
+        AutoVision.VisionPipeline detector = new AutoVision.VisionPipeline();
         webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
-        VisionPipeline detector = new VisionPipeline(telemetry);
-        webcam.setPipeline(detector);
-
         webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
             @Override
             public void onOpened() {
                 webcam.setViewportRenderer(OpenCvCamera.ViewportRenderer.GPU_ACCELERATED);
-                webcam.startStreaming(1280, 720, OpenCvCameraRotation.SIDEWAYS_LEFT);
-                webcam.setPipeline(pipeline);
+                webcam.startStreaming(1280, 720, OpenCvCameraRotation.UPRIGHT);
+                webcam.setPipeline(detector);
             }
 
             @Override
@@ -125,22 +123,38 @@ public class AutoBlueFarOCV extends LinearOpMode {
             }
         });
 
+        while (!isStarted())
+        {
+            telemetry.addData("Team element location: ", detector.getLocation());
+            telemetry.addData("pos 2 confidence: ", detector.getLeftValue());
+            telemetry.addData("pos 3 confidence: ", detector.getRightValue());
+            telemetry.update();
+        }
         waitForStart();
-        switch(detector.getLocation()){
+        int location = detector.getLocation();
+        switch(location){
             case (1): {
+                telemetry.addData("Team element location: ", location);
+                telemetry.update();
                 lowGoal();
                 break;
             }
             case (2): {
+                telemetry.addData("Team element location: ", location);
+                telemetry.update();
                 midGoal();
                 break;
             }
             case (3): {
+                telemetry.addData("Team element location: ", location);
+                telemetry.update();
                 highGoal();
                 break;
             }
             default: {
-                lowGoal();
+                telemetry.addData("Team element location: ", location);
+                telemetry.update();
+                highGoal();
             }
             park();
         }

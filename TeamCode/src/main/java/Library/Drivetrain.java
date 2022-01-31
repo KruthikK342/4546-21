@@ -151,11 +151,12 @@ public class Drivetrain {
                 startMotors(changePID + .075, -changePID - .075); // turn method for going right (left side turns forward and right side turns backward)
             }
             // the constants that are added or subtracted with changePID in startMotors allow the motors to turn when the value of changePID becomes small
-            opMode.telemetry.addData("Current position", sensor.getGyroYaw());
+            /*opMode.telemetry.addData("Current position", sensor.getGyroYaw());
             opMode.telemetry.addData("Current Difference",deltaAngle);
             opMode.telemetry.addData("changePID", changePID);
             opMode.telemetry.addData("angleDiff: ", angleDiff);
             opMode.telemetry.update();
+             */
         }
         stopMotors();
     }
@@ -180,13 +181,13 @@ public class Drivetrain {
             } else {
                 startMotors(changePID + .10, -changePID - .10);
             }
-            opMode.telemetry.addData("P", (angleDiff * kP));
+            /*opMode.telemetry.addData("P", (angleDiff * kP));
             opMode.telemetry.addData("D", ((Math.abs(angleDiff) - Math.abs(prevAngleDiff)) / dT * kD));
             opMode.telemetry.addData("Gyro Roll: ", sensor.getGyroRoll());
             opMode.telemetry.addData("Gyro Yaw: ", sensor.getGyroYaw());
             opMode.telemetry.addData("Gyro Pitch: ", sensor.getGyroPitch());
             opMode.telemetry.update();
-            prevAngleDiff = angleDiff;
+            prevAngleDiff = angleDiff;*/
         }
         stopMotors();
     }
@@ -210,13 +211,13 @@ public class Drivetrain {
             I += dT * angleDiff * kI; // sum of error throughout entire duration of the turn
             changePID = P;
             changePID += I;
-            opMode.telemetry.addData("PID: ", changePID);
+            /*opMode.telemetry.addData("PID: ", changePID);
             opMode.telemetry.addData("diff", angleDiff);
             opMode.telemetry.addData("P", P);
             opMode.telemetry.addData("I", I);
             opMode.telemetry.addData("Gyro Yaw: ", sensor.getGyroYaw());
             opMode.telemetry.addData("motorBR power: ", motorBR.getPower());
-            opMode.telemetry.update();
+            opMode.telemetry.update();*/
             if (changePID < 0) {
                 startMotors(changePID - .1, -changePID + .1);
             } else {

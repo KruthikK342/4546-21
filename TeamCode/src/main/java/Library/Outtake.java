@@ -41,31 +41,31 @@ public class Outtake {
         while (pulley.getCurrentPosition() > 100 && opMode.opModeIsActive()) {
             pulley.setPower(-.5);
             opMode.telemetry.addData("pulley position", pulley.getCurrentPosition());
-            opMode.telemetry.update();
+            //opMode.telemetry.update();
         }
         pulley.setPower(0);
 
 
     }
     public void highGoal() {
-        wrist.setPosition(.41);
-        while (pulley.getCurrentPosition() < 1200 && opMode.opModeIsActive()) {
+        wrist.setPosition(.2);
+        while (pulley.getCurrentPosition() < 1300 && opMode.opModeIsActive()) {
 
             pulley.setPower(0.5);
             opMode.telemetry.addData("pulley position", pulley.getCurrentPosition());
-            opMode.telemetry.update();
+            //opMode.telemetry.update();
 
         }
         pulley.setPower(0);
-        wrist.setPosition(.8);
+        wrist.setPosition(.6); //depositing
         opMode.sleep(500);
-        wrist.setPosition(.1);
+        wrist.setPosition(.17); //resting position
         opMode.sleep(500);
 
         while (pulley.getCurrentPosition() > 50 && opMode.opModeIsActive()) {
             pulley.setPower(-.7);
             opMode.telemetry.addData("pulley position", pulley.getCurrentPosition());
-            opMode.telemetry.update();
+            //opMode.telemetry.update();
         }
         pulley.setPower(0);
 
@@ -75,24 +75,24 @@ public class Outtake {
     public void midGoal() {
 
 
-        wrist.setPosition(.41);
+        wrist.setPosition(.3);
         while (pulley.getCurrentPosition() < 1100 && opMode.opModeIsActive()) {
 
             pulley.setPower(.5);
             opMode.telemetry.addData("pulley position", pulley.getCurrentPosition());
-            opMode.telemetry.update();
+            //opMode.telemetry.update();
 
         }
         pulley.setPower(0);
-        wrist.setPosition(.8);
+        wrist.setPosition(.6);
         opMode.sleep(500);
-        wrist.setPosition(.41);
+        wrist.setPosition(.05);
         opMode.sleep(500);
 
         while (pulley.getCurrentPosition() > 50 && opMode.opModeIsActive()) {
             pulley.setPower(-.7);
             opMode.telemetry.addData("pulley position", pulley.getCurrentPosition());
-            opMode.telemetry.update();
+            //opMode.telemetry.update();
         }
         pulley.setPower(0);
 
@@ -119,7 +119,7 @@ public class Outtake {
 
             pulley.setPower(1);
             opMode.telemetry.addData("pulley position", pulley.getCurrentPosition());
-            opMode.telemetry.update();
+            //opMode.telemetry.update();
 
         }
         pulley.setPower(0);
@@ -131,7 +131,7 @@ public class Outtake {
         while (pulley.getCurrentPosition() > 50 && opMode.opModeIsActive()) {
             pulley.setPower(-.7);
             opMode.telemetry.addData("pulley position", pulley.getCurrentPosition());
-            opMode.telemetry.update();
+            //opMode.telemetry.update();
         }
         pulley.setPower(0);
 

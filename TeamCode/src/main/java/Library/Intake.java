@@ -14,9 +14,9 @@ public class Intake {
         intake = this.opMode.hardwareMap.dcMotor.get("intake");
     }
 
-    public void collect() {
+    public void collect(double s) {
 
-        intake.setPower(-1);
+        intake.setPower(-s);
 
     }
     public void stop() {
