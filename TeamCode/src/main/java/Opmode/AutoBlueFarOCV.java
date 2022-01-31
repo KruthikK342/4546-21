@@ -9,6 +9,7 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName; //ea
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
+import org.opencv.core.Scalar;
 
 import Library.Carousel; //team imports
 import Library.Drivetrain;
@@ -128,24 +129,35 @@ public class AutoBlueFarOCV extends LinearOpMode {
             telemetry.addData("Team element location: ", detector.getLocation());
             telemetry.addData("pos 2 confidence: ", detector.getLeftValue());
             telemetry.addData("pos 3 confidence: ", detector.getRightValue());
+            double[] hsv = detector.getPixelHsv();
+            if (hsv != null) {
+                telemetry.addData("h ", hsv[0]);
+                telemetry.addData("s ", hsv[1]);
+                telemetry.addData("v ", hsv[2]);
+            }
+            Scalar leftAvg  = detector.getLeftScalar();
+            Scalar rightAvg = detector.getRightScalar();
+            telemetry.addData("leftAvg: ", leftAvg);
+            telemetry.addData("rightAvg: ", rightAvg);
+
             telemetry.update();
         }
         waitForStart();
         int location = detector.getLocation();
         switch(location){
-            case (1): {
+            case 1: {
                 telemetry.addData("Team element location: ", location);
                 telemetry.update();
                 lowGoal();
                 break;
             }
-            case (2): {
+            case 2: {
                 telemetry.addData("Team element location: ", location);
                 telemetry.update();
                 midGoal();
                 break;
             }
-            case (3): {
+            case 3: {
                 telemetry.addData("Team element location: ", location);
                 telemetry.update();
                 highGoal();
