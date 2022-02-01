@@ -29,14 +29,17 @@ import java.util.ArrayList;
 import java.util.concurrent.BlockingQueue;
 
 
-public class AutoVision {
-
+public class AutoVision { //camera resolution(x, y):
+    //the following comments are the bounding boxes that the different autos use
+    static final Rect spot1 = new Rect( //spot1 isn't used, but is named on principle until spot info is moved to autos
+            new Point(0, 0), // ARN = (1, 25), ARF = (50, 25)
+            new Point(0, 0)); //ARN = (200, 320), ARF = (280, 320)
     static final Rect spot2 = new Rect(
-            new Point(60, 65),
-            new Point(300, 370));
+            new Point(100, 25), //; ABN = (50, 25), ABF = (100, 25), ARN = (620, 25), ARF = (620, 25)
+            new Point(330, 320)); //; ABN = (280, 320), ABF = (330, 320), ARN = (830, 320), ARF = (840, 320)
     static final Rect spot3 = new Rect(
-            new Point(700, 20),
-            new Point(960, 350));
+            new Point(700, 25), //; ABN = (700, 25), ABF = (700, 25)
+            new Point(920, 320)); //; ABN = (920, 320), ABF = (920, 320)
 
     static double PERCENT_COLOR_THRESHOLD = 0.3; //the percent of the bounding box the need to be black (0 = 0%, 1 = 100%)
 
@@ -54,8 +57,8 @@ public class AutoVision {
 
             Imgproc.cvtColor(input, mat, Imgproc.COLOR_RGB2HSV); //moves from rgb to hsv (hue(color), saturation(intensity), value(brightness))
 
-          /*  Scalar lowHSV = new Scalar(0, 0, 16);
-            Scalar highHSV = new Scalar(60, 60, 22);
+            /* Scalar lowHSV = new Scalar(0, 0, 10);
+            Scalar highHSV = new Scalar(180, 255, 45);
             Mat hsvMat = new Mat();
 
             Core.inRange(mat, lowHSV, highHSV, hsvMat); */
@@ -65,9 +68,9 @@ public class AutoVision {
                 leftAvg = Core.mean(left);
                 rightAvg = Core.mean(right);
 
-                if (leftAvg.val[2] >= 35 && leftAvg.val[2] <= 50) {
+                if (meetsReqirements(leftAvg)) {
                     location = 2;
-                } else if (rightAvg.val[2] >= 35 && rightAvg.val[2] <= 50) {
+                } else if (meetsReqirements(rightAvg)) {
                     location = 3;
                 } else {
                     location = 1;
@@ -95,11 +98,15 @@ public class AutoVision {
             }
             */
             hsv_colors = mat.get(200, 800);
-            Imgproc.rectangle(mat, spot3, new Scalar(180, 255, 0));
+            Imgproc.rectangle(mat, spot3, new Scalar(238, 240, 125));
+            Imgproc.rectangle(mat, spot2, new Scalar(238, 240, 125));
 
             return mat;
         }
 
+        public boolean meetsReqirements(Scalar position) {
+            return position.val[2] >= 10 && position.val[2] <= 50; //these are the accepted brightness values
+        }
         public double getLeftValue() {
             return leftValue;
         }
@@ -118,6 +125,14 @@ public class AutoVision {
 
         public Scalar getRightScalar() {
             return rightAvg;
+        }
+
+        public double getLeftDouble() {
+            return leftAvg.val[2];
+        } //these are a lot better for telemetry vals, but gives some error if used
+
+        public double getRightDouble() {
+            return rightAvg.val[2];
         }
 
         public int getLocation() { return location; }

@@ -35,6 +35,9 @@ public class AutoBlueFarOCV extends LinearOpMode {
     private Intake intake;
     private Outtake outake;
     private int barcode;
+    //public int[] BoundingBoxABF1 = new int[]{50, 25, 280, 320};
+    //public int[] BoundingBoxABF2 = new int[]{700, 25, 920, 320};
+
 
 
     public void highGoal() {
@@ -130,11 +133,7 @@ public class AutoBlueFarOCV extends LinearOpMode {
             telemetry.addData("pos 2 confidence: ", detector.getLeftValue());
             telemetry.addData("pos 3 confidence: ", detector.getRightValue());
             double[] hsv = detector.getPixelHsv();
-            if (hsv != null) {
-                telemetry.addData("h ", hsv[0]);
-                telemetry.addData("s ", hsv[1]);
-                telemetry.addData("v ", hsv[2]);
-            }
+
             Scalar leftAvg  = detector.getLeftScalar();
             Scalar rightAvg = detector.getRightScalar();
             telemetry.addData("leftAvg: ", leftAvg);
