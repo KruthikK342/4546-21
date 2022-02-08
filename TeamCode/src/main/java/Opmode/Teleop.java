@@ -83,8 +83,8 @@ public class Teleop extends LinearOpMode {
         double hPos = .05;
         String liftState = "down";
         double wristDeposit = .6;
-        double wristRest = .1;
-        double wristTilt = .41;
+        double wristRest = .15;
+        double wristTilt = .3;
         double liftMax = 1250;
         double liftMin = 50;
 
@@ -202,8 +202,8 @@ public class Teleop extends LinearOpMode {
             else spin.setPower(0);
 
             // Either adjust the servo to sort into the box or into the base outtake
-            if (gamepad1.x) sort.setPosition(.55); // Sorting into box
-            if (gamepad1.y) sort.setPosition(0); // Sorting into base outtake
+            if (gamepad1.x) sort.setPosition(.35); // Sorting into box
+            if (gamepad1.y) sort.setPosition(.7); // Sorting into base outtake
 
 
             //Driver 2
