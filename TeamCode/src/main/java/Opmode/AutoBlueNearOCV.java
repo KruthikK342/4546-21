@@ -31,29 +31,31 @@ public class AutoBlueNearOCV extends LinearOpMode {
     private Intake intake;
     private Outtake outake;
     private int barcode;
+    private DcMotor spinner;
+    LinearOpMode opMode;
+
 
 
     public void carousel() {
-
         drivetrain.moveInches(3, 0.5); // Move forward to turn
         sleep(450);
-        drivetrain.turnPD(90, 0.8, 0, 3000); // Turn right 90
+        drivetrain.turnPD(100, 0.8, 0, 3000); // Turn right 90
         sleep(300);
         drivetrain.moveInches(50, 0.5); // Move forward
         sleep(450);
-        drivetrain.turnPD(165, .8, 0, 3000);
+        drivetrain.turnPD(160, .8, 0, 3000);
         sleep(300);
-        drivetrain.moveInches(23.5, .5);
+        drivetrain.moveInches(17, .5);
         sleep(200);
-        //start carousel spin
 
-        carousel.spin(.5);
-        sleep(3000);
-        carousel.stop();
+        //start carousel spin
+        spinner.setPower(.4);
+        drivetrain.startMotors(.05,.05);
+        sleep(3300);
+        spinner.setPower(0);
 
         //intake code
-
-        intake.collect(.8);
+        /*intake.collect(.8);
         drivetrain.moveInches(1,.8);
         sleep(300);
         drivetrain.moveInches(3,.6);
@@ -77,6 +79,7 @@ public class AutoBlueNearOCV extends LinearOpMode {
         drivetrain.moveInches(60, -1);
         sleep(150);
         outake.highGoal();
+        */
     }
     public void duckPickup() {
         //preset code
@@ -100,15 +103,14 @@ public class AutoBlueNearOCV extends LinearOpMode {
     }
 
     public void park() {
-        drivetrain.moveInches(5, 0.5);
+        drivetrain.moveInches(5, -0.5);
         sleep(500);
-        drivetrain.turnPI(90, 0.25, 0.1, 3000);
+        drivetrain.turnPI(185, 0.25, 0.3, 3000);
         sleep(500);
-        drivetrain.moveInches(30, 0.5);
+        drivetrain.moveInches(26, -0.5);
         sleep(500);
-        drivetrain.turnPI(0, .25, .1, 3000);
+        drivetrain.turnPI(180, .7, .1, 1000);
         sleep(500);
-        drivetrain.moveInches(10, .5);
     }
 
     public void duckHighGoal() {
@@ -127,43 +129,43 @@ public class AutoBlueNearOCV extends LinearOpMode {
 
     public void highGoal() {
         drivetrain.moveInches(9,.4); // Back up from Carousel;
-        sleep(400);
+        sleep(300);
         drivetrain.turnPI(90, .25, .1, 2000); // Turn towards warehouse
-        sleep(400);
+        sleep(250);
         drivetrain.moveInches(20, -.5);
-        sleep(400);
+        sleep(350);
         drivetrain.turnPI(160,.4, .1, 2000);
-        sleep(550);
-        drivetrain.moveInches(10,-.5);
-        sleep(600);
+        sleep(250);
+        drivetrain.moveInches(11.4,-.5);
+        sleep(500);
         outake.highGoal();
     }
 
     public void midGoal() {
         drivetrain.moveInches(9,.4); // Back up from Carousel;
-        sleep(400);
-        drivetrain.turnPI(90, .25, .1, 3000); // Turn towards warehouse
-        sleep(400);
+        sleep(300);
+        drivetrain.turnPI(90, .25, .1, 2000); // Turn towards warehouse
+        sleep(250);
         drivetrain.moveInches(20, -.5);
-        sleep(400);
-        drivetrain.turnPI(160,.4, .1, 3000);
-        sleep(550);
-        drivetrain.moveInches(5,-.5);
-        sleep(700);
-        outake.highGoal();
+        sleep(350);
+        drivetrain.turnPI(160,.4, .1, 2000);
+        sleep(250);
+        drivetrain.moveInches(9,-.5);
+        sleep(500);
+        outake.midGoal();
     }
 
     public void lowGoal() {
         drivetrain.moveInches(9,.4); // Back up from Carousel;
-        sleep(400);
-        drivetrain.turnPI(90, .25, .1, 3000); // Turn towards warehouse
-        sleep(400);
+        sleep(300);
+        drivetrain.turnPI(90, .25, .1, 2000); // Turn towards warehouse
+        sleep(250);
         drivetrain.moveInches(20, -.5);
-        sleep(400);
-        drivetrain.turnPI(160,.4, .1, 3000);
-        sleep(550);
-        drivetrain.moveInches(1,-.5);
-        sleep(700);
+        sleep(350);
+        drivetrain.turnPI(160,.4, .1, 2000);
+        sleep(250);
+        drivetrain.moveInches(8,-.5);
+        sleep(500);
         outake.lowGoal();
     }
 
@@ -176,6 +178,7 @@ public class AutoBlueNearOCV extends LinearOpMode {
         DcMotor bL  = hardwareMap.get(DcMotor.class, "bL");
         DcMotor fR  = hardwareMap.get(DcMotor.class, "fR");
         DcMotor bR  = hardwareMap.get(DcMotor.class, "bR");
+        spinner = hardwareMap.get(DcMotor.class,"carousel");
         fL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         bL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         fR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -238,8 +241,9 @@ public class AutoBlueNearOCV extends LinearOpMode {
                 telemetry.update();
                 highGoal();
             }
-            park();
         }
+        carousel();
+        park();
         webcam.stopStreaming();
     }
 }
