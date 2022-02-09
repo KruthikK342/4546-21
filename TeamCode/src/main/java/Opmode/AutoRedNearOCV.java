@@ -14,6 +14,7 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import Library.AutoVisionBlueFar;
+import Library.AutoVisionBlueNear;
 import Library.AutoVisionRedNear;
 import Library.Carousel;
 import Library.Drivetrain;
@@ -31,6 +32,8 @@ public class AutoRedNearOCV extends LinearOpMode {
     private Intake intake;
     private Outtake outake;
     private int barcode;
+    private DcMotor spinner;
+    LinearOpMode opMode;
 
     public void carousel() {
 
@@ -41,21 +44,20 @@ public class AutoRedNearOCV extends LinearOpMode {
         drivetrain.moveInches(56, 0.45); // Move forward
         sleep(450);
 
-        carousel.spin(-.42);
-        sleep(2900);
-        carousel.spin(.3);
-        sleep(800);
-        carousel.stop();
+        spinner.setPower(.4);
+        drivetrain.startMotors(.05,.05);
+        sleep(3300);
+        spinner.setPower(0);
 
 
         //intake code
-        intake.collect(.7);
+        /*intake.collect(.7);
         sleep(100);
         drivetrain.moveInches(3,.5);
         sleep(200);
         drivetrain.turnPI(210, 1, .1, 3000);
         sleep(1500);
-        intake.stop();
+        intake.stop();*/
     }
 
     /*
@@ -95,15 +97,15 @@ public class AutoRedNearOCV extends LinearOpMode {
 
     public void highGoal() {
         drivetrain.moveInches(9,.4); // Back up from Carousel;
-        sleep(400);
-        drivetrain.turnPI(-90, .25, .1, 3000); // Turn towards warehouse
-        sleep(400);
+        sleep(250);
+        drivetrain.turnPI(-120, .25, .1, 3000); // Turn towards warehouse
+        sleep(250);
         drivetrain.moveInches(15, -.5);
-        sleep(500);
-        drivetrain.turnPI(177,.38,.08, 3000);
-        sleep(500);
-        drivetrain.moveInches(2.3, -.4);
-        sleep(500);
+        sleep(250);
+        drivetrain.turnPI(200,.38,.08, 3000);
+        sleep(300);
+        drivetrain.moveInches(4, -.4);
+        sleep(400);
         outake.highGoal();
 
 
@@ -174,7 +176,7 @@ public class AutoRedNearOCV extends LinearOpMode {
             case 1: {
                 telemetry.addData("Team element location: ", location);
                 telemetry.update();
-                lowGoal();
+                highGoal();
                 break;
             }
             case 2: {
@@ -186,7 +188,7 @@ public class AutoRedNearOCV extends LinearOpMode {
             case 3: {
                 telemetry.addData("Team element location: ", location);
                 telemetry.update();
-                highGoal();
+                lowGoal();
                 break;
             }
             default: {
@@ -194,8 +196,9 @@ public class AutoRedNearOCV extends LinearOpMode {
                 telemetry.update();
                 highGoal();
             }
-            park();
         }
+        carousel();
+        park();
         webcam.stopStreaming();
     }
 }

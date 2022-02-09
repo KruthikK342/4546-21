@@ -177,8 +177,9 @@ public class AutoRedCarouselMid extends LinearOpMode {
                 telemetry.update();
                 highGoal();
             }
-            park();
+
         }
+        park();
         webcam.stopStreaming();
     }
 }

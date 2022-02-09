@@ -13,10 +13,10 @@ public class AutoVisionRedNear { //camera resolution(x, y):
     //the following comments are the bounding boxes that the different autos use
     static final Rect spot1 = new Rect(
             new Point(1, 25),
-            new Point(280, 320));
+            new Point(285, 325));
     static final Rect spot2 = new Rect(
-            new Point(620, 25),
-            new Point(840, 320));
+            new Point(650, 25),
+            new Point(840, 350));
 
     static double PERCENT_COLOR_THRESHOLD = 0.3; //the percent of the bounding box the need to be black (0 = 0%, 1 = 100%)
 
