@@ -37,99 +37,87 @@ public class AutoRedNearOCV extends LinearOpMode {
 
     public void carousel() {
 
-        drivetrain.moveInches(3, 0.5); // Move forward to turn
+        drivetrain.moveInches(4.5, 0.5); // Move forward to turn
         sleep(450);
-        drivetrain.turnPD(-106.5, 0.63, .1, 3000);
+        drivetrain.turnPD(-45, 0.63, .1, 3000);
         sleep(300);
-        drivetrain.moveInches(56, 0.45); // Move forward
+        drivetrain.moveInches(60, 0.45); // Move forward
         sleep(450);
 
-        spinner.setPower(.4);
-        drivetrain.startMotors(.05,.05);
+        carousel.spin(-.4);
+        //drivetrain.startMotors(.05,.05);
         sleep(3300);
-        spinner.setPower(0);
+        carousel.stop();
+        sleep(300);
 
-
-        //intake code
-        /*intake.collect(.7);
-        sleep(100);
-        drivetrain.moveInches(3,.5);
-        sleep(200);
-        drivetrain.turnPI(210, 1, .1, 3000);
-        sleep(1500);
-        intake.stop();*/
     }
 
-    /*
-    public void park() {
-        drivetrain.moveInches(6.2,-.4);
-    }
-    /
-     */
+
 
     public void park() {
-        drivetrain.moveInches(2.5, 0.5);
+        drivetrain.moveInches(3, -0.5);
         sleep(800);
 
-        drivetrain.turnPD(-3, 0.30, 0.25, 2000);
-        sleep(500);
-        drivetrain.turnPD(-113,.25,.25,2000);
+        drivetrain.turnPD(110, 0.8, 0.1, 2000);
+        sleep(800);
+        drivetrain.moveInches(20, -.5);
 
-        drivetrain.moveInches(7, -.8);
-        sleep(1000);
-        drivetrain.moveInches(60, -1);
     }
 
-
-    public void midGoal() {
-        drivetrain.moveInches(9,.4); // Back up from Carousel;
-        sleep(400);
-        drivetrain.turnPI(-90, .25, .1, 3000); // Turn towards warehouse
-        sleep(400);
-        drivetrain.moveInches(15, -.5);
-        sleep(500);
-        drivetrain.turnPI(177,.38, .1, 3000);
-        sleep(450);
-        drivetrain.moveInches(2, -.4);
-        sleep(500);
-        outake.midGoal();
-    }
 
     public void highGoal() {
         drivetrain.moveInches(9,.4); // Back up from Carousel;
         sleep(250);
         drivetrain.turnPI(-120, .25, .1, 3000); // Turn towards warehouse
         sleep(250);
-        drivetrain.moveInches(15, -.5);
+        drivetrain.moveInches(20, -.5);
         sleep(250);
         drivetrain.turnPI(200,.38,.08, 3000);
         sleep(300);
-        drivetrain.moveInches(4, -.4);
+        drivetrain.moveInches(3.5, -.4);
         sleep(400);
         outake.highGoal();
 
 
     }
 
+    public void midGoal() {
+        drivetrain.moveInches(9,.4); // Back up from Carousel;
+        sleep(250);
+        drivetrain.turnPI(-120, .25, .1, 3000); // Turn towards warehouse
+        sleep(250);
+        drivetrain.moveInches(20, -.5);
+        sleep(250);
+        drivetrain.turnPI(200,.38,.08, 3000);
+        sleep(300);
+        drivetrain.moveInches(3.5, -.4);
+        sleep(400);
+        outake.midGoal();
+    }
+
+
+
     public void lowGoal() {
         drivetrain.moveInches(9,.4); // Back up from Carousel;
-        sleep(400);
-        drivetrain.turnPI(-90, .25, .1, 3000); // Turn towards warehouse
-        sleep(400);
+        sleep(250);
+        drivetrain.turnPI(-120, .25, .1, 3000); // Turn towards warehouse
+        sleep(250);
         drivetrain.moveInches(15, -.5);
-        sleep(500);
-        drivetrain.turnPI(177,.38, .1, 3000);
-        sleep(450);
-        drivetrain.moveInches(2, -.4);
-        sleep(500);
+        sleep(250);
+        drivetrain.turnPI(200,.38,.08, 3000); //
+        sleep(300);
+        drivetrain.moveInches(4, -.4);
+        sleep(400);
         outake.lowGoal();
     }
 
     @Override
     public void runOpMode() throws InterruptedException {
 
+
         drivetrain = new Drivetrain(this);
         outake = new Outtake(this);
+        carousel = new Carousel(this);
         DcMotor fL  = hardwareMap.get(DcMotor.class, "fL");
         DcMotor bL  = hardwareMap.get(DcMotor.class, "bL");
         DcMotor fR  = hardwareMap.get(DcMotor.class, "fR");
@@ -176,7 +164,7 @@ public class AutoRedNearOCV extends LinearOpMode {
             case 1: {
                 telemetry.addData("Team element location: ", location);
                 telemetry.update();
-                highGoal();
+                lowGoal();
                 break;
             }
             case 2: {
@@ -188,7 +176,7 @@ public class AutoRedNearOCV extends LinearOpMode {
             case 3: {
                 telemetry.addData("Team element location: ", location);
                 telemetry.update();
-                lowGoal();
+                highGoal();
                 break;
             }
             default: {
@@ -198,6 +186,8 @@ public class AutoRedNearOCV extends LinearOpMode {
             }
         }
         carousel();
+
+
         park();
         webcam.stopStreaming();
     }

@@ -54,52 +54,7 @@ public class AutoBlueNearOCV extends LinearOpMode {
         sleep(3300);
         spinner.setPower(0);
 
-        //intake code
-        /*intake.collect(.8);
-        drivetrain.moveInches(1,.8);
-        sleep(300);
-        drivetrain.moveInches(3,.6);
-        sleep(400);
-        drivetrain.turnPI(200, .85, .1, 4000);
-        sleep(250);
-        drivetrain.moveInches(5,.5);
-        sleep(1000);
-        //drivetrain.turnPI(180, 1, .1, 3000);
-        //sleep(250);
 
-        intake.stop();
-
-        //intake stopped
-
-        //deposits
-
-        drivetrain.moveInches(-3,1);
-        drivetrain.turnPI(130, .9, .1, 3000);
-        sleep(150);
-        drivetrain.moveInches(60, -1);
-        sleep(150);
-        outake.highGoal();
-        */
-    }
-    public void duckPickup() {
-        //preset code
-        //collect duck
-        drivetrain.moveInches(-2.5, 0.5);
-        sleep(500);
-        drivetrain.turnPI(130, .35, .3, 3000);
-        sleep(500);
-        drivetrain.moveInches(2.5, 0.4);
-        sleep(500);
-        //intake.collect();
-        sleep(500);
-        //set robot in proper pos to do shipping hub
-        drivetrain.turnPI(-90, 0.3, 0.1, 3000); // Turn left 90
-        sleep(500);
-        drivetrain.moveInches(3, 0.5);
-        sleep(500);
-        drivetrain.turnPI(-45, .3, .3, 3000);
-        sleep(500);
-        drivetrain.moveInches(3, 0.5);
     }
 
     public void park() {
@@ -113,18 +68,6 @@ public class AutoBlueNearOCV extends LinearOpMode {
         sleep(500);
     }
 
-    public void duckHighGoal() {
-        sleep(500);
-        drivetrain.turnPD(90, .8, .1, 3000);
-        sleep(250);
-        drivetrain.moveInches(28, -.5);
-        sleep(500);
-        outake.highGoal();
-    }
-
-    public void reliablePark() {
-        drivetrain.moveInches(6.5, -.4);
-    }
 
 
     public void highGoal() {

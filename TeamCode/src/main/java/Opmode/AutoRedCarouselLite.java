@@ -17,9 +17,7 @@ public class AutoRedCarouselLite extends LinearOpMode {
     private Drivetrain drivetrain;
     private DuckBarcodeBitmap vision;
     private Carousel carousel;
-    private Intake intake;
-    private Outtake outake;
-    private int barcode;
+
 
     public void carousel() {
         drivetrain.moveInches(24, 0.5); // Move forward to turn
@@ -47,8 +45,6 @@ public class AutoRedCarouselLite extends LinearOpMode {
         // Vuforia stuff here
         vision = new DuckBarcodeBitmap(this);
         drivetrain = new Drivetrain(this);
-        outake = new Outtake(this);
-        intake = new Intake(this);
         carousel = new Carousel(this);
         DcMotor fL  = hardwareMap.get(DcMotor.class, "fL");
         DcMotor bL  = hardwareMap.get(DcMotor.class, "bL");
