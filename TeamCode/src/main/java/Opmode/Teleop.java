@@ -85,8 +85,9 @@ public class Teleop extends LinearOpMode {
         double wristDeposit = .6;
         double wristRest = .15;
         double wristTilt = .3;
+        double wristGround = .8;
         double liftMax = 1250;
-        double liftMin = 50;
+        double liftMin = 0;
 
         // Waits for the game to start (driver presses PLAY)
 
@@ -202,7 +203,7 @@ public class Teleop extends LinearOpMode {
             else spin.setPower(0);
 
             // Either adjust the servo to sort into the box or into the base outtake
-            if (gamepad1.x) sort.setPosition(.35); // Sorting into box
+            if (gamepad1.x) sort.setPosition(.45); // Sorting into box
             if (gamepad1.y) sort.setPosition(.7); // Sorting into base outtake
 
 
@@ -224,13 +225,14 @@ public class Teleop extends LinearOpMode {
             // if the left trigger is pressed, the arm will retract back down. Otherwise rest.
             // Will likely combine with wrist movement and into different levels.
 
-            if (gamepad2.right_trigger > 0.5 && arm.getCurrentPosition() > 10) arm.setPower(-.7);
+            if (gamepad2.right_trigger > 0.5 && arm.getCurrentPosition() > 20) arm.setPower(-.7);
             else if (gamepad2.left_trigger > 0.5 && arm.getCurrentPosition() < 1350) arm.setPower(1);
             else if (liftState == "down") arm.setPower(0);
 
             if  (gamepad2.a) wrist.setPosition(wristRest); // Wrist Rest
             if (gamepad2.b) wrist.setPosition(wristDeposit); // Wrist Deposit
             if (gamepad2.y) wrist.setPosition(wristTilt); // Wrist Tilt
+            if (gamepad2.x) wrist.setPosition(wristGround); // Box points straight down
             // Currently rotates the box either upright, tilt back slightly, or deposit element
 
 
