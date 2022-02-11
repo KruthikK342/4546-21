@@ -43,9 +43,9 @@ public class AutoVisionRedNear { //camera resolution(x, y):
                 if (meetsReqirements(leftAvg)) {
                     location = 2;
                 } else if (meetsReqirements(rightAvg)) {
-                    location = 1;
-                } else {
                     location = 3;
+                } else {
+                    location = 1;
                 }
             }
 

@@ -128,7 +128,7 @@ public class Teleop extends LinearOpMode {
             // If the right trigger is pressed down past a threshhold, the intake will run at full
             // power. If left trigger, will run the opposite direction to clear the robot.
             // If neither condition is met, automatically set power to 0 and rest.
-            if (gamepad1.right_trigger > .5) intake.setPower(-1); // Intake in
+            if (gamepad1.right_trigger > .5) intake.setPower(-.8); // Intake in
             else if (gamepad1.left_trigger > .5) intake.setPower(.5); // Intake out
             else intake.setPower(0);
 
