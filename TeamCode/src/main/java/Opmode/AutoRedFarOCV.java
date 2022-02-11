@@ -34,49 +34,57 @@ public class AutoRedFarOCV extends LinearOpMode {
 
 
     public void park() {
-       drivetrain.moveInches(3, -.5);
+       drivetrain.moveInches(6, .5);
        sleep(500);
-       drivetrain.turnPI(180, .25, .1, 3000);
+       drivetrain.turnPI(0, 0.4, 0.1,3000);
        sleep(500);
-       drivetrain.moveInches(9, -.5);
-       sleep(500);
-    }
+       drivetrain.turnPI(-80,.4,.1,3000);
 
-    public void midGoal() {
-        drivetrain.moveInches(5.5, 0.5);
-        sleep(800);
-        // drivetrain.turnPI(-255, 0.05, 0, 2000);
-        drivetrain.turnPD(145, 0.45, 0.25, 2000);
-        sleep(500);
-        drivetrain.moveInches(6.3, -0.45);
-        sleep(500);
-        outake.midGoal();
-        sleep(500);
+       drivetrain.moveInches(20, -.8);
+       sleep(1000);
+       drivetrain.moveInches(50, -1);
     }
 
     public void highGoal() {
-        drivetrain.moveInches(4.5, 0.5);
-        sleep(800);
-
-        drivetrain.turnPD(140, 0.45, 0.25, 2000);
-        sleep(500);
-        drivetrain.moveInches(6.7, -0.45);
+        drivetrain.moveInches(9,.4); // Back up from Carousel;
+        sleep(300);
+        drivetrain.turnPI(90, .25, .1, 2000); // Turn towards warehouse
+        sleep(250);
+        drivetrain.moveInches(20, -.5);
+        sleep(350);
+        drivetrain.turnPI(165,.4, .1, 2000);
+        sleep(250);
+        drivetrain.moveInches(11.9,-.5);
         sleep(500);
         outake.highGoal();
-        sleep(500);
+    }
 
+    public void midGoal() {
+        drivetrain.moveInches(9,.4); // Back up from Carousel;
+        sleep(300);
+        drivetrain.turnPI(90, .25, .1, 2000); // Turn towards warehouse
+        sleep(250);
+        drivetrain.moveInches(20, -.5);
+        sleep(350);
+        drivetrain.turnPI(165,.4, .1, 2000);
+        sleep(250);
+        drivetrain.moveInches(11.9,-.5);
+        sleep(500);
+        outake.midGoal();
     }
 
     public void lowGoal() {
-        drivetrain.moveInches(5.5, 0.5);
-        sleep(800);
-
-        drivetrain.turnPD(145, 0.45, 0.25, 2000);
-        sleep(500);
-        drivetrain.moveInches(6.1, -0.45);
+        drivetrain.moveInches(9,.4); // Back up from Carousel;
+        sleep(300);
+        drivetrain.turnPI(90, .25, .1, 2000); // Turn towards warehouse
+        sleep(250);
+        drivetrain.moveInches(20, -.5);
+        sleep(350);
+        drivetrain.turnPI(165,.4, .1, 2000);
+        sleep(250);
+        drivetrain.moveInches(11.9,-.5);
         sleep(500);
         outake.lowGoal();
-        sleep(500);
     }
 
     @Override
@@ -150,8 +158,9 @@ public class AutoRedFarOCV extends LinearOpMode {
                 telemetry.update();
                 highGoal();
             }
-            park();
+
         }
+        park();
         webcam.stopStreaming();
     }
 }
