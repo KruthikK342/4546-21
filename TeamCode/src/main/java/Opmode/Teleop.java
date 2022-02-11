@@ -100,56 +100,6 @@ public class Teleop extends LinearOpMode {
         hook.setPosition(.05);
 
         while (opModeIsActive()) {
-
-            // Lift Macro
-            switch(liftState) {
-                case("raise"): {
-                    wrist.setPosition(wristTilt); // Tilt box back
-                    arm.setPower(1); // Lift arm, increase encoder
-                    if (arm.getCurrentPosition() > liftMax) { // Reaches top
-                        arm.setPower(0); // Stop lift
-                        liftState = "deposit"; // Change case by changing state
-                        runtime.reset(); // Reset time, used for depositing
-                    }
-                    break;
-                }
-                case("deposit"): {
-                    wrist.setPosition(wristDeposit); // Deposit, Box points straight down
-                    if (runtime.time() > 1) { // Allows a second to allow freight to deposit
-                        wrist.setPosition(wristRest); // Tilts box back to resting position
-                        liftState = "retract"; // Change case
-                    }
-                    break;
-                }
-
-                case("retract"): {
-                    arm.setPower(-.7); // Retract lift
-                    if (arm.getCurrentPosition() < liftMin) { // Checks if lift at bottom
-                        arm.setPower(0); // Stops lift
-                        liftState = "down"; // Change case back to resting
-                    }
-                    break;
-                }
-
-                default: { // Should never be reached as liftState will never de NULL
-                    liftState = "down";
-                }
-            }
-
-            if (gamepad2.dpad_up) { // Begin lift sequence
-                liftState = "raise";
-            }
-            if (gamepad2.dpad_down) { // Part 2, deposit and retract
-                liftState = "down";
-            }
-
-            if (gamepad1.dpad_down) // Half-power mode
-                power = 0.5;
-            else if (gamepad1.dpad_up) // Full-power mode
-                power = 1.0;
-
-            // Driving [arcade mode]
-
             //Driver 1
             /*
             Driver 1 controls the drivetrain, carousel, intake, sorter, and the base level
@@ -159,27 +109,32 @@ public class Teleop extends LinearOpMode {
             direction regardless of team color.
 //////////////////////////////////////////////////////////////////////////////////////////////////
             POSSIBLE FUTURE CHANGES:
-            Create different teleOp classes for red vs blue so that only 1 button is needed for
-            carousel.
-            Create a "half-speed" mode for more precise movements, more specifically for carousel.
-            If necessary account for alterations in wheel movements/positioning.
+            Single button Macro
              */
+
+            // Driving [arcade mode]
             if (Math.abs(gamepad1.left_stick_y) > .05 || Math.abs(gamepad1.left_stick_x) > .05 || Math.abs(gamepad1.right_stick_x) > .05) {
                 driveTrainPower(-power*gamepad1.left_stick_y, -power*gamepad1.left_stick_x, -power*gamepad1.right_stick_x * .78);
             } else {
                 driveTrainPower(0, 0, 0);
             }
 
+            if (gamepad1.dpad_down) // Half-power mode
+                power = 0.5;
+            else if (gamepad1.dpad_up) // Full-power mode
+                power = 1.0;
+
+
             // If the right trigger is pressed down past a threshhold, the intake will run at full
             // power. If left trigger, will run the opposite direction to clear the robot.
             // If neither condition is met, automatically set power to 0 and rest.
-            if(gamepad1.right_trigger > .5) intake.setPower(-1); // Intake in
+            if (gamepad1.right_trigger > .5) intake.setPower(-1); // Intake in
             else if (gamepad1.left_trigger > .5) intake.setPower(.5); // Intake out
             else intake.setPower(0);
 
-            //outake
-            if(gamepad1.a) outake.setPower(.7); // Outake forward
-            else if(gamepad1.b) outake.setPower(-.7); //Outake reverse
+            // Outake
+            if (gamepad1.a) outake.setPower(.7); // Outake forward
+            else if (gamepad1.b) outake.setPower(-.7); //Outake reverse
             else outake.setPower(0);
 
 
@@ -216,8 +171,6 @@ public class Teleop extends LinearOpMode {
             game plan while still outtaking.
 //////////////////////////////////////////////////////////////////////////////////////////////////
             POSSIBLE FUTURE CHANGES:
-            Create macros to rise and automatically turn the box at the mid and high levels. (PID?)
-            Create encoder limits to ensure the pulley line does not snap.
             Test and set TRUE position for servo wrist. Possibly servo programmer.
              */
 
@@ -225,11 +178,51 @@ public class Teleop extends LinearOpMode {
             // if the left trigger is pressed, the arm will retract back down. Otherwise rest.
             // Will likely combine with wrist movement and into different levels.
 
+            // Lift Macro
+            switch(liftState) {
+                case("raise"): {
+                    wrist.setPosition(wristTilt); // Tilt box back
+                    arm.setPower(1); // Lift arm, increase encoder
+                    if (arm.getCurrentPosition() > liftMax) { // Reaches top
+                        arm.setPower(0); // Stop lift
+                    }
+                    break;
+                }
+                case("deposit"): {
+                    wrist.setPosition(wristDeposit); // Deposit, Box points straight down
+                    if (runtime.time() > 1) { // Allows a second to allow freight to deposit
+                        wrist.setPosition(wristRest); // Tilts box back to resting position
+                        liftState = "retract"; // Change case
+                    }
+                    break;
+                }
+
+                case("retract"): {
+                    arm.setPower(-.7); // Retract lift
+                    if (arm.getCurrentPosition() < liftMin) { // Checks if lift at bottom
+                        arm.setPower(0); // Stops lift
+                        liftState = "down"; // Change case back to resting
+                    }
+                    break;
+                }
+
+                default: { // Should never be reached as liftState will never be NULL
+                    liftState = "down";
+                }
+            }
+
             if (gamepad2.right_trigger > 0.5 && arm.getCurrentPosition() > 20) arm.setPower(-.7);
             else if (gamepad2.left_trigger > 0.5 && arm.getCurrentPosition() < 1350) arm.setPower(1);
             else if (liftState == "down") arm.setPower(0);
 
-            if  (gamepad2.a) wrist.setPosition(wristRest); // Wrist Rest
+            if (gamepad2.dpad_up) liftState = "raise"; // Begin lift sequence
+            if (gamepad2.dpad_right) {
+                runtime.reset(); // Reset time, used for depositing
+                liftState = "deposit"; // Deposit the freight and reset box
+            }
+            if (gamepad2.dpad_down) liftState = "down"; // Part 2, deposit and retract
+
+            if (gamepad2.a) wrist.setPosition(wristRest); // Wrist Rest
             if (gamepad2.b) wrist.setPosition(wristDeposit); // Wrist Deposit
             if (gamepad2.y) wrist.setPosition(wristTilt); // Wrist Tilt
             if (gamepad2.x) wrist.setPosition(wristGround); // Box points straight down
