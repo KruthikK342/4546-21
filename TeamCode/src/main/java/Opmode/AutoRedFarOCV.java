@@ -54,7 +54,7 @@ public class AutoRedFarOCV extends LinearOpMode {
         sleep(350);
         drivetrain.turnPI(165,.4, .1, 2000);
         sleep(250);
-        drivetrain.moveInches(11.9,-.5);
+        drivetrain.moveInches(8.5,-.5);
         sleep(500);
         outake.highGoal();
     }
@@ -68,7 +68,7 @@ public class AutoRedFarOCV extends LinearOpMode {
         sleep(350);
         drivetrain.turnPI(165,.4, .1, 2000);
         sleep(250);
-        drivetrain.moveInches(11.9,-.5);
+        drivetrain.moveInches(8,-.5);
         sleep(500);
         outake.midGoal();
     }
@@ -82,7 +82,7 @@ public class AutoRedFarOCV extends LinearOpMode {
         sleep(350);
         drivetrain.turnPI(165,.4, .1, 2000);
         sleep(250);
-        drivetrain.moveInches(11.9,-.5);
+        drivetrain.moveInches(6,-.5);
         sleep(500);
         outake.lowGoal();
     }
