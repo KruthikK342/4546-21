@@ -192,13 +192,14 @@ public class Teleop extends LinearOpMode {
                     wrist.setPosition(wristDeposit); // Deposit, Box points straight down
                     if (runtime.time() > 1) { // Allows a second to allow freight to deposit
                         wrist.setPosition(wristRest); // Tilts box back to resting position
-                        liftState = "retract"; // Change case
+
                     }
                     break;
                 }
 
                 case("retract"): {
                     arm.setPower(-.7); // Retract lift
+                    wrist.setPosition(wristRest);
                     if (arm.getCurrentPosition() < liftMin) { // Checks if lift at bottom
                         arm.setPower(0); // Stops lift
                         liftState = "down"; // Change case back to resting
@@ -215,12 +216,12 @@ public class Teleop extends LinearOpMode {
             else if (gamepad2.left_trigger > 0.5 && arm.getCurrentPosition() < 1350) arm.setPower(1);
             else if (liftState == "down") arm.setPower(0);
 
-            if (gamepad2.dpad_up) liftState = "raise"; // Begin lift sequence
+            if (gamepad2.dpad_up) liftState = "raise"; // Part 1, Begin lift sequence
             if (gamepad2.dpad_right) {
                 runtime.reset(); // Reset time, used for depositing
-                liftState = "deposit"; // Deposit the freight and reset box
+                liftState = "deposit"; //  Part 2, Deposit the freight and reset box
             }
-            if (gamepad2.dpad_down) liftState = "down"; // Part 2, deposit and retract
+            if (gamepad2.dpad_down) liftState = "retract"; // Part 3, retract
 
             if (gamepad2.a) wrist.setPosition(wristRest); // Wrist Rest
             if (gamepad2.b) wrist.setPosition(wristDeposit); // Wrist Deposit
