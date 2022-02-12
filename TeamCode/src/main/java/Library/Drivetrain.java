@@ -121,7 +121,7 @@ public class Drivetrain {
 
     public void moveInches(double inches, double power){
         resetEncoders();
-        while (getEncoderAvg() < inches * countsPerInch){
+        while (getEncoderAvg() < inches * countsPerInch && opMode.opModeIsActive()){
             startMotors(power, power);
         }
         stopMotors();
@@ -151,11 +151,12 @@ public class Drivetrain {
                 startMotors(changePID + .075, -changePID - .075); // turn method for going right (left side turns forward and right side turns backward)
             }
             // the constants that are added or subtracted with changePID in startMotors allow the motors to turn when the value of changePID becomes small
-            opMode.telemetry.addData("Current position", sensor.getGyroYaw());
+            /*opMode.telemetry.addData("Current position", sensor.getGyroYaw());
             opMode.telemetry.addData("Current Difference",deltaAngle);
             opMode.telemetry.addData("changePID", changePID);
             opMode.telemetry.addData("angleDiff: ", angleDiff);
             opMode.telemetry.update();
+             */
         }
         stopMotors();
     }
@@ -182,6 +183,9 @@ public class Drivetrain {
             }
             opMode.telemetry.addData("P", (angleDiff * kP));
             opMode.telemetry.addData("D", ((Math.abs(angleDiff) - Math.abs(prevAngleDiff)) / dT * kD));
+            opMode.telemetry.addData("Gyro Roll: ", sensor.getGyroRoll());
+            opMode.telemetry.addData("Gyro Yaw: ", sensor.getGyroYaw());
+            opMode.telemetry.addData("Gyro Pitch: ", sensor.getGyroPitch());
             opMode.telemetry.update();
             prevAngleDiff = angleDiff;
         }
@@ -198,7 +202,7 @@ public class Drivetrain {
         double I = 0;
         double angleDiff = sensor.getTrueDiff(angle);
         double changePID = 0;
-        while (Math.abs(angleDiff) > .5 && time.milliseconds() < timeout) {
+        while (Math.abs(angleDiff) > .5 && time.milliseconds() < timeout && opMode.opModeIsActive()) {
             pastTime = currentTime;
             currentTime = time.milliseconds();
             double dT = currentTime - pastTime;
@@ -211,6 +215,7 @@ public class Drivetrain {
             opMode.telemetry.addData("diff", angleDiff);
             opMode.telemetry.addData("P", P);
             opMode.telemetry.addData("I", I);
+            opMode.telemetry.addData("Gyro Yaw: ", sensor.getGyroYaw());
             opMode.telemetry.addData("motorBR power: ", motorBR.getPower());
             opMode.telemetry.update();
             if (changePID < 0) {
@@ -220,6 +225,16 @@ public class Drivetrain {
             }
         }
         stopMotors();
+    }
+
+    public void turnPID(double angle, double p, double i, double d, double timeout) {
+        time.reset();
+        double kP = p / 90;
+        double kI = i / 100000;
+        double kD = d;
+        double currentTime = time.milliseconds();
+        double pastTime = 0;
+
     }
 
 

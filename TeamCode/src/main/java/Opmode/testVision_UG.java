@@ -24,11 +24,10 @@ public class testVision_UG extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
 
         //stuff that happens after init is pressed
-        // DuckBarcodeBitmap db = new DuckBarcodeBitmap(this);
+        DuckBarcodeBitmap db = new DuckBarcodeBitmap(this);
         waitForStart();
         while (opModeIsActive())  {
-            telemetry.addLine("Hey there");
-            telemetry.update();
+            int barcode = db.getBarcode(false);
             sleep(5000);
         }
 

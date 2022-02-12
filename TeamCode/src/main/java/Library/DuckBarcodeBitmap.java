@@ -2,6 +2,7 @@ package Library;
 
 import android.graphics.Bitmap;
 
+import java.util.Collections;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.vuforia.Image;
 import com.vuforia.PIXEL_FORMAT;
@@ -27,22 +28,10 @@ public class DuckBarcodeBitmap {
     private VuforiaLocalizer.CameraDirection CAMERA_CHOICE = VuforiaLocalizer.CameraDirection.BACK;
     private static final String VUFORIA_KEY = "AVFFxKT/////AAABmQTYeIgT6k6wv0phn1XaTKN+Z9RdP23vp3+6IEyv9haxqO0u2vStZKAjPLct97BEhaeSkeYivFGo2IDu8fWfJlBY+2JZ0FIf8M2N7yW5XExNYWbGNwwem7Wgzsl5ld4wr6xOeXqcwtVn1mgt5ELcypOfvRnnun3FWIBr7mx+AJRN1ZAnqVvfOphPVxNm9vpylN4d5nJu58aTxiXMCJadPhhyviOGVlI6tT//lTO5GJEBva9xN+SXpxsTnPEaegQNE+qzFxVzmtXabk+oAuMxDh1XR+6EbyZzZjQm3gI9DXkt7os7ZkM95GXEZN9MHRwPWdwbk1Bt/iGI3VcXp2VfUDhWYXaWJjvu/aZC2WqrhAef";
 
-    private final int YELLOW_RED_THRESHOLD = 225;
-    private final int YELLOW_GREEN_THRESHOLD = 225;
-    private final int YELLOW_BLUE_MAX = 130;
-
     private final int BLACK_RED_THRESHOLD = 25;
     private final int BLACK_GREEN_THRESHOLD = 25;
     private final int BLACK_BLUE_THRESHOLD = 25;
 
-    private final int RED_RED_THRESHOLD = 200;
-    private final int RED_GREEN_THRESHOLD = 35;
-    private final int RED_BLUE_THRESHOLD = 35;
-
-
-    private final int BLUE_RED_THRESHOLD = 100;
-    private final int BLUE_GREEN_THRESHOLD = 95;
-    private final int BLUE_BLUE_THRESHOLD = 245;
 
 
     public DuckBarcodeBitmap (LinearOpMode opMode){
@@ -104,54 +93,99 @@ public class DuckBarcodeBitmap {
         return bitmap.getWidth();
     }
 
-    public int getBarcode() throws InterruptedException {
+    public int getBarcode(boolean isred) throws InterruptedException {
         Bitmap bitmap = getBitmap();
         int height = bitmap.getHeight();
         int width = bitmap.getWidth();
+        int teamElementXPosition = 0;
 
-        boolean teamElementFound = false;
-        boolean duckFound = false;
-        int duckXPosition = 0;
 
-        for(int y= bitmap.getHeight() / 2; y < height-5; y++) {
-            int duckPixelCount = 0, teamElementPixelCount = 0;
-            for(int x=0; x<width; x++) {
+        /*
+            This ternary expression accounts for the bitmap resizing the image taken
+            by the camera. We only need to do this for the blue side since the width
+            has to be shortened there. Otherwise, if it's red, then we can just use the
+            whole width.
+        */
+
+        /*
+            In this loop, we obtain pixel values from the bitmap to determine
+            the average X position of the bitmap. Based on a threshold, we can
+            then determine where the barcode is (1, 2, or 3). When looping over
+            the bitmap, we skip every third y value and every second x value so
+            that we can go over the entire bitmap in a timely manner. The height
+            used here is 1/3 of the bitmap height (this avoids black pixels in
+            the background from being included).
+        */
+
+        barcode = 1;
+        // barcode 2, 3
+        int heightLow[] = {40, 46};
+        int heightHigh[] = {240, 245};
+        int widthLow[] = {34, 340};
+        int widthHigh[] = {144, 445};
+        int j = 0, m = 0;
+        for (int i = 0; i < 2; i++) {
+            int teamElementPixelCount = 0;
+            for (int y = heightLow[i]; y < heightHigh[i]; y += 3) {
+                for (int x = widthLow[i]; x < widthHigh[i]; x += 2) {
+                    int pixel = bitmap.getPixel(x, y);
+                    int redValue = red(pixel);
+                    int blueValue = blue(pixel);
+                    int greenValue = green(pixel);
+                    boolean isBlack = redValue <= BLACK_RED_THRESHOLD && blueValue <= BLACK_BLUE_THRESHOLD && greenValue <= BLACK_GREEN_THRESHOLD;
+                    if (isBlack) {
+                        ++teamElementPixelCount;
+                        teamElementXPosition += x;
+                    }
+                }
+            }
+
+            /* j and m are for telemetry; j is barcode 2 and m is barcode 3 */
+            if (i == 0)
+                j = teamElementPixelCount; // barcode 2
+            if (i == 1)
+                m = teamElementPixelCount; // barcode 3
+
+
+            if (teamElementPixelCount >= 2500 && i == 0) {
+                barcode = 2;
+            } else if (teamElementPixelCount >= 2500 && i == 1) {
+                barcode = 3;
+            }
+        }
+
+
+
+
+        opMode.telemetry.addData("Width: ", bitmap.getWidth());
+        opMode.telemetry.addData("Height: ", bitmap.getHeight());
+        opMode.telemetry.addData("Barcode ", barcode);
+        opMode.telemetry.addData("bar2: ", j);
+        opMode.telemetry.addData("bar3: ", m);
+        opMode.telemetry.update();
+        return barcode;
+    }
+
+    public int getTeamElementPixelCount() throws InterruptedException {
+        Bitmap bitmap = getBitmap();
+        int height = bitmap.getHeight();
+        int width = bitmap.getWidth(); //bitmap.getWidth();
+        int teamElementXPosition = 0, teamElementPixelCount = 0;
+
+        for(int y = 0; y < height/3; y += 3) {
+            for(int x= 0; x< bitmap.getWidth(); x += 2) {
                 int pixel = bitmap.getPixel(x,y);
                 int redValue = red(pixel);
                 int blueValue  = blue(pixel);
                 int greenValue = green(pixel);
-                boolean isBlack =  redValue <= BLACK_RED_THRESHOLD && greenValue <= BLACK_GREEN_THRESHOLD && blueValue <= BLACK_BLUE_THRESHOLD;
-                boolean isYellow = redValue >= YELLOW_RED_THRESHOLD && greenValue >=YELLOW_GREEN_THRESHOLD && blueValue <= YELLOW_BLUE_MAX;
-                if(isYellow) {
-                    opMode.telemetry.addData("R: ", red(pixel));
-                    opMode.telemetry.addData("G: ", green(pixel));
-                    opMode.telemetry.addData("B: ", blue(pixel));
-                    duckPixelCount++;
-                    duckXPosition = x;
-                    break;
+                boolean isBlack = redValue <= BLACK_RED_THRESHOLD && greenValue <= BLACK_GREEN_THRESHOLD && blueValue <= BLACK_BLUE_THRESHOLD;
+                if(isBlack) {
+                    ++teamElementPixelCount;
+                    teamElementXPosition += x;
                 }
             }
         }
-        int barcode = 0;
-        int section = width/3;
-        if(duckFound) {
-
-            if(duckXPosition >= 0 && duckXPosition <= section) {
-                barcode = 1;
-            }else if(duckXPosition > section && duckXPosition <= (section*2)) {
-                barcode = 2;
-            }else {
-                barcode = 3;
-            }
-
-        }
-        opMode.telemetry.addData("DuckxPosition: ", duckXPosition);
-        opMode.telemetry.addData("section: ", section);
-        opMode.telemetry.addData("width: ", width);
-        opMode.telemetry.addData("Barcode: ", barcode);
-        opMode.telemetry.update();
-        opMode.sleep(2000);
-        return barcode;
+        return teamElementPixelCount;
     }
 }
 
