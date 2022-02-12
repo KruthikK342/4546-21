@@ -12,11 +12,11 @@ import org.openftc.easyopencv.OpenCvPipeline;
 public class AutoVisionBlueNear { //camera resolution(x, y):
     //the following comments are the bounding boxes that the different autos use
     static final Rect spot2 = new Rect(
-            new Point(50, 25),
-            new Point(280, 320));
+            new Point(150, 25),
+            new Point(380, 320));
     static final Rect spot3 = new Rect(
-            new Point(700, 25),
-            new Point(920, 320));
+            new Point(740, 25),
+            new Point(960, 320));
 
     static double PERCENT_COLOR_THRESHOLD = 0.3; //the percent of the bounding box the need to be black (0 = 0%, 1 = 100%)
 

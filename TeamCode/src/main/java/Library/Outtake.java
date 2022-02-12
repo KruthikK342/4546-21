@@ -133,7 +133,7 @@ public class Outtake {
 
         }
         pulley.setPower(0);
-        wrist.setPosition(.8);
+        wrist.setPosition(.75);
         opMode.sleep(500);
         wrist.setPosition(.1);
         opMode.sleep(500);

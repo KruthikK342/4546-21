@@ -13,10 +13,10 @@ public class AutoVisionRedFar { //camera resolution(x, y):
     //the following comments are the bounding boxes that the different autos use
     static final Rect spot1 = new Rect(
             new Point(1, 25),
-            new Point(150, 320));
+            new Point(50, 320));
     static final Rect spot2 = new Rect(
-            new Point(530, 25),
-            new Point(750, 320));
+            new Point(500, 25),
+            new Point(720, 320));
 
     static double PERCENT_COLOR_THRESHOLD = 0.3; //the percent of the bounding box the need to be black (0 = 0%, 1 = 100%)
 

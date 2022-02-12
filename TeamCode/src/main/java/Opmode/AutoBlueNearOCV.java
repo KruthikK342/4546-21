@@ -41,7 +41,7 @@ public class AutoBlueNearOCV extends LinearOpMode {
         sleep(450);
         drivetrain.turnPD(100, 0.8, 0, 3000); // Turn right 90
         sleep(300);
-        drivetrain.moveInches(50, 0.5); // Move forward
+        drivetrain.moveInches(50, 0.4); // Move forward
         sleep(450);
         drivetrain.turnPD(160, .8, 0, 3000);
         sleep(300);
@@ -79,7 +79,7 @@ public class AutoBlueNearOCV extends LinearOpMode {
         sleep(350);
         drivetrain.turnPI(160,.4, .1, 2000);
         sleep(250);
-        drivetrain.moveInches(11.4,-.5);
+        drivetrain.moveInches(10.5,-.5);
         sleep(500);
         outake.highGoal();
     }
@@ -93,7 +93,7 @@ public class AutoBlueNearOCV extends LinearOpMode {
         sleep(350);
         drivetrain.turnPI(160,.4, .1, 2000);
         sleep(250);
-        drivetrain.moveInches(9,-.5);
+        drivetrain.moveInches(6.5,-.5);
         sleep(500);
         outake.midGoal();
     }
