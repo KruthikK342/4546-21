@@ -36,12 +36,12 @@ public class AutoRedFarOCV extends LinearOpMode {
     public void park() {
        drivetrain.moveInches(6, .5);
        sleep(500);
-       drivetrain.turnPI(0, 0.4, 0.1,3000);
+       drivetrain.turnPI(0, 0.4, 0.1,2000);
        sleep(500);
        drivetrain.turnPI(-80,.4,.1,3000);
 
        drivetrain.moveInches(20, -.8);
-       sleep(1000);
+       sleep(100);
        drivetrain.moveInches(50, -1);
     }
 
@@ -54,7 +54,7 @@ public class AutoRedFarOCV extends LinearOpMode {
         sleep(350);
         drivetrain.turnPI(165,.4, .1, 1500);
         sleep(250);
-        //drivetrain.moveInches(5,-.5);
+        drivetrain.moveInches(7,-.5);
         sleep(500);
         outake.highGoal();
     }
@@ -64,11 +64,11 @@ public class AutoRedFarOCV extends LinearOpMode {
         sleep(300);
         drivetrain.turnPI(90, .25, .1, 2000); // Turn towards warehouse
         sleep(250);
-        drivetrain.moveInches(20, -.5);
+        drivetrain.moveInches(17, -.5);
         sleep(350);
         drivetrain.turnPI(165,.2, .2, 2000);
         sleep(250);
-        drivetrain.moveInches(8,-.5);
+        drivetrain.moveInches(3,-.5);
         sleep(500);
         outake.midGoal();
     }
@@ -78,11 +78,11 @@ public class AutoRedFarOCV extends LinearOpMode {
         sleep(300);
         drivetrain.turnPI(90, .25, .1, 2000); // Turn towards warehouse
         sleep(250);
-        drivetrain.moveInches(20, -.5);
+        drivetrain.moveInches(18, -.5);
         sleep(350);
         drivetrain.turnPI(175,.4, .1, 2000);
         sleep(250);
-        drivetrain.moveInches(6,-.5);
+        //drivetrain.moveInches(3,-.5);
         sleep(500);
         outake.lowGoal();
     }

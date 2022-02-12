@@ -57,10 +57,9 @@ public class AutoRedNearOCV extends LinearOpMode {
     public void park() {
         drivetrain.moveInches(3, -0.5);
         sleep(800);
-
-        drivetrain.turnPD(110, 0.8, 0.1, 2000);
-        sleep(800);
-        drivetrain.moveInches(23, -.5);
+        drivetrain.turnPD(180, 0.8, 0.1, 2000);
+        sleep(1000);
+        drivetrain.moveInches(23, -.4);
 
     }
 
@@ -70,11 +69,11 @@ public class AutoRedNearOCV extends LinearOpMode {
         sleep(250);
         drivetrain.turnPI(-120, .25, .1, 3000); // Turn towards warehouse
         sleep(250);
-        drivetrain.moveInches(19, -.5);
+        drivetrain.moveInches(16, -.5);
         sleep(250);
-        drivetrain.turnPI(200,.38,.08, 3000);
+        drivetrain.turnPI(200,.38,.08, 2000);
         sleep(300);
-        drivetrain.moveInches(2.5, -.4);
+        //drivetrain.moveInches(2.5, -.4);
         sleep(400);
         outake.highGoal();
 
@@ -102,11 +101,11 @@ public class AutoRedNearOCV extends LinearOpMode {
         sleep(250);
         drivetrain.turnPI(-120, .25, .1, 3000); // Turn towards warehouse
         sleep(250);
-        drivetrain.moveInches(15, -.5);
+        drivetrain.moveInches(8, -.5);
         sleep(250);
-        drivetrain.turnPI(200,.38,.08, 3000); //
+        drivetrain.turnPI(210,.48,.08, 2000); //
         sleep(300);
-        drivetrain.moveInches(4, -.4);
+        drivetrain.moveInches(5, -.4);
         sleep(400);
         outake.lowGoal();
     }

@@ -16,7 +16,7 @@ public class AutoVisionBlueNear { //camera resolution(x, y):
             new Point(380, 320));
     static final Rect spot3 = new Rect(
             new Point(740, 25),
-            new Point(960, 320));
+            new Point(930, 320));
 
     static double PERCENT_COLOR_THRESHOLD = 0.3; //the percent of the bounding box the need to be black (0 = 0%, 1 = 100%)
 
