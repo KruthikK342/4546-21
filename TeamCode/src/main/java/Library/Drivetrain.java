@@ -206,6 +206,7 @@ public class Drivetrain {
             pastTime = currentTime;
             currentTime = time.milliseconds();
             double dT = currentTime - pastTime;
+
             angleDiff = sensor.getTrueDiff(angle); // error
             P = angleDiff * kP; // power is proportional to error
             I += dT * angleDiff * kI; // sum of error throughout entire duration of the turn
