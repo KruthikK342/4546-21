@@ -21,4 +21,5 @@ dependencies {
     annotationProcessor files('lib/OpModeAnnotationProcessor.jar')
     implementation 'org.openftc:easyopencv:1.5.1'
     implementation 'com.acmerobotics.dashboard:dashboard:0.3.8'
+    implementation 'com.acmerobotics.dashboard:dashboard:0.3.8'
 }
