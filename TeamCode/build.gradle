@@ -21,6 +21,7 @@ dependencies {
     annotationProcessor files('lib/OpModeAnnotationProcessor.jar')
     implementation 'org.openftc:easyopencv:1.5.1'
     implementation 'com.acmerobotics.dashboard:dashboard:0.3.8'
+<<<<<<< HEAD
 <<<<<<< Updated upstream
     implementation 'com.acmerobotics.dashboard:dashboard:0.3.8'
 =======
@@ -28,4 +29,6 @@ dependencies {
     implementation 'com.acmerobotics.roadrunner:core:0.5.5'
 
 >>>>>>> Stashed changes
+=======
+>>>>>>> parent of 8204805 (Merge branch 'main' of https://github.com/Redlion010/4546-21)
 }

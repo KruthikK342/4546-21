@@ -22,9 +22,12 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'org.firstinspires.ftc:gameAssets-FreightFrenzy:1.0.0'
     implementation 'com.acmerobotics.dashboard:dashboard:0.4.4'
+<<<<<<< HEAD
 <<<<<<< Updated upstream
     implementation 'com.acmerobotics.dashboard:dashboard:0.3.8'
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> parent of 8204805 (Merge branch 'main' of https://github.com/Redlion010/4546-21)
 }
 
